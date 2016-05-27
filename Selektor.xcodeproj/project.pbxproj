@@ -1,0 +1,411 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4A0402A21CF7F18F0031011A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0402A11CF7F18F0031011A /* AppDelegate.swift */; };
+		4A0402A41CF7F18F0031011A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0402A31CF7F18F0031011A /* ViewController.swift */; };
+		4A0402A71CF7F18F0031011A /* Selektor.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4A0402A51CF7F18F0031011A /* Selektor.xcdatamodeld */; };
+		4A0402A91CF7F18F0031011A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A0402A81CF7F18F0031011A /* Assets.xcassets */; };
+		4A0402AC1CF7F18F0031011A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A0402AA1CF7F18F0031011A /* Main.storyboard */; };
+		4A0402B71CF7F18F0031011A /* SelektorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0402B61CF7F18F0031011A /* SelektorTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4A0402B31CF7F18F0031011A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4A0402961CF7F18F0031011A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4A04029D1CF7F18F0031011A;
+			remoteInfo = Selektor;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		4A04029E1CF7F18F0031011A /* Selektor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Selektor.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A0402A11CF7F18F0031011A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		4A0402A31CF7F18F0031011A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		4A0402A61CF7F18F0031011A /* Selektor.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Selektor.xcdatamodel; sourceTree = "<group>"; };
+		4A0402A81CF7F18F0031011A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4A0402AB1CF7F18F0031011A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		4A0402AD1CF7F18F0031011A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4A0402B21CF7F18F0031011A /* SelektorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SelektorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A0402B61CF7F18F0031011A /* SelektorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelektorTests.swift; sourceTree = "<group>"; };
+		4A0402B81CF7F18F0031011A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4A04029B1CF7F18F0031011A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4A0402AF1CF7F18F0031011A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4A0402951CF7F18F0031011A = {
+			isa = PBXGroup;
+			children = (
+				4A0402A01CF7F18F0031011A /* Selektor */,
+				4A0402B51CF7F18F0031011A /* SelektorTests */,
+				4A04029F1CF7F18F0031011A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4A04029F1CF7F18F0031011A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4A04029E1CF7F18F0031011A /* Selektor.app */,
+				4A0402B21CF7F18F0031011A /* SelektorTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4A0402A01CF7F18F0031011A /* Selektor */ = {
+			isa = PBXGroup;
+			children = (
+				4A0402A11CF7F18F0031011A /* AppDelegate.swift */,
+				4A0402A31CF7F18F0031011A /* ViewController.swift */,
+				4A0402A81CF7F18F0031011A /* Assets.xcassets */,
+				4A0402AA1CF7F18F0031011A /* Main.storyboard */,
+				4A0402AD1CF7F18F0031011A /* Info.plist */,
+				4A0402A51CF7F18F0031011A /* Selektor.xcdatamodeld */,
+			);
+			path = Selektor;
+			sourceTree = "<group>";
+		};
+		4A0402B51CF7F18F0031011A /* SelektorTests */ = {
+			isa = PBXGroup;
+			children = (
+				4A0402B61CF7F18F0031011A /* SelektorTests.swift */,
+				4A0402B81CF7F18F0031011A /* Info.plist */,
+			);
+			path = SelektorTests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4A04029D1CF7F18F0031011A /* Selektor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4A0402BB1CF7F18F0031011A /* Build configuration list for PBXNativeTarget "Selektor" */;
+			buildPhases = (
+				4A04029A1CF7F18F0031011A /* Sources */,
+				4A04029B1CF7F18F0031011A /* Frameworks */,
+				4A04029C1CF7F18F0031011A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Selektor;
+			productName = Selektor;
+			productReference = 4A04029E1CF7F18F0031011A /* Selektor.app */;
+			productType = "com.apple.product-type.application";
+		};
+		4A0402B11CF7F18F0031011A /* SelektorTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4A0402BE1CF7F18F0031011A /* Build configuration list for PBXNativeTarget "SelektorTests" */;
+			buildPhases = (
+				4A0402AE1CF7F18F0031011A /* Sources */,
+				4A0402AF1CF7F18F0031011A /* Frameworks */,
+				4A0402B01CF7F18F0031011A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4A0402B41CF7F18F0031011A /* PBXTargetDependency */,
+			);
+			name = SelektorTests;
+			productName = SelektorTests;
+			productReference = 4A0402B21CF7F18F0031011A /* SelektorTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4A0402961CF7F18F0031011A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = "James Gray";
+				TargetAttributes = {
+					4A04029D1CF7F18F0031011A = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+					4A0402B11CF7F18F0031011A = {
+						CreatedOnToolsVersion = 7.3.1;
+						TestTargetID = 4A04029D1CF7F18F0031011A;
+					};
+				};
+			};
+			buildConfigurationList = 4A0402991CF7F18F0031011A /* Build configuration list for PBXProject "Selektor" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4A0402951CF7F18F0031011A;
+			productRefGroup = 4A04029F1CF7F18F0031011A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4A04029D1CF7F18F0031011A /* Selektor */,
+				4A0402B11CF7F18F0031011A /* SelektorTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4A04029C1CF7F18F0031011A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4A0402A91CF7F18F0031011A /* Assets.xcassets in Resources */,
+				4A0402AC1CF7F18F0031011A /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4A0402B01CF7F18F0031011A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4A04029A1CF7F18F0031011A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4A0402A71CF7F18F0031011A /* Selektor.xcdatamodeld in Sources */,
+				4A0402A41CF7F18F0031011A /* ViewController.swift in Sources */,
+				4A0402A21CF7F18F0031011A /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4A0402AE1CF7F18F0031011A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4A0402B71CF7F18F0031011A /* SelektorTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4A0402B41CF7F18F0031011A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4A04029D1CF7F18F0031011A /* Selektor */;
+			targetProxy = 4A0402B31CF7F18F0031011A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		4A0402AA1CF7F18F0031011A /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4A0402AB1CF7F18F0031011A /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4A0402B91CF7F18F0031011A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		4A0402BA1CF7F18F0031011A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		4A0402BC1CF7F18F0031011A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Selektor/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jamesgray.Selektor;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		4A0402BD1CF7F18F0031011A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Selektor/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jamesgray.Selektor;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		4A0402BF1CF7F18F0031011A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = SelektorTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jamesgray.SelektorTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Selektor.app/Contents/MacOS/Selektor";
+			};
+			name = Debug;
+		};
+		4A0402C01CF7F18F0031011A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = SelektorTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jamesgray.SelektorTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Selektor.app/Contents/MacOS/Selektor";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4A0402991CF7F18F0031011A /* Build configuration list for PBXProject "Selektor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4A0402B91CF7F18F0031011A /* Debug */,
+				4A0402BA1CF7F18F0031011A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4A0402BB1CF7F18F0031011A /* Build configuration list for PBXNativeTarget "Selektor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4A0402BC1CF7F18F0031011A /* Debug */,
+				4A0402BD1CF7F18F0031011A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		4A0402BE1CF7F18F0031011A /* Build configuration list for PBXNativeTarget "SelektorTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4A0402BF1CF7F18F0031011A /* Debug */,
+				4A0402C01CF7F18F0031011A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		4A0402A51CF7F18F0031011A /* Selektor.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				4A0402A61CF7F18F0031011A /* Selektor.xcdatamodel */,
+			);
+			currentVersion = 4A0402A61CF7F18F0031011A /* Selektor.xcdatamodel */;
+			path = Selektor.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 4A0402961CF7F18F0031011A /* Project object */;
+}
