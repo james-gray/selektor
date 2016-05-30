@@ -1,51 +1,55 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15E65" minimumToolsVersion="Automatic">
-    <entity name="Album" syncable="YES">
+    <entity name="Album" representedClassName="AlbumMO" syncable="YES">
         <attribute name="name" attributeType="String" syncable="YES"/>
         <relationship name="songs" optional="YES" toMany="YES" deletionRule="Deny" destinationEntity="Song" inverseName="album" inverseEntity="Song" syncable="YES"/>
     </entity>
-    <entity name="Artist" syncable="YES">
+    <entity name="Artist" representedClassName="ArtistMO" syncable="YES">
         <attribute name="name" attributeType="String" syncable="YES"/>
         <relationship name="songs" optional="YES" toMany="YES" deletionRule="Deny" destinationEntity="Song" inverseName="artist" inverseEntity="Song" syncable="YES"/>
     </entity>
-    <entity name="Genre" syncable="YES">
+    <entity name="Genre" representedClassName="GenreMO" syncable="YES">
         <attribute name="name" attributeType="String" syncable="YES"/>
         <relationship name="songs" optional="YES" toMany="YES" deletionRule="Deny" destinationEntity="Song" inverseName="genre" inverseEntity="Song" syncable="YES"/>
     </entity>
-    <entity name="Key" syncable="YES">
-        <relationship name="mode" maxCount="1" deletionRule="Nullify" destinationEntity="Mode" syncable="YES"/>
-        <relationship name="note" maxCount="1" deletionRule="Nullify" destinationEntity="Note" syncable="YES"/>
+    <entity name="Key" representedClassName="KeyMO" syncable="YES">
+        <relationship name="mode" maxCount="1" deletionRule="Nullify" destinationEntity="Mode" inverseName="keys" inverseEntity="Mode" syncable="YES"/>
+        <relationship name="note" maxCount="1" deletionRule="Nullify" destinationEntity="Note" inverseName="keys" inverseEntity="Note" syncable="YES"/>
+        <relationship name="songs" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Song" inverseName="key" inverseEntity="Song" syncable="YES"/>
     </entity>
-    <entity name="Label" syncable="YES">
+    <entity name="Label" representedClassName="LabelMO" syncable="YES">
         <attribute name="name" attributeType="String" syncable="YES"/>
         <relationship name="songs" optional="YES" toMany="YES" deletionRule="Deny" destinationEntity="Song" inverseName="label" inverseEntity="Song" syncable="YES"/>
     </entity>
-    <entity name="Mode" syncable="YES">
+    <entity name="Mode" representedClassName="ModeMO" syncable="YES">
         <attribute name="name" attributeType="String" syncable="YES"/>
+        <relationship name="keys" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Key" inverseName="mode" inverseEntity="Key" syncable="YES"/>
     </entity>
-    <entity name="Note" syncable="YES">
+    <entity name="Note" representedClassName="NoteMO" syncable="YES">
         <attribute name="name" attributeType="String" syncable="YES"/>
+        <relationship name="keys" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Key" inverseName="note" inverseEntity="Key" syncable="YES"/>
     </entity>
-    <entity name="Song" syncable="YES">
-        <attribute name="duration" optional="YES" attributeType="Double" defaultValueString="0" syncable="YES"/>
+    <entity name="Song" representedClassName="SongMO" syncable="YES">
+        <attribute name="dateAdded" attributeType="Date" syncable="YES"/>
+        <attribute name="duration" attributeType="Double" minValueString="0" defaultValueString="0" syncable="YES"/>
         <attribute name="filename" attributeType="String" syncable="YES"/>
-        <attribute name="loudness" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="tempo" optional="YES" attributeType="Double" defaultValueString="0" syncable="YES"/>
-        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="loudness" attributeType="Double" minValueString="0" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="tempo" attributeType="Double" minValueString="0" defaultValueString="0" syncable="YES"/>
+        <attribute name="title" attributeType="String" syncable="YES"/>
         <relationship name="album" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Album" inverseName="songs" inverseEntity="Album" syncable="YES"/>
         <relationship name="artist" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Artist" inverseName="songs" inverseEntity="Artist" syncable="YES"/>
         <relationship name="genre" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Genre" inverseName="songs" inverseEntity="Genre" syncable="YES"/>
-        <relationship name="key" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Key" syncable="YES"/>
+        <relationship name="key" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Key" inverseName="songs" inverseEntity="Key" syncable="YES"/>
         <relationship name="label" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Label" inverseName="songs" inverseEntity="Label" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Album" positionX="-351" positionY="-495" width="128" height="73"/>
-        <element name="Artist" positionX="-180" positionY="-405" width="128" height="73"/>
-        <element name="Genre" positionX="-83" positionY="-270" width="128" height="73"/>
-        <element name="Key" positionX="-272" positionY="-90" width="128" height="75"/>
-        <element name="Label" positionX="-614" positionY="-450" width="128" height="73"/>
-        <element name="Mode" positionX="-74" positionY="-168" width="128" height="60"/>
-        <element name="Note" positionX="-135" positionY="9" width="128" height="60"/>
-        <element name="Song" positionX="-378" positionY="-340" width="128" height="193"/>
+        <element name="Album" positionX="-351" positionY="-495" width="128" height="75"/>
+        <element name="Artist" positionX="-180" positionY="-405" width="128" height="75"/>
+        <element name="Genre" positionX="-83" positionY="-270" width="128" height="75"/>
+        <element name="Key" positionX="-272" positionY="-90" width="128" height="90"/>
+        <element name="Label" positionX="-614" positionY="-450" width="128" height="75"/>
+        <element name="Mode" positionX="-74" positionY="-168" width="128" height="75"/>
+        <element name="Note" positionX="-135" positionY="9" width="128" height="75"/>
+        <element name="Song" positionX="-378" positionY="-340" width="128" height="210"/>
     </elements>
 </model>
