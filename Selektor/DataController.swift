@@ -8,9 +8,6 @@
 
 import CoreData
 
-// Add any new managed object model classes here so the DataController can maintain
-// a consistent mapping of entities to their model classes
-
 class DataController: NSObject {
   // Based on sample code provided by Apple at:
   // developer.apple.com/library/mac/documentation/Cocoa/Conceptual/CoreData/
@@ -20,10 +17,10 @@ class DataController: NSObject {
   var managedObjectContext: NSManagedObjectContext
   
   override init() {
-    guard let modelURL = NSBundle.mainBundle().URLForResource(
-        "DataModel",
-        withExtension: "momd"
-    ) else {
+    let dbName = "Selektor"
+
+    guard let modelURL = NSBundle.mainBundle().URLForResource(dbName,
+        withExtension: "momd") else {
       fatalError("Error loading model from bundle.")
     }
     
@@ -51,27 +48,25 @@ class DataController: NSObject {
       // The directory the application uses to store the Core Data store file.
       // This code uses a file named "DataModel.sqlite" in the application's
       // documents directory.
-      let storeURL = docURL.URLByAppendingPathComponent("DataModel.sqlite")
+      let storeURL = docURL.URLByAppendingPathComponent(dbName + ".sqlite")
       do {
-        try psc.addPersistentStoreWithType(NSSQLiteStoreType,
-                                           configuration: nil,
-                                           URL: storeURL,
-                                           options: nil)
+        try psc.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil,
+            URL: storeURL, options: nil)
       } catch {
         fatalError("Error migrating store: \(error)")
       }
     }
   }
 
-  func createNewEntity(entityName: String) -> NSManagedObject {
-    let object = NSEntityDescription.insertNewObjectForEntityForName(entityName,
-        inManagedObjectContext: managedObjectContext)
-    return object
+  func createEntity<T: SelektorObject>() -> T {
+    return NSEntityDescription.insertNewObjectForEntityForName(T.getEntityName(),
+        inManagedObjectContext: managedObjectContext) as! T
   }
 
-  func fetchEntities(entityName: String, predicate: String?) -> [NSManagedObject] {
+  func fetchEntities<T: SelektorObject>(predicate: String?) -> [T] {
 
     let moc = managedObjectContext
+    let entityName = T.getEntityName()
     let fetchRequest = NSFetchRequest(entityName: entityName)
 
     if let predicate = predicate {
@@ -80,10 +75,18 @@ class DataController: NSObject {
     }
 
     do {
-      let fetchedObjects = try moc.executeFetchRequest(fetchRequest) as! [NSManagedObject]
+      let fetchedObjects = try moc.executeFetchRequest(fetchRequest) as! [T]
       return fetchedObjects
     } catch {
       fatalError("Failed to fetch \(entityName)s: \(error)")
+    }
+  }
+
+  func save() {
+    do {
+      try managedObjectContext.save()
+    } catch {
+      fatalError("Failure to save context: \(error)")
     }
   }
 }
