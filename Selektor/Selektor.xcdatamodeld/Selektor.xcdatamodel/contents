@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15E65" minimumToolsVersion="Automatic">
-    <entity name="Album" representedClassName="AlbumMO" syncable="YES">
+    <entity name="Album" representedClassName="AlbumEntity" syncable="YES">
         <attribute name="name" attributeType="String" syncable="YES"/>
         <relationship name="songs" optional="YES" toMany="YES" deletionRule="Deny" destinationEntity="Song" inverseName="album" inverseEntity="Song" syncable="YES"/>
     </entity>
-    <entity name="Artist" representedClassName="ArtistMO" syncable="YES">
+    <entity name="Artist" representedClassName="ArtistEntity" syncable="YES">
         <attribute name="name" attributeType="String" syncable="YES"/>
         <relationship name="songs" optional="YES" toMany="YES" deletionRule="Deny" destinationEntity="Song" inverseName="artist" inverseEntity="Song" syncable="YES"/>
     </entity>
-    <entity name="Genre" representedClassName="GenreMO" syncable="YES">
+    <entity name="Genre" representedClassName="GenreEntity" syncable="YES">
         <attribute name="name" attributeType="String" syncable="YES"/>
         <relationship name="songs" optional="YES" toMany="YES" deletionRule="Deny" destinationEntity="Song" inverseName="genre" inverseEntity="Song" syncable="YES"/>
     </entity>
-    <entity name="Key" representedClassName="KeyMO" syncable="YES">
+    <entity name="Key" representedClassName="KeyEntity" syncable="YES">
         <relationship name="mode" maxCount="1" deletionRule="Nullify" destinationEntity="Mode" inverseName="keys" inverseEntity="Mode" syncable="YES"/>
         <relationship name="note" maxCount="1" deletionRule="Nullify" destinationEntity="Note" inverseName="keys" inverseEntity="Note" syncable="YES"/>
         <relationship name="songs" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Song" inverseName="key" inverseEntity="Song" syncable="YES"/>
     </entity>
-    <entity name="Label" representedClassName="LabelMO" syncable="YES">
+    <entity name="Label" representedClassName="LabelEntity" syncable="YES">
         <attribute name="name" attributeType="String" syncable="YES"/>
         <relationship name="songs" optional="YES" toMany="YES" deletionRule="Deny" destinationEntity="Song" inverseName="label" inverseEntity="Song" syncable="YES"/>
     </entity>
-    <entity name="Mode" representedClassName="ModeMO" syncable="YES">
+    <entity name="Mode" representedClassName="ModeEntity" syncable="YES">
         <attribute name="name" attributeType="String" syncable="YES"/>
         <relationship name="keys" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Key" inverseName="mode" inverseEntity="Key" syncable="YES"/>
     </entity>
-    <entity name="Note" representedClassName="NoteMO" syncable="YES">
+    <entity name="Note" representedClassName="NoteEntity" syncable="YES">
         <attribute name="name" attributeType="String" syncable="YES"/>
         <relationship name="keys" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Key" inverseName="note" inverseEntity="Key" syncable="YES"/>
     </entity>
-    <entity name="Song" representedClassName="SongMO" syncable="YES">
+    <entity name="Song" representedClassName="SongEntity" syncable="YES">
         <attribute name="dateAdded" attributeType="Date" syncable="YES"/>
         <attribute name="duration" attributeType="Double" minValueString="0" defaultValueString="0" syncable="YES"/>
         <attribute name="filename" attributeType="String" syncable="YES"/>
