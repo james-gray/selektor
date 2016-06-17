@@ -16,8 +16,7 @@ class KeyEntity: SelektorObject {
     return "Key"
   }
 
-  @NSManaged var mode: ModeEntity?
-  @NSManaged var note: NoteEntity?
+  @NSManaged var name: String?
   @NSManaged var songs: SongEntity?
 
 }
