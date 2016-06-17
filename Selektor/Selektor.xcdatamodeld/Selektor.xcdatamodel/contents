@@ -13,21 +13,12 @@
         <relationship name="songs" optional="YES" toMany="YES" deletionRule="Deny" destinationEntity="Song" inverseName="genre" inverseEntity="Song" syncable="YES"/>
     </entity>
     <entity name="Key" representedClassName="KeyEntity" syncable="YES">
-        <relationship name="mode" maxCount="1" deletionRule="Nullify" destinationEntity="Mode" inverseName="keys" inverseEntity="Mode" syncable="YES"/>
-        <relationship name="note" maxCount="1" deletionRule="Nullify" destinationEntity="Note" inverseName="keys" inverseEntity="Note" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="songs" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Song" inverseName="key" inverseEntity="Song" syncable="YES"/>
     </entity>
     <entity name="Label" representedClassName="LabelEntity" syncable="YES">
         <attribute name="name" attributeType="String" syncable="YES"/>
         <relationship name="songs" optional="YES" toMany="YES" deletionRule="Deny" destinationEntity="Song" inverseName="label" inverseEntity="Song" syncable="YES"/>
-    </entity>
-    <entity name="Mode" representedClassName="ModeEntity" syncable="YES">
-        <attribute name="name" attributeType="String" syncable="YES"/>
-        <relationship name="keys" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Key" inverseName="mode" inverseEntity="Key" syncable="YES"/>
-    </entity>
-    <entity name="Note" representedClassName="NoteEntity" syncable="YES">
-        <attribute name="name" attributeType="String" syncable="YES"/>
-        <relationship name="keys" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Key" inverseName="note" inverseEntity="Key" syncable="YES"/>
     </entity>
     <entity name="Song" representedClassName="SongEntity" syncable="YES">
         <attribute name="dateAdded" attributeType="Date" syncable="YES"/>
@@ -46,10 +37,8 @@
         <element name="Album" positionX="-351" positionY="-495" width="128" height="75"/>
         <element name="Artist" positionX="-180" positionY="-405" width="128" height="75"/>
         <element name="Genre" positionX="-83" positionY="-270" width="128" height="75"/>
-        <element name="Key" positionX="-272" positionY="-90" width="128" height="90"/>
+        <element name="Key" positionX="-272" positionY="-90" width="128" height="75"/>
         <element name="Label" positionX="-614" positionY="-450" width="128" height="75"/>
-        <element name="Mode" positionX="-74" positionY="-168" width="128" height="75"/>
-        <element name="Note" positionX="-135" positionY="9" width="128" height="75"/>
         <element name="Song" positionX="-378" positionY="-340" width="128" height="210"/>
     </elements>
 </model>
