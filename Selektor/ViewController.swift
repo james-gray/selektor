@@ -10,10 +10,27 @@ import Cocoa
 
 class ViewController: NSViewController {
 
+  // MARK: Properties
+
+  // Controller used by the table view for displaying songs in a list
+  @IBOutlet var songsController: NSArrayController!
+
+  // Data controller acts as the interface to the Core Data stack, allowing
+  // interaction with the database.
+  let dc = DataController()
+
+  // Array of songs which will be used by the songsController for
+  // populating the songs table view.
+  var songs = [SongEntity]()
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    // Do any additional setup after loading the view.
+    // Populate the songs array and attach to the songsController
+    dispatch_async(dispatch_get_main_queue()) {
+      self.songs = self.dc.fetchEntities()
+      self.songsController.content = self.songs
+    }
   }
 
   override var representedObject: AnyObject? {
@@ -24,4 +41,3 @@ class ViewController: NSViewController {
 
 
 }
-
