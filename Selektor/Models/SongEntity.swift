@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import Cocoa
 
 @objc(SongEntity)
 class SongEntity: SelektorObject {
@@ -16,17 +17,17 @@ class SongEntity: SelektorObject {
     return "Song"
   }
 
-  @NSManaged var dateAdded: NSDate?
-  @NSManaged var duration: NSNumber?
-  @NSManaged var filename: String?
-  @NSManaged var loudness: NSNumber?
-  @NSManaged var tempo: NSNumber?
-  @NSManaged var title: String?
-  @NSManaged var album: AlbumEntity?
-  @NSManaged var artist: ArtistEntity?
-  @NSManaged var genre: GenreEntity?
-  @NSManaged var key: KeyEntity?
-  @NSManaged var label: LabelEntity?
+  @NSManaged dynamic var dateAdded: NSDate?
+  @NSManaged dynamic var duration: NSNumber?
+  @NSManaged dynamic var filename: String?
+  @NSManaged dynamic var loudness: NSNumber?
+  @NSManaged dynamic var tempo: NSNumber?
+  @NSManaged dynamic var title: String?
+  @NSManaged dynamic var album: AlbumEntity?
+  @NSManaged dynamic var artist: ArtistEntity?
+  @NSManaged dynamic var genre: GenreEntity?
+  @NSManaged dynamic var key: KeyEntity?
+  @NSManaged dynamic var label: LabelEntity?
 
   override func awakeFromInsert() {
     super.awakeFromInsert()
