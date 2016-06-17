@@ -63,7 +63,7 @@ class DataController: NSObject {
         inManagedObjectContext: managedObjectContext) as! T
   }
 
-  func fetchEntities<T: SelektorObject>(predicate: String?) -> [T] {
+  func fetchEntities<T: SelektorObject>(predicate: String? = nil) -> [T] {
 
     let moc = managedObjectContext
     let entityName = T.getEntityName()
