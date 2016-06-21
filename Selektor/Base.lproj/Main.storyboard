@@ -676,7 +676,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tho-r2-llV">
-                                <rect key="frame" x="30" y="222" width="423" height="341"/>
+                                <rect key="frame" x="30" y="212" width="423" height="341"/>
                                 <clipView key="contentView" id="Eso-xo-WUf">
                                     <rect key="frame" x="1" y="0.0" width="421" height="340"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -874,8 +874,11 @@
                                     </subviews>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </clipView>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="423" id="R0w-cd-L02"/>
+                                </constraints>
                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="UQc-65-wfb">
-                                    <rect key="frame" x="1" y="324" width="421" height="16"/>
+                                    <rect key="frame" x="1" y="324" width="86" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="pif-wV-QZm">
@@ -888,7 +891,7 @@
                                 </tableHeaderView>
                             </scrollView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Shv-UH-mIl">
-                                <rect key="frame" x="195" y="571" width="92" height="17"/>
+                                <rect key="frame" x="28" y="563" width="92" height="17"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="88" id="qjG-4V-2OY"/>
                                 </constraints>
@@ -1084,19 +1087,35 @@
                                 <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                 <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </box>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tfv-u8-i1I">
+                                <rect key="frame" x="287" y="556" width="172" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="160" id="Egr-jt-UBq"/>
+                                </constraints>
+                                <buttonCell key="cell" type="push" title="Import Music Folder..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="h2z-pa-xbU">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="chooseMusicFolder:" target="XfG-lQ-9wD" id="pdI-uy-9g3"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="Shv-UH-mIl" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="12" id="1ci-A0-naP"/>
-                            <constraint firstAttribute="bottom" secondItem="tho-r2-llV" secondAttribute="bottom" constant="222" id="35G-yJ-Utb"/>
+                            <constraint firstItem="Shv-UH-mIl" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" id="1ci-A0-naP"/>
+                            <constraint firstAttribute="bottom" secondItem="tho-r2-llV" secondAttribute="bottom" constant="212" id="35G-yJ-Utb"/>
                             <constraint firstItem="tho-r2-llV" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="30" id="DNe-EO-cSA"/>
                             <constraint firstAttribute="trailing" secondItem="3sI-NR-qHN" secondAttribute="trailing" constant="30" id="Q0i-Jm-lgT"/>
-                            <constraint firstItem="Shv-UH-mIl" firstAttribute="centerX" secondItem="tho-r2-llV" secondAttribute="centerX" id="e3d-Jm-emo"/>
+                            <constraint firstItem="Shv-UH-mIl" firstAttribute="centerX" secondItem="tho-r2-llV" secondAttribute="centerX" constant="-167.5" id="e3d-Jm-emo"/>
+                            <constraint firstItem="tfv-u8-i1I" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="16" id="irn-DQ-mbe"/>
                             <constraint firstItem="3sI-NR-qHN" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="37" id="kWm-U7-caw"/>
-                            <constraint firstItem="Shv-UH-mIl" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="197" id="pE7-2z-iKb"/>
-                            <constraint firstItem="tho-r2-llV" firstAttribute="top" secondItem="Shv-UH-mIl" secondAttribute="bottom" constant="8" symbolic="YES" id="yqS-Nw-7L0"/>
+                            <constraint firstItem="Shv-UH-mIl" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="30" id="wpg-Tj-qSI"/>
+                            <constraint firstItem="tfv-u8-i1I" firstAttribute="leading" secondItem="Shv-UH-mIl" secondAttribute="trailing" constant="175" id="x8Y-oa-1cd"/>
+                            <constraint firstItem="tho-r2-llV" firstAttribute="top" secondItem="Shv-UH-mIl" secondAttribute="bottom" constant="10" id="yqS-Nw-7L0"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="chooseBtn" destination="tfv-u8-i1I" id="ARq-Zu-iVG"/>
                         <outlet property="songsController" destination="JdN-Fp-fVn" id="oMS-qg-geC"/>
                     </connections>
                 </viewController>
