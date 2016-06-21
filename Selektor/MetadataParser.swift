@@ -9,6 +9,13 @@
 import AVFoundation
 import Foundation
 
+// MARK: Custom lets for 3-character ID3 v2.3 tag names
+let AVMetadataID322MetadataKeyTitle: String = "TT2"
+let AVMetadataID322MetadataKeyArtist: String = "TP1"
+let AVMetadataID322MetadataKeyAlbum: String = "TAL"
+let AVMetadataID322MetadataKeyInitialKey: String = "TKE"
+let AVMetadataID322MetadataKeyBeatsPerMin: String = "TBP"
+
 class MetadataParser {
   let formats: Dictionary<String, String> = [
     "itunes": AVMetadataFormatiTunesMetadata,
@@ -26,10 +33,11 @@ class MetadataParser {
     ],
     // id3
     AVMetadataFormatID3Metadata: [
-      AVMetadataID3MetadataKeyTitleDescription: "title",
-      AVMetadataID3MetadataKeyOriginalArtist: "artist",
-      AVMetadataID3MetadataKeyAlbumTitle: "album",
-      AVMetadataID3MetadataKeyInitialKey: "key",
+      AVMetadataID322MetadataKeyTitle: "title",
+      AVMetadataID322MetadataKeyArtist: "artist",
+      AVMetadataID322MetadataKeyAlbum: "album",
+      AVMetadataID322MetadataKeyInitialKey: "key",
+      AVMetadataID322MetadataKeyBeatsPerMin: "tempo",
     ],
   ]
 

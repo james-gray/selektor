@@ -22,7 +22,13 @@ extension AVMetadataItem {
   var keyString: String {
     let specialChars: [Int8] = [97, -87] // © and ï, respectively
 
-    if let key = self.key as? String {
+    if var key = self.key as? String {
+      // Advance past the null byte which, for some reason, is showing up in
+      // ID3 v2.x tag names to obtain the 3-character tag name
+      if key[key.startIndex] == Character("\0") {
+        let substring = key.startIndex.advancedBy(1) ..< key.endIndex
+        key = key[substring]
+      }
       return key
     }
 
