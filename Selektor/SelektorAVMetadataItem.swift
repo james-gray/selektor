@@ -20,8 +20,7 @@ extension AVMetadataItem {
    * See https://itunes.apple.com/us/book/learning-av-foundation/id934379880?mt=11
    */
   var keyString: String {
-    let copyrightChar: Int8 = 97
-    let diaeresisChar: Int8 = -87
+    let specialChars: [Int8] = [97, -87] // © and ï, respectively
 
     if let key = self.key as? String {
       return key
@@ -51,8 +50,8 @@ extension AVMetadataItem {
       cstring[length] = CChar(Array("\0".utf8)[0])
       // </Gross Hack>
 
-      if [copyrightChar, diaeresisChar].contains(cstring[0]) {
-        // Replace "©" with @
+      if specialChars.contains(cstring[0]) {
+        // Replace special characters with @
         cstring[0] = CChar(Array("@".utf8)[0])
       }
 
