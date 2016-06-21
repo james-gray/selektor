@@ -30,14 +30,40 @@ class MetadataParser {
       AVMetadataiTunesMetadataKeyAlbum: "album",
       AVMetadataiTunesMetadataKeyUserGenre: "genre",
       AVMetadataiTunesMetadataKeyBeatsPerMin: "tempo",
+      AVMetadataiTunesMetadataKeyPublisher: "label",
     ],
     // id3
     AVMetadataFormatID3Metadata: [
+      AVMetadataID3MetadataKeyTitleDescription: "title",
+      AVMetadataID3MetadataKeyOriginalArtist: "artist",
+      AVMetadataID3MetadataKeyLeadPerformer: "artist",
+      AVMetadataID3MetadataKeyBand: "artist",
+      AVMetadataID3MetadataKeyAlbumTitle: "album",
+      AVMetadataID3MetadataKeyInitialKey: "key",
+      AVMetadataID3MetadataKeyBeatsPerMinute: "tempo",
       AVMetadataID322MetadataKeyTitle: "title",
       AVMetadataID322MetadataKeyArtist: "artist",
       AVMetadataID322MetadataKeyAlbum: "album",
       AVMetadataID322MetadataKeyInitialKey: "key",
       AVMetadataID322MetadataKeyBeatsPerMin: "tempo",
+      AVMetadataID3MetadataKeyPublisher: "label",
+    ],
+    // Quicktime Meta
+    AVMetadataFormatQuickTimeMetadata: [
+      AVMetadataQuickTimeMetadataKeyTitle: "title",
+      AVMetadataQuickTimeMetadataKeyArtist: "artist",
+      AVMetadataQuickTimeMetadataKeyOriginalArtist: "artist",
+      AVMetadataQuickTimeMetadataKeyAlbum: "album",
+      AVMetadataQuickTimeMetadataKeyGenre: "genre",
+      AVMetadataQuickTimeMetadataKeyPublisher: "label",
+    ],
+    // Quicktime User
+    AVMetadataFormatQuickTimeUserData: [
+      AVMetadataQuickTimeUserDataKeyTrackName: "title",
+      AVMetadataQuickTimeUserDataKeyArtist: "artist",
+      AVMetadataQuickTimeUserDataKeyOriginalArtist: "artist",
+      AVMetadataQuickTimeUserDataKeyAlbum: "album",
+      AVMetadataQuickTimeUserDataKeyPublisher: "label",
     ],
   ]
 
