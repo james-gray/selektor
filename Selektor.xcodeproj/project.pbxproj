@@ -13,6 +13,8 @@
 		4A0402A91CF7F18F0031011A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A0402A81CF7F18F0031011A /* Assets.xcassets */; };
 		4A0402AC1CF7F18F0031011A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A0402AA1CF7F18F0031011A /* Main.storyboard */; };
 		4A0402B71CF7F18F0031011A /* SelektorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0402B61CF7F18F0031011A /* SelektorTests.swift */; };
+		4A51B7C31D18E7D800F7D9EE /* SelektorAVMetadataItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A51B7C21D18E7D800F7D9EE /* SelektorAVMetadataItem.swift */; };
+		4A51B7C71D18FE6A00F7D9EE /* MetadataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A51B7C61D18FE6A00F7D9EE /* MetadataParser.swift */; };
 		4A57502E1CFA9F89007ED42C /* AlbumEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A57501E1CFA9F89007ED42C /* AlbumEntity.swift */; };
 		4A5750301CFA9F89007ED42C /* SongEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5750201CFA9F89007ED42C /* SongEntity.swift */; };
 		4A5750321CFA9F89007ED42C /* ArtistEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5750221CFA9F89007ED42C /* ArtistEntity.swift */; };
@@ -28,8 +30,6 @@
 		4A5EC7191CFBD9210019FFF6 /* Selektor.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4A0402A51CF7F18F0031011A /* Selektor.xcdatamodeld */; };
 		4AAA2E361CFA39C00001D767 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAA2E351CFA39C00001D767 /* DataController.swift */; };
 		4AAC4D921CFBD5AC0060149C /* Selektor-OSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 4AAC4D911CFBD5AC0060149C /* Selektor-OSX.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4AAC4D961CFBD5AC0060149C /* Selektor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AAC4D8F1CFBD5AC0060149C /* Selektor.framework */; };
-		4AAC4D971CFBD5AC0060149C /* Selektor.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4AAC4D8F1CFBD5AC0060149C /* Selektor.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4AAC4D9F1CFBD6200060149C /* AlbumEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A57501E1CFA9F89007ED42C /* AlbumEntity.swift */; };
 		4AAC4DA11CFBD6200060149C /* SongEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5750201CFA9F89007ED42C /* SongEntity.swift */; };
 		4AAC4DA31CFBD6200060149C /* ArtistEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5750221CFA9F89007ED42C /* ArtistEntity.swift */; };
@@ -48,13 +48,6 @@
 			remoteGlobalIDString = 4A04029D1CF7F18F0031011A;
 			remoteInfo = Selektor;
 		};
-		4AAC4D941CFBD5AC0060149C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4A0402961CF7F18F0031011A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4AAC4D8E1CFBD5AC0060149C;
-			remoteInfo = "Selektor-OSX";
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -64,7 +57,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4AAC4D971CFBD5AC0060149C /* Selektor.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -82,6 +74,8 @@
 		4A0402B21CF7F18F0031011A /* SelektorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SelektorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A0402B61CF7F18F0031011A /* SelektorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelektorTests.swift; sourceTree = "<group>"; };
 		4A0402B81CF7F18F0031011A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4A51B7C21D18E7D800F7D9EE /* SelektorAVMetadataItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelektorAVMetadataItem.swift; sourceTree = "<group>"; };
+		4A51B7C61D18FE6A00F7D9EE /* MetadataParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetadataParser.swift; sourceTree = "<group>"; };
 		4A57501E1CFA9F89007ED42C /* AlbumEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlbumEntity.swift; path = Models/AlbumEntity.swift; sourceTree = "<group>"; };
 		4A5750201CFA9F89007ED42C /* SongEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SongEntity.swift; path = Models/SongEntity.swift; sourceTree = "<group>"; };
 		4A5750221CFA9F89007ED42C /* ArtistEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArtistEntity.swift; path = Models/ArtistEntity.swift; sourceTree = "<group>"; };
@@ -101,7 +95,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4AAC4D961CFBD5AC0060149C /* Selektor.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,9 +143,11 @@
 				4A0402A11CF7F18F0031011A /* AppDelegate.swift */,
 				4A0402A81CF7F18F0031011A /* Assets.xcassets */,
 				4A0402AD1CF7F18F0031011A /* Info.plist */,
+				4A51B7C61D18FE6A00F7D9EE /* MetadataParser.swift */,
 				4A0402A51CF7F18F0031011A /* Selektor.xcdatamodeld */,
 				4AD9543C1CFA651B00D4BE53 /* Models */,
 				4AAA2E351CFA39C00001D767 /* DataController.swift */,
+				4A51B7C51D18E7E000F7D9EE /* Extensions */,
 			);
 			path = Selektor;
 			sourceTree = "<group>";
@@ -173,6 +168,14 @@
 				4A0402AA1CF7F18F0031011A /* Main.storyboard */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		4A51B7C51D18E7E000F7D9EE /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4A51B7C21D18E7D800F7D9EE /* SelektorAVMetadataItem.swift */,
+			);
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 		4AAC4D901CFBD5AC0060149C /* Selektor-OSX */ = {
@@ -224,7 +227,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				4AAC4D951CFBD5AC0060149C /* PBXTargetDependency */,
 			);
 			name = Selektor;
 			productName = Selektor;
@@ -344,8 +346,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A5750321CFA9F89007ED42C /* ArtistEntity.swift in Sources */,
+				4A51B7C71D18FE6A00F7D9EE /* MetadataParser.swift in Sources */,
 				4A0402A71CF7F18F0031011A /* Selektor.xcdatamodeld in Sources */,
 				4A57503A1CFA9F89007ED42C /* KeyEntity.swift in Sources */,
+				4A51B7C31D18E7D800F7D9EE /* SelektorAVMetadataItem.swift in Sources */,
 				4AAA2E361CFA39C00001D767 /* DataController.swift in Sources */,
 				4A5750361CFA9F89007ED42C /* LabelEntity.swift in Sources */,
 				4A57503C1CFA9FBF007ED42C /* SelektorObject.swift in Sources */,
@@ -390,11 +394,6 @@
 			isa = PBXTargetDependency;
 			target = 4A04029D1CF7F18F0031011A /* Selektor */;
 			targetProxy = 4A0402B31CF7F18F0031011A /* PBXContainerItemProxy */;
-		};
-		4AAC4D951CFBD5AC0060149C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4AAC4D8E1CFBD5AC0060149C /* Selektor-OSX */;
-			targetProxy = 4AAC4D941CFBD5AC0060149C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -497,7 +496,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Selektor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jamesgray.Selektor;
@@ -510,7 +512,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Selektor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jamesgray.Selektor;
