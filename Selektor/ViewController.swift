@@ -13,6 +13,9 @@ class ViewController: NSViewController {
 
   // MARK: Properties
 
+  // Songs table view
+  @IBOutlet weak var songsTableView: NSTableView!
+
   // Controller used by the table view for displaying songs in a list
   @IBOutlet var songsController: NSArrayController!
 
