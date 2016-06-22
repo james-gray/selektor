@@ -22,7 +22,7 @@ class MetadataParser {
     "id3": AVMetadataFormatID3Metadata,
   ]
 
-  let keys: Dictionary<String, Dictionary<String, String>> = [
+  let tags: Dictionary<String, Dictionary<String, String>> = [
     // iTunes
     AVMetadataFormatiTunesMetadata: [
       AVMetadataiTunesMetadataKeySongName: "title",
@@ -108,13 +108,18 @@ class MetadataParser {
     var songMeta = songMeta
     var key: String = ""
 
+    guard let tags = self.tags[format] else {
+      print("Found unknown tag format '\(format)', skipping")
+      return songMeta
+    }
+
     let meta = asset.metadataForFormat(format).filter {
-      (item) in keys[format]!.keys.contains(item.keyString)
+      (item) in tags.keys.contains(item.keyString)
     }
 
     for item in meta {
       // Set each metadata item in the song meta dict if it isn't already set
-      key = keys[format]![item.keyString]!
+      key = tags[item.keyString]!
       if let value = item.value {
         songMeta[key] = songMeta[key] ?? value
       }
