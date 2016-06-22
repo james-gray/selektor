@@ -25,6 +25,13 @@ class ViewController: NSViewController {
   // populating the songs table view.
   var songs = [SongEntity]()
 
+  // Memoized artist, album, and genre dicts
+  var artists = [String: ArtistEntity]()
+  var albums = [String: AlbumEntity]()
+  var genres = [String: GenreEntity]()
+  var labels = [String: LabelEntity]()
+
+  // Set of supported audio file extensions
   let validExtensions: Set<String> = ["mp3", "m4a", "wav", "m3u", "wma", "aif", "ogg"]
 
   override func viewDidLoad() {
@@ -33,6 +40,27 @@ class ViewController: NSViewController {
     // Populate the songs array and attach to the songsController
     dispatch_async(dispatch_get_main_queue()) {
       self.songs = self.dc.fetchEntities()
+
+      // Memoize album, artist, and genre names
+      let artists: [ArtistEntity] = self.dc.fetchEntities()
+      let albums: [AlbumEntity] = self.dc.fetchEntities()
+      let genres: [GenreEntity] = self.dc.fetchEntities()
+      let labels: [LabelEntity] = self.dc.fetchEntities()
+
+      // TODO: Make this a method on SelektorObject arrays
+      for artist in artists {
+        self.artists[artist.name!] = artist
+      }
+      for album in albums {
+        self.albums[album.name!] = album
+      }
+      for genre in genres {
+        self.genres[genre.name!] = genre
+      }
+      for label in labels {
+        self.labels[label.name!] = label
+      }
+
       self.songsController.content = self.songs
     }
   }
@@ -46,12 +74,60 @@ class ViewController: NSViewController {
   func importSong(url: NSURL) {
     print("Importing song '\(url.absoluteString)'")
 
-    var song: SongEntity = dc.createEntity()
-
+    let song: SongEntity = dc.createEntity()
     let asset = AVURLAsset(URL: url)
-    var meta = mp.parse(asset)
-    print("\(meta)")
-    // TODO: Add metadata to the song entity
+    let meta = mp.parse(asset)
+
+    song.title = meta["title"] as? String ?? url.lastPathComponent
+    song.filename = url.path
+    song.tempo = meta["tempo"] as? Int ?? 0
+
+    let artistName = meta["artist"] as? String ?? nil
+    let albumName = meta["album"] as? String ?? nil
+    let genreName = meta["genre"] as? String ?? nil
+    let labelName = meta["label"] as? String ?? nil
+
+    if artistName != nil {
+      var artist: ArtistEntity? = artists[artistName!]
+      if artist == nil {
+        artist = dc.createEntity() as ArtistEntity
+        artist!.name = artistName
+        self.artists[artistName!] = artist!
+      }
+      song.artist = artist
+    }
+
+    if albumName != nil {
+      var album: AlbumEntity? = albums[albumName!]
+      if album == nil {
+        album = dc.createEntity() as AlbumEntity
+        album!.name = albumName
+        self.albums[albumName!] = album!
+      }
+      song.album = album
+    }
+
+    if genreName != nil {
+      var genre: GenreEntity? = genres[genreName!]
+      if genre == nil {
+        genre = dc.createEntity() as GenreEntity
+        genre!.name = genreName
+        self.genres[genreName!] = genre!
+      }
+      song.genre = genre
+    }
+
+    if labelName != nil {
+      var label: LabelEntity? = labels[labelName!]
+      if label == nil {
+        label = dc.createEntity() as LabelEntity
+        label!.name = labelName
+        self.labels[labelName!] = label!
+      }
+      song.label = label
+    }
+
+    self.songs.append(song)
   }
 
   @IBAction func chooseMusicFolder(sender: AnyObject) {
@@ -77,6 +153,10 @@ class ViewController: NSViewController {
               self.importSong(url as! NSURL)
             }
           }
+
+          self.dc.save()
+          self.songsTableView.performSelectorOnMainThread(#selector(NSCollectionView.reloadData),
+            withObject: nil, waitUntilDone: true)
         }
       }
     }
