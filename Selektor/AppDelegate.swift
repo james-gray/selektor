@@ -11,6 +11,11 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
+  override class func initialize() {
+    let filenameTransformer = FilenameTransformer()
+    NSValueTransformer.setValueTransformer(filenameTransformer, forName: "FilenameTransformer")
+  }
+
   func applicationDidFinishLaunching(aNotification: NSNotification) {
     // Insert code here to initialize your application
   }
