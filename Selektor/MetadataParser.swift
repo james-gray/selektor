@@ -78,18 +78,9 @@ class MetadataParser {
   */
   func parse(asset: AVURLAsset) -> [String: AnyObject] {
     var songMeta = [String: AnyObject]()
-
-    // TODO: Can do without the formats dict entirely - just iterate over the
-    // availableMetadataFormats array and pass the format into parseMetadataFormat,
-    // raising an error if the format isn't in the keys dict - may as well handle
-    // as many AVMetadataFormats as possible
-    if asset.availableMetadataFormats.contains(formats["itunes"]!) {
-      songMeta = parseMetadataFormat(asset, songMeta: songMeta, format: formats["itunes"]!)
+    for format in asset.availableMetadataFormats {
+      songMeta = parseMetadataFormat(asset, songMeta: songMeta, format: format)
     }
-    if asset.availableMetadataFormats.contains(formats["id3"]!) {
-      songMeta = parseMetadataFormat(asset, songMeta: songMeta, format: formats["id3"]!)
-    }
-
     return songMeta
   }
 
