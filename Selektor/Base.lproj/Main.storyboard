@@ -703,11 +703,11 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView id="KPW-uU-kMp">
-                                                            <rect key="frame" x="1" y="1" width="162" height="17"/>
+                                                            <rect key="frame" x="1" y="1" width="162" height="20"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="dIa-hb-9mD">
-                                                                    <rect key="frame" x="5" y="0.0" width="78" height="17"/>
+                                                                    <rect key="frame" x="5" y="3" width="161" height="17"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="tXD-kv-SpT">
                                                                         <font key="font" metaFont="system"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -719,9 +719,9 @@
                                                                 </textField>
                                                             </subviews>
                                                             <constraints>
-                                                                <constraint firstAttribute="trailing" secondItem="dIa-hb-9mD" secondAttribute="trailing" constant="81" id="KTk-NA-cSu"/>
+                                                                <constraint firstAttribute="trailing" secondItem="dIa-hb-9mD" secondAttribute="trailing" constant="-2" id="KTk-NA-cSu"/>
                                                                 <constraint firstItem="dIa-hb-9mD" firstAttribute="leading" secondItem="KPW-uU-kMp" secondAttribute="leading" constant="7" id="NE4-hG-Ue4"/>
-                                                                <constraint firstItem="dIa-hb-9mD" firstAttribute="centerY" secondItem="KPW-uU-kMp" secondAttribute="centerY" id="ybd-DS-vgg"/>
+                                                                <constraint firstItem="dIa-hb-9mD" firstAttribute="centerY" secondItem="KPW-uU-kMp" secondAttribute="centerY" constant="-1.5" id="ybd-DS-vgg"/>
                                                             </constraints>
                                                             <connections>
                                                                 <outlet property="textField" destination="dIa-hb-9mD" id="b1c-b6-1HA"/>
@@ -1035,7 +1035,11 @@
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
-                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.filename" id="xax-tM-Aet"/>
+                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.filename" id="wTC-tr-oCg">
+                                                    <dictionary key="options">
+                                                        <string key="NSValueTransformerName">FilenameTransformer</string>
+                                                    </dictionary>
+                                                </binding>
                                             </connections>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="znI-sl-FVR">
@@ -1117,6 +1121,7 @@
                     <connections>
                         <outlet property="chooseBtn" destination="tfv-u8-i1I" id="ARq-Zu-iVG"/>
                         <outlet property="songsController" destination="JdN-Fp-fVn" id="oMS-qg-geC"/>
+                        <outlet property="songsTableView" destination="1nm-gb-X4G" id="cai-qY-T2B"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
