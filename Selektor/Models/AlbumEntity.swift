@@ -12,22 +12,23 @@ import CoreData
 @objc(AlbumEntity)
 class AlbumEntity: SelektorObject {
 
+  // MARK: Properties
+  @NSManaged var name: String?
+  @NSManaged var songs: NSSet?
+
   override class func getEntityName() -> String {
     return "Album"
   }
 
   class func createOrFetchAlbum(name: String, dc: DataController, inout albumsDict: [String: AlbumEntity]) -> AlbumEntity {
-    var album: AlbumEntity? = albumsDict[name]
-    if album == nil {
-      album = dc.createEntity() as AlbumEntity
-      album!.name = name
+    guard let album = albumsDict[name] else {
+      let album: AlbumEntity = dc.createEntity()
+      album.name = name
       albumsDict[name] = album
+      return album
     }
-    return album!
+    return album
   }
 
-
-  @NSManaged var name: String?
-  @NSManaged var songs: NSSet?
 
 }

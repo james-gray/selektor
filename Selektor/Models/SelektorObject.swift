@@ -24,5 +24,4 @@ class SelektorObject: NSManagedObject {
     print("Subclasses should override abstract method `getEntityName`!")
     abort()
   }
-
 }

@@ -13,10 +13,7 @@ import Cocoa
 @objc(SongEntity)
 class SongEntity: SelektorObject {
 
-  override class func getEntityName() -> String {
-    return "Song"
-  }
-
+  // MARK: Properties
   @NSManaged dynamic var dateAdded: NSDate?
   @NSManaged dynamic var duration: NSNumber?
   @NSManaged dynamic var filename: String?
@@ -28,6 +25,10 @@ class SongEntity: SelektorObject {
   @NSManaged dynamic var genre: GenreEntity?
   @NSManaged dynamic var key: KeyEntity?
   @NSManaged dynamic var label: LabelEntity?
+
+  override class func getEntityName() -> String {
+    return "Song"
+  }
 
   override func awakeFromInsert() {
     super.awakeFromInsert()

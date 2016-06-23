@@ -12,21 +12,21 @@ import CoreData
 @objc(ArtistEntity)
 class ArtistEntity: SelektorObject {
 
+  // MARK: Properties
+  @NSManaged var name: String?
+  @NSManaged var songs: NSSet?
+
   override class func getEntityName() -> String {
     return "Artist"
   }
 
   class func createOrFetchArtist(name: String, dc: DataController, inout artistsDict: [String: ArtistEntity]) -> ArtistEntity {
-    var artist: ArtistEntity? = artistsDict[name]
-    if artist == nil {
-      artist = dc.createEntity() as ArtistEntity
-      artist!.name = name
+    guard let artist = artistsDict[name] else {
+      let artist: ArtistEntity = dc.createEntity()
+      artist.name = name
       artistsDict[name] = artist
+      return artist
     }
-    return artist!
+    return artist
   }
-
-  @NSManaged var name: String?
-  @NSManaged var songs: NSSet?
-
 }
