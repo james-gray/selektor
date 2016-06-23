@@ -38,6 +38,8 @@
 		4AAC4DAB1CFBD6200060149C /* KeyEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A57502A1CFA9F89007ED42C /* KeyEntity.swift */; };
 		4AAC4DAC1CFBD6200060149C /* SelektorObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A57503B1CFA9FBF007ED42C /* SelektorObject.swift */; };
 		4AAC4DAD1CFBD6280060149C /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAA2E351CFA39C00001D767 /* DataController.swift */; };
+		4AFA94591D1BB03B00F8102A /* CountTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AFA94581D1BB03B00F8102A /* CountTransformer.swift */; };
+		4AFA945D1D1BB05400F8102A /* FilenameTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AFA945C1D1BB05400F8102A /* FilenameTransformer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +90,8 @@
 		4AAC4D8F1CFBD5AC0060149C /* Selektor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Selektor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4AAC4D911CFBD5AC0060149C /* Selektor-OSX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Selektor-OSX.h"; sourceTree = "<group>"; };
 		4AAC4D931CFBD5AC0060149C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4AFA94581D1BB03B00F8102A /* CountTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountTransformer.swift; sourceTree = "<group>"; };
+		4AFA945C1D1BB05400F8102A /* FilenameTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilenameTransformer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +143,7 @@
 		4A0402A01CF7F18F0031011A /* Selektor */ = {
 			isa = PBXGroup;
 			children = (
+				4AFA945B1D1BB04700F8102A /* Transformers */,
 				4A0AD10E1D0A7D5100DC98E4 /* Views */,
 				4A0402A11CF7F18F0031011A /* AppDelegate.swift */,
 				4A0402A81CF7F18F0031011A /* Assets.xcassets */,
@@ -199,6 +204,15 @@
 				4A57503B1CFA9FBF007ED42C /* SelektorObject.swift */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		4AFA945B1D1BB04700F8102A /* Transformers */ = {
+			isa = PBXGroup;
+			children = (
+				4AFA94581D1BB03B00F8102A /* CountTransformer.swift */,
+				4AFA945C1D1BB05400F8102A /* FilenameTransformer.swift */,
+			);
+			name = Transformers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -348,8 +362,10 @@
 				4A5750321CFA9F89007ED42C /* ArtistEntity.swift in Sources */,
 				4A51B7C71D18FE6A00F7D9EE /* MetadataParser.swift in Sources */,
 				4A0402A71CF7F18F0031011A /* Selektor.xcdatamodeld in Sources */,
+				4AFA945D1D1BB05400F8102A /* FilenameTransformer.swift in Sources */,
 				4A57503A1CFA9F89007ED42C /* KeyEntity.swift in Sources */,
 				4A51B7C31D18E7D800F7D9EE /* SelektorAVMetadataItem.swift in Sources */,
+				4AFA94591D1BB03B00F8102A /* CountTransformer.swift in Sources */,
 				4AAA2E361CFA39C00001D767 /* DataController.swift in Sources */,
 				4A5750361CFA9F89007ED42C /* LabelEntity.swift in Sources */,
 				4A57503C1CFA9FBF007ED42C /* SelektorObject.swift in Sources */,
