@@ -122,6 +122,7 @@ class ViewController: NSViewController {
 
         if let fileUrls = fileMgr.enumeratorAtURL(directoryURL, includingPropertiesForKeys: nil,
             options: options, errorHandler: nil) {
+
           for url in fileUrls {
             if self.validExtensions.contains(url.pathExtension) {
               self.importSong(url as! NSURL)
