@@ -714,7 +714,7 @@
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
-                                                                        <binding destination="KPW-uU-kMp" name="value" keyPath="objectValue.title" id="TZ0-7a-Oms"/>
+                                                                        <binding destination="KPW-uU-kMp" name="value" keyPath="objectValue.name" id="rgP-De-PAd"/>
                                                                     </connections>
                                                                 </textField>
                                                             </subviews>
@@ -729,7 +729,7 @@
                                                         </tableCellView>
                                                     </prototypeCellViews>
                                                     <connections>
-                                                        <binding destination="JdN-Fp-fVn" name="value" keyPath="arrangedObjects.title" id="ytj-2L-YN5"/>
+                                                        <binding destination="JdN-Fp-fVn" name="value" keyPath="arrangedObjects.name" id="Dnd-wo-1iJ"/>
                                                     </connections>
                                                 </tableColumn>
                                                 <tableColumn width="112" minWidth="40" maxWidth="1000" id="ohX-3m-DAZ">
@@ -923,7 +923,7 @@
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
-                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.title" id="wu0-Tr-xsO"/>
+                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.name" id="ny1-uv-SGL"/>
                                             </connections>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G6E-mv-WTV">
@@ -1143,7 +1143,12 @@
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-                <arrayController id="JdN-Fp-fVn"/>
+                <userDefaultsController representsSharedInstance="YES" id="iPW-Ye-n6M"/>
+                <arrayController id="JdN-Fp-fVn">
+                    <connections>
+                        <binding destination="XfG-lQ-9wD" name="contentArray" keyPath="self.songs" id="iZH-ce-xbf"/>
+                    </connections>
+                </arrayController>
             </objects>
             <point key="canvasLocation" x="75" y="1174"/>
         </scene>
