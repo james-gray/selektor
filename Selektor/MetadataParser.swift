@@ -65,6 +65,9 @@ class MetadataParser {
       AVMetadataQuickTimeUserDataKeyAlbum: "album",
       AVMetadataQuickTimeUserDataKeyPublisher: "label",
     ],
+    AVMetadataFormatISOUserData: [
+      AVMetadataISOUserDataKeyCopyright: "label",
+    ]
   ]
 
   /**
