@@ -16,6 +16,16 @@ class LabelEntity: SelektorObject {
     return "Label"
   }
 
+  class func createOrFetchLabel(name: String, dc: DataController, inout labelsDict: [String: LabelEntity]) -> LabelEntity {
+    var label: LabelEntity? = labelsDict[name]
+    if label == nil {
+      label = dc.createEntity() as LabelEntity
+      label!.name = name
+      labelsDict[name] = label
+    }
+    return label!
+  }
+
   @NSManaged var name: String?
   @NSManaged var songs: NSSet?
 

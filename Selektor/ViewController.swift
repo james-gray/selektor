@@ -85,49 +85,20 @@ class ViewController: NSViewController {
     song.filename = url.path
     song.tempo = meta["tempo"] as? Int ?? 0
 
-    let artistName = meta["artist"] as? String ?? nil
-    let albumName = meta["album"] as? String ?? nil
-    let genreName = meta["genre"] as? String ?? nil
-    let labelName = meta["label"] as? String ?? nil
-
-    if artistName != nil {
-      var artist: ArtistEntity? = artists[artistName!]
-      if artist == nil {
-        artist = dc.createEntity() as ArtistEntity
-        artist!.name = artistName
-        self.artists[artistName!] = artist!
-      }
-      song.artist = artist
+    if let artistName = meta["artist"] as? String {
+      song.artist = ArtistEntity.createOrFetchArtist(artistName, dc: dc, artistsDict: &self.artists)
     }
 
-    if albumName != nil {
-      var album: AlbumEntity? = albums[albumName!]
-      if album == nil {
-        album = dc.createEntity() as AlbumEntity
-        album!.name = albumName
-        self.albums[albumName!] = album!
-      }
-      song.album = album
+    if let albumName = meta["album"] as? String {
+      song.album = AlbumEntity.createOrFetchAlbum(albumName, dc: dc, albumsDict: &self.albums)
     }
 
-    if genreName != nil {
-      var genre: GenreEntity? = genres[genreName!]
-      if genre == nil {
-        genre = dc.createEntity() as GenreEntity
-        genre!.name = genreName
-        self.genres[genreName!] = genre!
-      }
-      song.genre = genre
+    if let genreName = meta["genre"] as? String {
+      song.genre = GenreEntity.createOrFetchGenre(genreName, dc: dc, genresDict: &self.genres)
     }
 
-    if labelName != nil {
-      var label: LabelEntity? = labels[labelName!]
-      if label == nil {
-        label = dc.createEntity() as LabelEntity
-        label!.name = labelName
-        self.labels[labelName!] = label!
-      }
-      song.label = label
+    if let labelName = meta["label"] as? String {
+      song.label = LabelEntity.createOrFetchLabel(labelName, dc: dc, labelsDict: &self.labels)
     }
 
     self.songs.append(song)

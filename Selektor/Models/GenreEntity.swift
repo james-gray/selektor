@@ -16,6 +16,16 @@ class GenreEntity: SelektorObject {
     return "Genre"
   }
 
+  class func createOrFetchGenre(name: String, dc: DataController, inout genresDict: [String: GenreEntity]) -> GenreEntity {
+    var genre: GenreEntity? = genresDict[name]
+    if genre == nil {
+      genre = dc.createEntity() as GenreEntity
+      genre!.name = name
+      genresDict[name] = genre
+    }
+    return genre!
+  }
+
   @NSManaged var name: String?
   @NSManaged var songs: NSSet?
 

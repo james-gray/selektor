@@ -16,6 +16,16 @@ class ArtistEntity: SelektorObject {
     return "Artist"
   }
 
+  class func createOrFetchArtist(name: String, dc: DataController, inout artistsDict: [String: ArtistEntity]) -> ArtistEntity {
+    var artist: ArtistEntity? = artistsDict[name]
+    if artist == nil {
+      artist = dc.createEntity() as ArtistEntity
+      artist!.name = name
+      artistsDict[name] = artist
+    }
+    return artist!
+  }
+
   @NSManaged var name: String?
   @NSManaged var songs: NSSet?
 

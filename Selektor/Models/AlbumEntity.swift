@@ -16,6 +16,17 @@ class AlbumEntity: SelektorObject {
     return "Album"
   }
 
+  class func createOrFetchAlbum(name: String, dc: DataController, inout albumsDict: [String: AlbumEntity]) -> AlbumEntity {
+    var album: AlbumEntity? = albumsDict[name]
+    if album == nil {
+      album = dc.createEntity() as AlbumEntity
+      album!.name = name
+      albumsDict[name] = album
+    }
+    return album!
+  }
+
+
   @NSManaged var name: String?
   @NSManaged var songs: NSSet?
 
