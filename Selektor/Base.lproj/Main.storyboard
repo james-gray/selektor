@@ -676,13 +676,13 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tho-r2-llV">
-                                <rect key="frame" x="30" y="212" width="423" height="341"/>
+                                <rect key="frame" x="30" y="41" width="423" height="512"/>
                                 <clipView key="contentView" id="Eso-xo-WUf">
-                                    <rect key="frame" x="1" y="0.0" width="421" height="340"/>
+                                    <rect key="frame" x="1" y="0.0" width="421" height="511"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="WLF-oi-wQA" viewBased="YES" id="1nm-gb-X4G">
-                                            <rect key="frame" x="0.0" y="0.0" width="421" height="317"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="421" height="488"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1104,17 +1104,35 @@
                                     <action selector="chooseMusicFolder:" target="XfG-lQ-9wD" id="pdI-uy-9g3"/>
                                 </connections>
                             </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="G6H-IH-gPw">
+                                <rect key="frame" x="28" y="20" width="427" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="Hgm-an-ZhP">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <binding destination="JdN-Fp-fVn" name="value" keyPath="arrangedObjects.@count" id="TFq-EX-n2C">
+                                        <dictionary key="options">
+                                            <string key="NSValueTransformerName">CountTransformer</string>
+                                        </dictionary>
+                                    </binding>
+                                </connections>
+                            </textField>
                         </subviews>
                         <constraints>
                             <constraint firstItem="Shv-UH-mIl" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" id="1ci-A0-naP"/>
-                            <constraint firstAttribute="bottom" secondItem="tho-r2-llV" secondAttribute="bottom" constant="212" id="35G-yJ-Utb"/>
+                            <constraint firstAttribute="bottom" secondItem="tho-r2-llV" secondAttribute="bottom" constant="41" id="35G-yJ-Utb"/>
+                            <constraint firstAttribute="bottom" secondItem="G6H-IH-gPw" secondAttribute="bottom" constant="20" symbolic="YES" id="6KS-Fz-DBO"/>
                             <constraint firstItem="tho-r2-llV" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="30" id="DNe-EO-cSA"/>
+                            <constraint firstItem="G6H-IH-gPw" firstAttribute="trailing" secondItem="tho-r2-llV" secondAttribute="trailing" id="Fm9-kZ-hBE"/>
                             <constraint firstAttribute="trailing" secondItem="3sI-NR-qHN" secondAttribute="trailing" constant="30" id="Q0i-Jm-lgT"/>
                             <constraint firstItem="Shv-UH-mIl" firstAttribute="centerX" secondItem="tho-r2-llV" secondAttribute="centerX" constant="-167.5" id="e3d-Jm-emo"/>
                             <constraint firstItem="tfv-u8-i1I" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="16" id="irn-DQ-mbe"/>
                             <constraint firstItem="3sI-NR-qHN" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="37" id="kWm-U7-caw"/>
                             <constraint firstItem="Shv-UH-mIl" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="30" id="wpg-Tj-qSI"/>
                             <constraint firstItem="tfv-u8-i1I" firstAttribute="leading" secondItem="Shv-UH-mIl" secondAttribute="trailing" constant="175" id="x8Y-oa-1cd"/>
+                            <constraint firstItem="G6H-IH-gPw" firstAttribute="leading" secondItem="tho-r2-llV" secondAttribute="leading" id="ySs-M8-tiF"/>
                             <constraint firstItem="tho-r2-llV" firstAttribute="top" secondItem="Shv-UH-mIl" secondAttribute="bottom" constant="10" id="yqS-Nw-7L0"/>
                         </constraints>
                     </view>
