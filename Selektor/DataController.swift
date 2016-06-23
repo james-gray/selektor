@@ -36,6 +36,7 @@ class DataController: NSObject {
         concurrencyType: .MainQueueConcurrencyType
     )
     managedObjectContext.persistentStoreCoordinator = psc
+    managedObjectContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
       let urls = NSFileManager.defaultManager().URLsForDirectory(
