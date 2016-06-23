@@ -129,8 +129,10 @@ class ViewController: NSViewController {
           }
 
           self.dc.save()
-          self.songsTableView.performSelectorOnMainThread(#selector(NSCollectionView.reloadData),
-            withObject: nil, waitUntilDone: true)
+
+          // Update the table view by refreshing the array controller
+          self.songsController.content = self.songs
+          self.songsController.rearrangeObjects()
         }
       }
     }
