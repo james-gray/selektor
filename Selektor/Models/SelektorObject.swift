@@ -29,12 +29,21 @@ class SelektorObject: NSManagedObject {
   }
 
   class func createOrFetchEntity<T: SelektorObject>(name: String, dc: DataController, inout entityDict: [String: T]) -> T {
-    guard let entity = entityDict[name] else {
-      let entity: T = dc.createEntity()
-      entity.name = name
-      entityDict[name] = entity
+    // First check the memoization dictionary for the desired entity
+    if let entity: T = entityDict[name] {
       return entity
     }
+
+    // If no dict, or the entity is not in the dict, check the database
+    guard let entity: T = dc.fetchEntities("name = '\(name)'").first else {
+      // Create the entity if it does not exist in the DB
+      let entity: T = dc.createEntity()
+      entity.name = name
+      entityDict[name] = entity // Memoize the newly created entity
+      return entity
+    }
+
+    entityDict[name] = entity // Memoize the fetched entity
     return entity
   }
 }

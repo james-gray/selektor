@@ -43,27 +43,6 @@ class ViewController: NSViewController {
     // Populate the songs array and attach to the songsController
     dispatch_async(dispatch_get_main_queue()) {
       self.songs = self.dc.fetchEntities()
-
-      // Memoize album, artist, and genre names
-      let artists: [ArtistEntity] = self.dc.fetchEntities()
-      let albums: [AlbumEntity] = self.dc.fetchEntities()
-      let genres: [GenreEntity] = self.dc.fetchEntities()
-      let labels: [LabelEntity] = self.dc.fetchEntities()
-
-      // TODO: Make this a method on SelektorObject arrays
-      for artist in artists {
-        self.artists[artist.name!] = artist
-      }
-      for album in albums {
-        self.albums[album.name!] = album
-      }
-      for genre in genres {
-        self.genres[genre.name!] = genre
-      }
-      for label in labels {
-        self.labels[label.name!] = label
-      }
-
       self.songsController.content = self.songs
     }
   }
