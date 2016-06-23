@@ -81,7 +81,7 @@ class ViewController: NSViewController {
     let asset = AVURLAsset(URL: url)
     let meta = mp.parse(asset)
 
-    song.title = meta["title"] as? String ?? url.lastPathComponent
+    song.name = meta["name"] as? String ?? url.lastPathComponent
     song.filename = url.path
     song.tempo = meta["tempo"] as? Int ?? 0
 

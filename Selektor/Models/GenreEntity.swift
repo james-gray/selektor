@@ -13,7 +13,6 @@ import CoreData
 class GenreEntity: SelektorObject {
 
   // MARK: Properties
-  @NSManaged var name: String?
   @NSManaged var songs: NSSet?
 
   override class func getEntityName() -> String {
@@ -21,12 +20,6 @@ class GenreEntity: SelektorObject {
   }
 
   class func createOrFetchGenre(name: String, dc: DataController, inout genresDict: [String: GenreEntity]) -> GenreEntity {
-    guard let genre = genresDict[name] else {
-      let genre: GenreEntity = dc.createEntity()
-      genre.name = name
-      genresDict[name] = genre
-      return genre
-    }
-    return genre
+    return super.createOrFetchEntity(name, dc: dc, entityDict: &genresDict) as GenreEntity
   }
 }

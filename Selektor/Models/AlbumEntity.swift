@@ -13,7 +13,6 @@ import CoreData
 class AlbumEntity: SelektorObject {
 
   // MARK: Properties
-  @NSManaged var name: String?
   @NSManaged var songs: NSSet?
 
   override class func getEntityName() -> String {
@@ -21,13 +20,7 @@ class AlbumEntity: SelektorObject {
   }
 
   class func createOrFetchAlbum(name: String, dc: DataController, inout albumsDict: [String: AlbumEntity]) -> AlbumEntity {
-    guard let album = albumsDict[name] else {
-      let album: AlbumEntity = dc.createEntity()
-      album.name = name
-      albumsDict[name] = album
-      return album
-    }
-    return album
+    return super.createOrFetchEntity(name, dc: dc, entityDict: &albumsDict) as AlbumEntity
   }
 
 

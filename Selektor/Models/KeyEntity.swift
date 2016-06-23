@@ -13,7 +13,6 @@ import CoreData
 class KeyEntity: SelektorObject {
 
   // MARK: Properties
-  @NSManaged var name: String?
   @NSManaged var songs: SongEntity?
 
   override class func getEntityName() -> String {

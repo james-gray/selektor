@@ -25,7 +25,7 @@ class MetadataParser {
   let tags: Dictionary<String, Dictionary<String, String>> = [
     // iTunes
     AVMetadataFormatiTunesMetadata: [
-      AVMetadataiTunesMetadataKeySongName: "title",
+      AVMetadataiTunesMetadataKeySongName: "name",
       AVMetadataiTunesMetadataKeyArtist: "artist",
       AVMetadataiTunesMetadataKeyAlbum: "album",
       AVMetadataiTunesMetadataKeyUserGenre: "genre",
@@ -34,14 +34,14 @@ class MetadataParser {
     ],
     // id3
     AVMetadataFormatID3Metadata: [
-      AVMetadataID3MetadataKeyTitleDescription: "title",
+      AVMetadataID3MetadataKeyTitleDescription: "name",
       AVMetadataID3MetadataKeyOriginalArtist: "artist",
       AVMetadataID3MetadataKeyLeadPerformer: "artist",
       AVMetadataID3MetadataKeyBand: "artist",
       AVMetadataID3MetadataKeyAlbumTitle: "album",
       AVMetadataID3MetadataKeyInitialKey: "key",
       AVMetadataID3MetadataKeyBeatsPerMinute: "tempo",
-      AVMetadataID322MetadataKeyTitle: "title",
+      AVMetadataID322MetadataKeyTitle: "name",
       AVMetadataID322MetadataKeyArtist: "artist",
       AVMetadataID322MetadataKeyAlbum: "album",
       AVMetadataID322MetadataKeyInitialKey: "key",
@@ -50,7 +50,7 @@ class MetadataParser {
     ],
     // Quicktime Meta
     AVMetadataFormatQuickTimeMetadata: [
-      AVMetadataQuickTimeMetadataKeyTitle: "title",
+      AVMetadataQuickTimeMetadataKeyTitle: "name",
       AVMetadataQuickTimeMetadataKeyArtist: "artist",
       AVMetadataQuickTimeMetadataKeyOriginalArtist: "artist",
       AVMetadataQuickTimeMetadataKeyAlbum: "album",
@@ -59,7 +59,7 @@ class MetadataParser {
     ],
     // Quicktime User
     AVMetadataFormatQuickTimeUserData: [
-      AVMetadataQuickTimeUserDataKeyTrackName: "title",
+      AVMetadataQuickTimeUserDataKeyTrackName: "name",
       AVMetadataQuickTimeUserDataKeyArtist: "artist",
       AVMetadataQuickTimeUserDataKeyOriginalArtist: "artist",
       AVMetadataQuickTimeUserDataKeyAlbum: "album",

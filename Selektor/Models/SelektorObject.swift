@@ -15,6 +15,9 @@ import CoreData
 // functionality that only makes sense within the context of this app.
 class SelektorObject: NSManagedObject {
 
+  // MARK: Properties
+  @NSManaged var name: String?
+
   // XXX: Hack due to Swift's lack of support for class vars as of yet.
   // A `class func` is effectively equivalent to a `static func`, but can be
   // overridden by subclasses (unlike static funcs.)
@@ -23,5 +26,15 @@ class SelektorObject: NSManagedObject {
   class func getEntityName() -> String {
     print("Subclasses should override abstract method `getEntityName`!")
     abort()
+  }
+
+  class func createOrFetchEntity<T: SelektorObject>(name: String, dc: DataController, inout entityDict: [String: T]) -> T {
+    guard let entity = entityDict[name] else {
+      let entity: T = dc.createEntity()
+      entity.name = name
+      entityDict[name] = entity
+      return entity
+    }
+    return entity
   }
 }

@@ -13,7 +13,6 @@ import CoreData
 class LabelEntity: SelektorObject {
 
   // MARK: Properties
-  @NSManaged var name: String?
   @NSManaged var songs: NSSet?
 
   override class func getEntityName() -> String {
@@ -21,12 +20,6 @@ class LabelEntity: SelektorObject {
   }
 
   class func createOrFetchLabel(name: String, dc: DataController, inout labelsDict: [String: LabelEntity]) -> LabelEntity {
-    guard let label = labelsDict[name] else {
-      let label: LabelEntity = dc.createEntity()
-      label.name = name
-      labelsDict[name] = label
-      return label
-    }
-    return label
+    return super.createOrFetchEntity(name, dc: dc, entityDict: &labelsDict) as LabelEntity
   }
 }

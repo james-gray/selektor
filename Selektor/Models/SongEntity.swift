@@ -19,7 +19,6 @@ class SongEntity: SelektorObject {
   @NSManaged dynamic var filename: String?
   @NSManaged dynamic var loudness: NSNumber?
   @NSManaged dynamic var tempo: NSNumber?
-  @NSManaged dynamic var title: String?
   @NSManaged dynamic var album: AlbumEntity?
   @NSManaged dynamic var artist: ArtistEntity?
   @NSManaged dynamic var genre: GenreEntity?
