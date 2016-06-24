@@ -39,6 +39,7 @@ class ViewController: NSViewController {
   var albums = [String: AlbumEntity]()
   var genres = [String: GenreEntity]()
   var labels = [String: LabelEntity]()
+  var keys = [String: KeyEntity]()
 
   // Set of supported audio file extensions
   let validExtensions: Set<String> = ["mp3", "m4a", "wav", "m3u", "wma", "aif", "ogg"]
@@ -85,6 +86,10 @@ class ViewController: NSViewController {
 
     if let labelName = meta["label"] as? String {
       song.label = LabelEntity.createOrFetchLabel(labelName, dc: dc, labelsDict: &self.labels)
+    }
+
+    if let keyName = meta["key"] as? String {
+      song.key = KeyEntity.createOrFetchKey(keyName, dc: dc, keysDict: &self.keys)
     }
 
     self.songs.append(song)

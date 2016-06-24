@@ -18,4 +18,9 @@ class KeyEntity: SelektorObject {
   override class func getEntityName() -> String {
     return "Key"
   }
+
+  class func createOrFetchKey(name: String, dc: DataController, inout keysDict: [String: KeyEntity]) -> KeyEntity {
+    return super.createOrFetchEntity(name, dc: dc, entityDict: &keysDict) as KeyEntity
+  }
+
 }
