@@ -21,7 +21,13 @@ class ViewController: NSViewController {
 
   // Data controller acts as the interface to the Core Data stack, allowing
   // interaction with the database.
-  let dc = DataController()
+  let appDelegate = NSApplication.sharedApplication().delegate as! AppDelegate
+
+  lazy var managedObjectContext: NSManagedObjectContext = {
+    return (NSApplication.sharedApplication().delegate
+      as? AppDelegate)?.dc.managedObjectContext
+    }()!
+
   let mp = MetadataParser()
 
   // Array of songs which will be used by the songsController for
@@ -42,7 +48,7 @@ class ViewController: NSViewController {
 
     // Populate the songs array and attach to the songsController
     dispatch_async(dispatch_get_main_queue()) {
-      self.songs = self.dc.fetchEntities()
+      self.songs = self.appDelegate.dc.fetchEntities()
       self.songsController.content = self.songs
     }
   }
@@ -55,6 +61,7 @@ class ViewController: NSViewController {
 
   func importSong(url: NSURL) {
     print("Importing song '\(url.absoluteString)'")
+    let dc = appDelegate.dc
 
     let song: SongEntity = dc.createEntity()
     let asset = AVURLAsset(URL: url)
@@ -108,7 +115,7 @@ class ViewController: NSViewController {
             }
           }
 
-          self.dc.save()
+          self.appDelegate.dc.save()
 
           // Update the table view by refreshing the array controller
           self.songsController.content = self.songs

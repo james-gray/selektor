@@ -1146,6 +1146,7 @@
                 <userDefaultsController representsSharedInstance="YES" id="iPW-Ye-n6M"/>
                 <arrayController id="JdN-Fp-fVn">
                     <connections>
+                        <binding destination="XfG-lQ-9wD" name="managedObjectContext" keyPath="self.managedObjectContext" id="gcf-py-fTh"/>
                         <binding destination="XfG-lQ-9wD" name="contentArray" keyPath="self.songs" id="iZH-ce-xbf"/>
                     </connections>
                 </arrayController>
