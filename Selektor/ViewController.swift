@@ -129,4 +129,50 @@ class ViewController: NSViewController {
       }
     }
   }
+
+  // TODO: Dedupe handler code to some degree
+  @IBAction func handleArtistEdit(sender: NSTextField) {
+    let dc = appDelegate.dc
+    let artistName = sender.stringValue
+    let artist = ArtistEntity.createOrFetchArtist(artistName, dc: dc, artistsDict: &self.artists)
+
+    let song = songsController.selectedObjects[0] as! SongEntity
+    song.artist = artist
+  }
+
+  @IBAction func handleAlbumEdit(sender: AnyObject) {
+    let dc = appDelegate.dc
+    let albumName = (sender as! NSTextField).stringValue
+    let album = AlbumEntity.createOrFetchAlbum(albumName, dc: dc, albumsDict: &self.albums)
+
+    let song = songsController.selectedObjects[0] as! SongEntity
+    song.album = album
+  }
+
+  @IBAction func handleGenreEdit(sender: AnyObject) {
+    let dc = appDelegate.dc
+    let genreName = (sender as! NSTextField).stringValue
+    let genre = GenreEntity.createOrFetchGenre(genreName, dc: dc, genresDict: &self.genres)
+
+    let song = songsController.selectedObjects[0] as! SongEntity
+    song.genre = genre
+  }
+
+  @IBAction func handleLabelEdit(sender: AnyObject) {
+    let dc = appDelegate.dc
+    let labelName = (sender as! NSTextField).stringValue
+    let label = LabelEntity.createOrFetchLabel(labelName, dc: dc, labelsDict: &self.labels)
+
+    let song = songsController.selectedObjects[0] as! SongEntity
+    song.label = label
+  }
+
+  @IBAction func handleKeyEdit(sender: AnyObject) {
+    let dc = appDelegate.dc
+    let keyName = (sender as! NSTextField).stringValue
+    let key = KeyEntity.createOrFetchKey(keyName, dc: dc, keysDict: &self.keys)
+
+    let song = songsController.selectedObjects[0] as! SongEntity
+    song.key = key
+  }
 }
