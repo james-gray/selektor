@@ -896,8 +896,8 @@
                                     <action selector="chooseMusicFolder:" target="XfG-lQ-9wD" id="pdI-uy-9g3"/>
                                 </connections>
                             </button>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="G6H-IH-gPw">
-                                <rect key="frame" x="28" y="20" width="427" height="17"/>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G6H-IH-gPw">
+                                <rect key="frame" x="28" y="29" width="427" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="Hgm-an-ZhP">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -911,14 +911,27 @@
                                     </binding>
                                 </connections>
                             </textField>
+                            <button toolTip="Delete Selected Song" verticalHuggingPriority="750" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hWs-nX-HeX">
+                                <rect key="frame" x="30" y="28" width="19" height="21"/>
+                                <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="4Zt-wj-8nA">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+CA
+</string>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="handleSongRemove:" target="XfG-lQ-9wD" id="7rn-UR-w5f"/>
+                                </connections>
+                            </button>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="25" horizontalPageScroll="10" verticalLineScroll="25" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tho-r2-llV">
-                                <rect key="frame" x="30" y="41" width="423" height="512"/>
+                                <rect key="frame" x="30" y="54" width="423" height="499"/>
                                 <clipView key="contentView" id="Eso-xo-WUf">
-                                    <rect key="frame" x="1" y="0.0" width="421" height="511"/>
+                                    <rect key="frame" x="1" y="0.0" width="421" height="498"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="23" rowSizeStyle="automatic" headerView="WLF-oi-wQA" viewBased="YES" id="1nm-gb-X4G">
-                                            <rect key="frame" x="0.0" y="0.0" width="421" height="488"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="421" height="475"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1136,7 +1149,7 @@
                         </subviews>
                         <constraints>
                             <constraint firstItem="Shv-UH-mIl" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" id="1ci-A0-naP"/>
-                            <constraint firstAttribute="bottom" secondItem="tho-r2-llV" secondAttribute="bottom" constant="41" id="35G-yJ-Utb"/>
+                            <constraint firstAttribute="bottom" secondItem="tho-r2-llV" secondAttribute="bottom" constant="54" id="35G-yJ-Utb"/>
                             <constraint firstAttribute="bottom" secondItem="G6H-IH-gPw" secondAttribute="bottom" constant="20" symbolic="YES" id="6KS-Fz-DBO"/>
                             <constraint firstItem="tho-r2-llV" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="30" id="DNe-EO-cSA"/>
                             <constraint firstItem="G6H-IH-gPw" firstAttribute="trailing" secondItem="tho-r2-llV" secondAttribute="trailing" id="Fm9-kZ-hBE"/>
@@ -1158,14 +1171,21 @@
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <userDefaultsController representsSharedInstance="YES" id="iPW-Ye-n6M"/>
-                <arrayController id="JdN-Fp-fVn">
+                <arrayController mode="entity" entityName="Song" automaticallyPreparesContent="YES" id="JdN-Fp-fVn">
                     <connections>
+                        <binding destination="XfG-lQ-9wD" name="contentArray" keyPath="self.songs" id="ZOE-gk-QOX">
+                            <dictionary key="options">
+                                <bool key="NSDeletesObjectsOnRemove" value="YES"/>
+                            </dictionary>
+                        </binding>
                         <binding destination="XfG-lQ-9wD" name="managedObjectContext" keyPath="self.managedObjectContext" id="gcf-py-fTh"/>
-                        <binding destination="XfG-lQ-9wD" name="contentArray" keyPath="self.songs" id="iZH-ce-xbf"/>
                     </connections>
                 </arrayController>
             </objects>
             <point key="canvasLocation" x="75" y="1174"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="NSRemoveTemplate" width="11" height="11"/>
+    </resources>
 </document>

@@ -130,6 +130,25 @@ class ViewController: NSViewController {
     }
   }
 
+  @IBAction func handleSongRemove(sender: AnyObject) {
+    dispatch_async(dispatch_get_main_queue()) {
+      let song = self.songsController.selectedObjects[0] as! SongEntity
+
+      let alert = NSAlert()
+      alert.messageText = "Delete Song"
+      alert.addButtonWithTitle("Cancel")
+      alert.addButtonWithTitle("Delete")
+      alert.informativeText = "Are you sure you want to delete the song '\(song.name!)'?"
+
+      alert.beginSheetModalForWindow(self.view.window!, completionHandler: {
+        (returnCode) -> Void in
+        if returnCode == NSAlertSecondButtonReturn {
+          self.songsController.removeObjectAtArrangedObjectIndex(self.songsController.selectionIndex)
+        }
+      })
+    }
+  }
+
   // TODO: Dedupe handler code to some degree
   @IBAction func handleArtistEdit(sender: NSTextField) {
     let dc = appDelegate.dc
