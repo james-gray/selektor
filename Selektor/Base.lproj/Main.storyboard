@@ -862,45 +862,17 @@
                                                 </binding>
                                             </connections>
                                         </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="znI-sl-FVR">
-                                            <rect key="frame" x="18" y="95" width="41" height="17"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label:" id="h0h-71-ip2">
-                                                <font key="font" metaFont="system"/>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aKa-sC-D1w">
+                                            <rect key="frame" x="90" y="145" width="177" height="17"/>
+                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="Label" id="Kaw-ei-Ruq">
+                                                <font key="font" metaFont="systemBold"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
-                                        </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8PN-31-CPS">
-                                            <rect key="frame" x="18" y="70" width="30" height="17"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Key:" id="3yW-Ll-z7P">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kCm-NH-ybk">
-                                            <rect key="frame" x="18" y="45" width="60" height="17"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Duration:" id="Ndc-tY-TeT">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TFY-Q9-84O">
-                                            <rect key="frame" x="18" y="20" width="49" height="17"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Tempo:" id="Hwt-rE-UfU">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a4H-Sm-b5R">
-                                            <rect key="frame" x="18" y="195" width="63" height="17"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Filename:" id="tUd-Az-XcD">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
+                                            <connections>
+                                                <action selector="handleAlbumEdit:" target="XfG-lQ-9wD" id="F1e-3T-Oex"/>
+                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.album.name" id="LWa-hT-GyD"/>
+                                            </connections>
                                         </textField>
                                     </subviews>
                                 </view>
@@ -939,13 +911,13 @@
                                     </binding>
                                 </connections>
                             </textField>
-                            <scrollView misplaced="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tho-r2-llV">
-                                <rect key="frame" x="30" y="43" width="423" height="512"/>
+                            <scrollView autohidesScrollers="YES" horizontalLineScroll="25" horizontalPageScroll="10" verticalLineScroll="25" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tho-r2-llV">
+                                <rect key="frame" x="30" y="41" width="423" height="512"/>
                                 <clipView key="contentView" id="Eso-xo-WUf">
                                     <rect key="frame" x="1" y="0.0" width="421" height="511"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="WLF-oi-wQA" viewBased="YES" id="1nm-gb-X4G">
+                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="23" rowSizeStyle="automatic" headerView="WLF-oi-wQA" viewBased="YES" id="1nm-gb-X4G">
                                             <rect key="frame" x="0.0" y="0.0" width="421" height="488"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
@@ -983,8 +955,8 @@
                                                                 </textField>
                                                             </subviews>
                                                             <constraints>
-                                                                <constraint firstAttribute="trailing" secondItem="dIa-hb-9mD" secondAttribute="trailing" constant="-2" id="KTk-NA-cSu"/>
-                                                                <constraint firstItem="dIa-hb-9mD" firstAttribute="leading" secondItem="KPW-uU-kMp" secondAttribute="leading" constant="7" id="NE4-hG-Ue4"/>
+                                                                <constraint firstItem="dIa-hb-9mD" firstAttribute="leading" secondItem="KPW-uU-kMp" secondAttribute="leading" constant="2" id="MQa-Wd-cin"/>
+                                                                <constraint firstAttribute="trailing" secondItem="dIa-hb-9mD" secondAttribute="trailing" constant="-2" id="a4E-nD-nXV"/>
                                                                 <constraint firstItem="dIa-hb-9mD" firstAttribute="centerY" secondItem="KPW-uU-kMp" secondAttribute="centerY" constant="-1.5" id="ybd-DS-vgg"/>
                                                             </constraints>
                                                             <connections>
@@ -1024,12 +996,15 @@
                                                                             <binding destination="3tr-Gd-4aG" name="value" keyPath="objectValue.artist.name" id="knJ-BU-ahT"/>
                                                                         </connections>
                                                                     </textFieldCell>
+                                                                    <connections>
+                                                                        <action selector="handleArtistEdit:" target="XfG-lQ-9wD" id="OFM-1z-5cu"/>
+                                                                    </connections>
                                                                 </textField>
                                                             </subviews>
                                                             <constraints>
-                                                                <constraint firstAttribute="trailing" secondItem="tVi-pl-W8k" secondAttribute="trailing" constant="3" id="ZyZ-1f-DZP"/>
-                                                                <constraint firstItem="tVi-pl-W8k" firstAttribute="centerY" secondItem="3tr-Gd-4aG" secondAttribute="centerY" id="cIC-6C-NUV"/>
-                                                                <constraint firstItem="tVi-pl-W8k" firstAttribute="leading" secondItem="3tr-Gd-4aG" secondAttribute="leading" constant="7" id="dIp-mm-BSD"/>
+                                                                <constraint firstAttribute="trailing" secondItem="tVi-pl-W8k" secondAttribute="trailing" constant="-2" id="ZyZ-1f-DZP"/>
+                                                                <constraint firstItem="tVi-pl-W8k" firstAttribute="leading" secondItem="3tr-Gd-4aG" secondAttribute="leading" constant="2" id="b0H-c6-Qu6"/>
+                                                                <constraint firstItem="tVi-pl-W8k" firstAttribute="centerY" secondItem="3tr-Gd-4aG" secondAttribute="centerY" constant="-2" id="cIC-6C-NUV"/>
                                                             </constraints>
                                                             <connections>
                                                                 <outlet property="textField" destination="tVi-pl-W8k" id="rmM-PC-6qn"/>
@@ -1068,12 +1043,15 @@
                                                                             <binding destination="1WT-4U-Vp9" name="value" keyPath="objectValue.genre.name" id="bQx-B3-elh"/>
                                                                         </connections>
                                                                     </textFieldCell>
+                                                                    <connections>
+                                                                        <action selector="handleGenreEdit:" target="XfG-lQ-9wD" id="heo-4g-OJD"/>
+                                                                    </connections>
                                                                 </textField>
                                                             </subviews>
                                                             <constraints>
-                                                                <constraint firstItem="QFm-2C-JmY" firstAttribute="leading" secondItem="1WT-4U-Vp9" secondAttribute="leading" constant="8" id="D50-o1-rxE"/>
-                                                                <constraint firstAttribute="trailing" secondItem="QFm-2C-JmY" secondAttribute="trailing" constant="2" id="IhX-O1-OVB"/>
-                                                                <constraint firstItem="QFm-2C-JmY" firstAttribute="top" secondItem="1WT-4U-Vp9" secondAttribute="top" constant="1" id="pQl-VP-g0C"/>
+                                                                <constraint firstItem="QFm-2C-JmY" firstAttribute="leading" secondItem="1WT-4U-Vp9" secondAttribute="leading" constant="2" id="Ee2-ez-fPs"/>
+                                                                <constraint firstAttribute="trailing" secondItem="QFm-2C-JmY" secondAttribute="trailing" constant="-2" id="IhX-O1-OVB"/>
+                                                                <constraint firstItem="QFm-2C-JmY" firstAttribute="centerY" secondItem="1WT-4U-Vp9" secondAttribute="centerY" constant="-2" id="TWy-so-Xlh"/>
                                                             </constraints>
                                                             <connections>
                                                                 <outlet property="textField" destination="QFm-2C-JmY" id="kS3-dd-oFu"/>
@@ -1116,9 +1094,9 @@
                                                                 </textField>
                                                             </subviews>
                                                             <constraints>
-                                                                <constraint firstAttribute="trailing" secondItem="yrR-Xd-vvF" secondAttribute="trailing" constant="-10" id="0YU-aJ-LJI"/>
-                                                                <constraint firstItem="yrR-Xd-vvF" firstAttribute="leading" secondItem="seL-7e-u6t" secondAttribute="leading" constant="7" id="1An-jk-eZ2"/>
-                                                                <constraint firstItem="yrR-Xd-vvF" firstAttribute="centerY" secondItem="seL-7e-u6t" secondAttribute="centerY" id="1Wf-Ia-PON"/>
+                                                                <constraint firstAttribute="trailing" secondItem="yrR-Xd-vvF" secondAttribute="trailing" constant="-2" id="0YU-aJ-LJI"/>
+                                                                <constraint firstItem="yrR-Xd-vvF" firstAttribute="centerY" secondItem="seL-7e-u6t" secondAttribute="centerY" constant="-2" id="1Wf-Ia-PON"/>
+                                                                <constraint firstItem="yrR-Xd-vvF" firstAttribute="leading" secondItem="seL-7e-u6t" secondAttribute="leading" constant="7" id="X4H-2q-v2K"/>
                                                             </constraints>
                                                             <connections>
                                                                 <outlet property="textField" destination="yrR-Xd-vvF" id="q9q-1Z-qhX"/>
