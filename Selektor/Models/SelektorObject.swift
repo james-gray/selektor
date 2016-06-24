@@ -35,7 +35,8 @@ class SelektorObject: NSManagedObject {
     }
 
     // If the entity is not in the dict, check the database
-    guard let entity: T = dc.fetchEntities("name = '\(name)'").first else {
+    let predicate = NSPredicate(format: "name = %s", name)
+    guard let entity: T = dc.fetchEntities(predicate).first else {
       // Create the entity if it does not exist in the DB
       let entity: T = dc.createEntity()
       entity.name = name

@@ -64,7 +64,7 @@ class DataController: NSObject {
         inManagedObjectContext: managedObjectContext) as! T
   }
 
-  func fetchEntities<T: SelektorObject>(predicate: String? = nil) -> [T] {
+  func fetchEntities<T: SelektorObject>(predicate: NSPredicate? = nil) -> [T] {
 
     let moc = managedObjectContext
     let entityName = T.getEntityName()
@@ -72,7 +72,7 @@ class DataController: NSObject {
 
     if let predicate = predicate {
       // Filter the results
-      fetchRequest.predicate = NSPredicate(format: predicate)
+      fetchRequest.predicate = predicate
     }
 
     do {
