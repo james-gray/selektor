@@ -132,18 +132,22 @@ class ViewController: NSViewController {
 
   @IBAction func handleSongRemove(sender: AnyObject) {
     dispatch_async(dispatch_get_main_queue()) {
-      let song = self.songsController.selectedObjects[0] as! SongEntity
+      let selectedSongs = self.songsController.selectedObjects as! [SongEntity]
 
       let alert = NSAlert()
       alert.messageText = "Delete Song"
       alert.addButtonWithTitle("Cancel")
       alert.addButtonWithTitle("Delete")
-      alert.informativeText = "Are you sure you want to delete the song '\(song.name!)'?"
+      if selectedSongs.count > 1 {
+        alert.informativeText = "Are you sure you want to delete the selected songs?"
+      } else {
+        alert.informativeText = "Are you sure you want to delete the song '\(selectedSongs[0].name!)'?"
+      }
 
       alert.beginSheetModalForWindow(self.view.window!, completionHandler: {
         (returnCode) -> Void in
         if returnCode == NSAlertSecondButtonReturn {
-          self.songsController.removeObjectAtArrangedObjectIndex(self.songsController.selectionIndex)
+          self.songsController.removeObjectsAtArrangedObjectIndexes(self.songsController.selectionIndexes)
         }
       })
     }
