@@ -708,7 +708,11 @@
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
-                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.name" id="ny1-uv-SGL"/>
+                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.name" id="zV0-Aa-iVV">
+                                                    <dictionary key="options">
+                                                        <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                                    </dictionary>
+                                                </binding>
                                             </connections>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G6E-mv-WTV">
@@ -744,7 +748,11 @@
                                             </textFieldCell>
                                             <connections>
                                                 <action selector="handleArtistEdit:" target="XfG-lQ-9wD" id="yh4-AU-Q65"/>
-                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.artist.name" id="1XS-EA-Eo4"/>
+                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.artist.name" id="bXe-sL-gfb">
+                                                    <dictionary key="options">
+                                                        <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                                    </dictionary>
+                                                </binding>
                                             </connections>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="znI-sl-FVR">
@@ -796,19 +804,11 @@
                                             </textFieldCell>
                                             <connections>
                                                 <action selector="handleGenreEdit:" target="XfG-lQ-9wD" id="PZz-YN-V44"/>
-                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.genre.name" id="DZN-oj-VMK"/>
-                                            </connections>
-                                        </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jft-YI-U6C">
-                                            <rect key="frame" x="90" y="95" width="177" height="17"/>
-                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="Label" id="7Sk-hV-0Tx">
-                                                <font key="font" metaFont="systemBold"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                            <connections>
-                                                <action selector="handleLabelEdit:" target="XfG-lQ-9wD" id="tkZ-Le-g7e"/>
-                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.label.name" id="1Q1-AV-Zw0"/>
+                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.genre.name" id="f84-Jc-klk">
+                                                    <dictionary key="options">
+                                                        <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                                    </dictionary>
+                                                </binding>
                                             </connections>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EBs-7c-kHJ">
@@ -820,7 +820,11 @@
                                             </textFieldCell>
                                             <connections>
                                                 <action selector="handleKeyEdit:" target="XfG-lQ-9wD" id="g5y-cD-yba"/>
-                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.key.name" id="xnu-2K-AyM"/>
+                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.key.name" id="WpS-mp-ZgB">
+                                                    <dictionary key="options">
+                                                        <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                                    </dictionary>
+                                                </binding>
                                             </connections>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VQr-Mx-A87">
@@ -832,7 +836,11 @@
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
-                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.duration" id="JKm-C3-fKZ"/>
+                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.duration" id="wSd-3C-VZJ">
+                                                    <dictionary key="options">
+                                                        <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                                    </dictionary>
+                                                </binding>
                                             </connections>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BKB-YQ-Hlc">
@@ -844,7 +852,11 @@
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
-                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.tempo" id="LPe-LK-y7a"/>
+                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.tempo" id="8tp-7c-0nS">
+                                                    <dictionary key="options">
+                                                        <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                                    </dictionary>
+                                                </binding>
                                             </connections>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vj7-Xl-7Ph">
@@ -855,8 +867,9 @@
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
-                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.filename" id="wTC-tr-oCg">
+                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.filename" id="jAX-h1-15e">
                                                     <dictionary key="options">
+                                                        <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                                         <string key="NSValueTransformerName">FilenameTransformer</string>
                                                     </dictionary>
                                                 </binding>
@@ -871,7 +884,27 @@
                                             </textFieldCell>
                                             <connections>
                                                 <action selector="handleAlbumEdit:" target="XfG-lQ-9wD" id="F1e-3T-Oex"/>
-                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.album.name" id="LWa-hT-GyD"/>
+                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.album.name" id="RMt-Yw-13L">
+                                                    <dictionary key="options">
+                                                        <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                                    </dictionary>
+                                                </binding>
+                                            </connections>
+                                        </textField>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jft-YI-U6C">
+                                            <rect key="frame" x="90" y="95" width="177" height="17"/>
+                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="Label" id="7Sk-hV-0Tx">
+                                                <font key="font" metaFont="systemBold"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                            <connections>
+                                                <action selector="handleLabelEdit:" target="XfG-lQ-9wD" id="tkZ-Le-g7e"/>
+                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.label.name" id="Snc-ja-W56">
+                                                    <dictionary key="options">
+                                                        <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                                    </dictionary>
+                                                </binding>
                                             </connections>
                                         </textField>
                                     </subviews>
@@ -896,7 +929,7 @@
                                     <action selector="chooseMusicFolder:" target="XfG-lQ-9wD" id="pdI-uy-9g3"/>
                                 </connections>
                             </button>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G6H-IH-gPw">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="G6H-IH-gPw">
                                 <rect key="frame" x="28" y="29" width="427" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="Hgm-an-ZhP">
                                     <font key="font" metaFont="system"/>
@@ -930,7 +963,7 @@ CA
                                     <rect key="frame" x="1" y="0.0" width="421" height="498"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="23" rowSizeStyle="automatic" headerView="WLF-oi-wQA" viewBased="YES" id="1nm-gb-X4G">
+                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" autosaveColumns="NO" rowHeight="23" rowSizeStyle="automatic" headerView="WLF-oi-wQA" viewBased="YES" id="1nm-gb-X4G">
                                             <rect key="frame" x="0.0" y="0.0" width="421" height="475"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
@@ -978,7 +1011,11 @@ CA
                                                         </tableCellView>
                                                     </prototypeCellViews>
                                                     <connections>
-                                                        <binding destination="JdN-Fp-fVn" name="value" keyPath="arrangedObjects.name" id="Dnd-wo-1iJ"/>
+                                                        <binding destination="JdN-Fp-fVn" name="value" keyPath="arrangedObjects.name" id="w03-Xe-djz">
+                                                            <dictionary key="options">
+                                                                <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                                            </dictionary>
+                                                        </binding>
                                                     </connections>
                                                 </tableColumn>
                                                 <tableColumn width="112" minWidth="40" maxWidth="1000" id="ohX-3m-DAZ">
@@ -1025,7 +1062,11 @@ CA
                                                         </tableCellView>
                                                     </prototypeCellViews>
                                                     <connections>
-                                                        <binding destination="JdN-Fp-fVn" name="value" keyPath="arrangedObjects.artist" id="Ws5-5E-Nxt"/>
+                                                        <binding destination="JdN-Fp-fVn" name="value" keyPath="arrangedObjects.artist" id="tlJ-R2-izr">
+                                                            <dictionary key="options">
+                                                                <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                                            </dictionary>
+                                                        </binding>
                                                     </connections>
                                                 </tableColumn>
                                                 <tableColumn identifier="" width="80" minWidth="10" maxWidth="3.4028234663852886e+38" id="oTL-7v-2oP">
@@ -1072,7 +1113,11 @@ CA
                                                         </tableCellView>
                                                     </prototypeCellViews>
                                                     <connections>
-                                                        <binding destination="JdN-Fp-fVn" name="value" keyPath="arrangedObjects.genre" id="hP6-rz-aJj"/>
+                                                        <binding destination="JdN-Fp-fVn" name="value" keyPath="arrangedObjects.genre" id="1zU-Pp-1hh">
+                                                            <dictionary key="options">
+                                                                <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                                            </dictionary>
+                                                        </binding>
                                                     </connections>
                                                 </tableColumn>
                                                 <tableColumn identifier="" width="55" minWidth="10" maxWidth="3.4028234663852886e+38" id="HM0-ch-sv3">
@@ -1117,7 +1162,11 @@ CA
                                                         </tableCellView>
                                                     </prototypeCellViews>
                                                     <connections>
-                                                        <binding destination="JdN-Fp-fVn" name="value" keyPath="arrangedObjects.tempo" id="aV7-a1-w6M"/>
+                                                        <binding destination="JdN-Fp-fVn" name="value" keyPath="arrangedObjects.tempo" id="AcF-Od-RUM">
+                                                            <dictionary key="options">
+                                                                <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                                            </dictionary>
+                                                        </binding>
                                                     </connections>
                                                 </tableColumn>
                                             </tableColumns>
@@ -1173,11 +1222,12 @@ CA
                 <userDefaultsController representsSharedInstance="YES" id="iPW-Ye-n6M"/>
                 <arrayController mode="entity" entityName="Song" automaticallyPreparesContent="YES" id="JdN-Fp-fVn">
                     <connections>
-                        <binding destination="XfG-lQ-9wD" name="contentArray" keyPath="self.songs" id="ZOE-gk-QOX">
+                        <binding destination="XfG-lQ-9wD" name="contentArray" keyPath="self.songs" id="kOm-V6-EJc">
                             <dictionary key="options">
                                 <bool key="NSDeletesObjectsOnRemove" value="YES"/>
                             </dictionary>
                         </binding>
+                        <binding destination="XfG-lQ-9wD" name="contentArrayForMultipleSelection" keyPath="self.songs" previousBinding="kOm-V6-EJc" id="kVj-WK-ACu"/>
                         <binding destination="XfG-lQ-9wD" name="managedObjectContext" keyPath="self.managedObjectContext" id="gcf-py-fTh"/>
                     </connections>
                 </arrayController>
