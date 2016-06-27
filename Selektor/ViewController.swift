@@ -159,8 +159,7 @@ class ViewController: NSViewController {
     let artistName = sender.stringValue
     let artist = ArtistEntity.createOrFetchArtist(artistName, dc: dc, artistsDict: &self.artists)
 
-    let song = songsController.selectedObjects[0] as! SongEntity
-    song.artist = artist
+    self.editPropertyForSongs("artist", object: artist)
   }
 
   @IBAction func handleAlbumEdit(sender: AnyObject) {
@@ -168,8 +167,7 @@ class ViewController: NSViewController {
     let albumName = (sender as! NSTextField).stringValue
     let album = AlbumEntity.createOrFetchAlbum(albumName, dc: dc, albumsDict: &self.albums)
 
-    let song = songsController.selectedObjects[0] as! SongEntity
-    song.album = album
+    self.editPropertyForSongs("album", object: album)
   }
 
   @IBAction func handleGenreEdit(sender: AnyObject) {
@@ -177,8 +175,7 @@ class ViewController: NSViewController {
     let genreName = (sender as! NSTextField).stringValue
     let genre = GenreEntity.createOrFetchGenre(genreName, dc: dc, genresDict: &self.genres)
 
-    let song = songsController.selectedObjects[0] as! SongEntity
-    song.genre = genre
+    self.editPropertyForSongs("genre", object: genre)
   }
 
   @IBAction func handleLabelEdit(sender: AnyObject) {
@@ -186,8 +183,7 @@ class ViewController: NSViewController {
     let labelName = (sender as! NSTextField).stringValue
     let label = LabelEntity.createOrFetchLabel(labelName, dc: dc, labelsDict: &self.labels)
 
-    let song = songsController.selectedObjects[0] as! SongEntity
-    song.label = label
+    self.editPropertyForSongs("label", object: label)
   }
 
   @IBAction func handleKeyEdit(sender: AnyObject) {
@@ -195,7 +191,20 @@ class ViewController: NSViewController {
     let keyName = (sender as! NSTextField).stringValue
     let key = KeyEntity.createOrFetchKey(keyName, dc: dc, keysDict: &self.keys)
 
-    let song = songsController.selectedObjects[0] as! SongEntity
-    song.key = key
+    self.editPropertyForSongs("key", object: key)
+  }
+
+  func editPropertyForSongs(key: String, object: SelektorObject) {
+    let selectedSongs = self.songsController.selectedObjects as! [SongEntity]
+    if selectedSongs.count > 1 {
+      // BUG: For some reason, even though editing labels is disabled when
+      // multiple values are selected, we seem to be getting here in some cases 
+      // - return here as a workaround
+      return
+    }
+
+    for song in selectedSongs {
+      song.setValue(object, forKey: key)
+    }
   }
 }
