@@ -646,16 +646,16 @@
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Selektor" customModuleProvider="target"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="41" y="-99"/>
+            <point key="canvasLocation" x="44" y="-149"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
-                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                    <window key="window" title="Selektor" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
                         <rect key="contentRect" x="302" y="133" width="800" height="600"/>
-                        <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="1280" height="800"/>
                         <value key="minSize" type="size" width="800" height="600"/>
                         <value key="maxSize" type="size" width="800" height="600"/>
                     </window>
@@ -1222,13 +1222,13 @@ CA
                 <userDefaultsController representsSharedInstance="YES" id="iPW-Ye-n6M"/>
                 <arrayController mode="entity" entityName="Song" automaticallyPreparesContent="YES" id="JdN-Fp-fVn">
                     <connections>
+                        <binding destination="XfG-lQ-9wD" name="managedObjectContext" keyPath="self.managedObjectContext" id="gcf-py-fTh"/>
                         <binding destination="XfG-lQ-9wD" name="contentArray" keyPath="self.songs" id="kOm-V6-EJc">
                             <dictionary key="options">
                                 <bool key="NSDeletesObjectsOnRemove" value="YES"/>
                             </dictionary>
                         </binding>
                         <binding destination="XfG-lQ-9wD" name="contentArrayForMultipleSelection" keyPath="self.songs" previousBinding="kOm-V6-EJc" id="kVj-WK-ACu"/>
-                        <binding destination="XfG-lQ-9wD" name="managedObjectContext" keyPath="self.managedObjectContext" id="gcf-py-fTh"/>
                     </connections>
                 </arrayController>
             </objects>
