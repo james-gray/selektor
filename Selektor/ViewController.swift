@@ -11,13 +11,12 @@ import Cocoa
 
 class ViewController: NSViewController {
 
-  // MARK: Properties
+  // MARK: Outlets
 
-  // Songs table view
   @IBOutlet weak var songsTableView: NSTableView!
-
-  // Controller used by the table view for displaying songs in a list
   @IBOutlet var songsController: NSArrayController!
+
+  // MARK: Properties
 
   // Data controller acts as the interface to the Core Data stack, allowing
   // interaction with the database.
@@ -44,6 +43,31 @@ class ViewController: NSViewController {
   // Set of supported audio file extensions
   let validExtensions: Set<String> = ["mp3", "m4a", "wav", "m3u", "wma", "aif", "ogg"]
 
+  // MARK: UI Elements
+  lazy var openPanel: NSOpenPanel = {
+    let openPanel = NSOpenPanel()
+    openPanel.canChooseDirectories = true
+    openPanel.canCreateDirectories = false
+    openPanel.canChooseFiles = false
+    openPanel.allowsMultipleSelection = false
+    return openPanel
+  }()
+
+  lazy var deleteAlert: NSAlert = {
+    let alert = NSAlert()
+    alert.messageText = "Delete Songs"
+    alert.addButtonWithTitle("Cancel")
+    alert.addButtonWithTitle("Delete")
+    return alert
+  }()
+
+  lazy var importProgressAlert: NSAlert = {
+    let alert = NSAlert()
+    alert.messageText = "Importing songs. Please wait..."
+    return alert
+  }()
+
+  // MARK: Behaviour
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -54,9 +78,24 @@ class ViewController: NSViewController {
     }
   }
 
-  override var representedObject: AnyObject? {
-    didSet {
-    // Update the view, if already loaded.
+  func importMusicFolder(directoryURL: NSURL) {
+    let fileMgr = NSFileManager.defaultManager()
+    let options: NSDirectoryEnumerationOptions = [.SkipsHiddenFiles, .SkipsPackageDescendants]
+
+    if let fileUrls = fileMgr.enumeratorAtURL(directoryURL, includingPropertiesForKeys: nil,
+                                              options: options, errorHandler: nil) {
+      for url in fileUrls {
+        if self.validExtensions.contains(url.pathExtension) {
+            self.importSong(url as! NSURL)
+        }
+      }
+
+      // Persist changes to DB
+      self.appDelegate.dc.save()
+
+      // Update the table view by refreshing the array controller
+      self.songsController.content = self.songs
+      self.songsController.rearrangeObjects()
     }
   }
 
@@ -95,56 +134,46 @@ class ViewController: NSViewController {
     self.songs.append(song)
   }
 
-  @IBAction func chooseMusicFolder(sender: AnyObject) {
-    let openPanel = NSOpenPanel()
-    openPanel.canChooseDirectories = true
-    openPanel.canCreateDirectories = false
-    openPanel.canChooseFiles = false
-    openPanel.allowsMultipleSelection = false
+  func editPropertyForSongs(key: String, object: SelektorObject) {
+    let selectedSongs = self.songsController.selectedObjects as! [SongEntity]
+    if selectedSongs.count > 1 {
+      // BUG: For some reason, even though editing labels is disabled when
+      // multiple values are selected, we seem to be getting here in some cases
+      // - return here as a workaround
+      return
+    }
 
-    openPanel.beginWithCompletionHandler { (result) -> Void in
-      if result == NSFileHandlingPanelOKButton {
-        guard let directoryURL = openPanel.URL else {
-          fatalError("Invalid directory specified")
-        }
-
-        let fileMgr = NSFileManager.defaultManager()
-        let options: NSDirectoryEnumerationOptions = [.SkipsHiddenFiles, .SkipsPackageDescendants]
-
-        if let fileUrls = fileMgr.enumeratorAtURL(directoryURL, includingPropertiesForKeys: nil,
-            options: options, errorHandler: nil) {
-
-          for url in fileUrls {
-            if self.validExtensions.contains(url.pathExtension) {
-              self.importSong(url as! NSURL)
-            }
-          }
-
-          self.appDelegate.dc.save()
-
-          // Update the table view by refreshing the array controller
-          self.songsController.content = self.songs
-          self.songsController.rearrangeObjects()
-        }
-      }
+    for song in selectedSongs {
+      song.setValue(object, forKey: key)
     }
   }
+
+  // MARK: Actions
+  @IBAction func chooseMusicFolder(sender: AnyObject) {
+    if self.openPanel.runModal() == NSFileHandlingPanelOKButton {
+
+      dispatch_async(dispatch_get_main_queue()) {
+        self.importProgressAlert.beginSheetModalForWindow(self.view.window!, completionHandler: nil)
+        self.importMusicFolder(self.openPanel.URL!)
+        self.view.window!.endSheet(self.importProgressAlert.window)
+      }
+      self.openPanel.close()
+    }
+  }
+
+  @IBAction func unwindToMenu(segue: NSStoryboardSegue) {}
 
   @IBAction func handleSongRemove(sender: AnyObject) {
     dispatch_async(dispatch_get_main_queue()) {
       let selectedSongs = self.songsController.selectedObjects as! [SongEntity]
 
-      let alert = NSAlert()
-      alert.messageText = "Delete Song"
-      alert.addButtonWithTitle("Cancel")
-      alert.addButtonWithTitle("Delete")
       if selectedSongs.count > 1 {
-        alert.informativeText = "Are you sure you want to delete the selected songs?"
+        self.deleteAlert.informativeText = "Are you sure you want to delete the selected songs?"
       } else {
-        alert.informativeText = "Are you sure you want to delete the song '\(selectedSongs[0].name!)'?"
+        self.deleteAlert.informativeText = "Are you sure you want to delete the song '\(selectedSongs[0].name!)'?"
       }
 
-      alert.beginSheetModalForWindow(self.view.window!, completionHandler: {
+      self.deleteAlert.beginSheetModalForWindow(self.view.window!, completionHandler: {
         (returnCode) -> Void in
         if returnCode == NSAlertSecondButtonReturn {
           self.songsController.removeObjectsAtArrangedObjectIndexes(self.songsController.selectionIndexes)
@@ -194,17 +223,4 @@ class ViewController: NSViewController {
     self.editPropertyForSongs("key", object: key)
   }
 
-  func editPropertyForSongs(key: String, object: SelektorObject) {
-    let selectedSongs = self.songsController.selectedObjects as! [SongEntity]
-    if selectedSongs.count > 1 {
-      // BUG: For some reason, even though editing labels is disabled when
-      // multiple values are selected, we seem to be getting here in some cases 
-      // - return here as a workaround
-      return
-    }
-
-    for song in selectedSongs {
-      song.setValue(object, forKey: key)
-    }
-  }
 }
