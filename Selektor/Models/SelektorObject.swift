@@ -13,6 +13,7 @@ import CoreData
 // NOTE: This could also be accomplished with an NSManagedObject extension, however
 // I've opted to simply subclass NSManagedObject in case I need other common
 // functionality that only makes sense within the context of this app.
+@objc(SelektorObject)
 class SelektorObject: NSManagedObject {
 
   // MARK: Properties
@@ -35,7 +36,7 @@ class SelektorObject: NSManagedObject {
     }
 
     // If the entity is not in the dict, check the database
-    let predicate = NSPredicate(format: "name = %s", name)
+    let predicate = NSPredicate(format: "self.name = %@", name)
     guard let entity: T = dc.fetchEntities(predicate).first else {
       // Create the entity if it does not exist in the DB
       let entity: T = dc.createEntity()
