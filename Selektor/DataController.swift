@@ -65,7 +65,6 @@ class DataController: NSObject {
   }
 
   func fetchEntities<T: SelektorObject>(predicate: NSPredicate? = nil) -> [T] {
-
     let moc = managedObjectContext
     let entityName = T.getEntityName()
     let fetchRequest = NSFetchRequest(entityName: entityName)

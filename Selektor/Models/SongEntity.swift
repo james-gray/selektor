@@ -35,5 +35,4 @@ class SongEntity: SelektorObject {
     // Set dateAdded to the current date on object creation
     dateAdded = NSDate()
   }
-
 }
