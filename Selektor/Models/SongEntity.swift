@@ -9,11 +9,19 @@
 import Foundation
 import CoreData
 import Cocoa
+import ObjectiveC
+import QuartzCore
+
+// Enumeration to track song analysis state
+enum AnalysisState: Int {
+  case ToDo = 0, InProgress, Done
+}
 
 @objc(SongEntity)
 class SongEntity: SelektorObject {
 
   // MARK: Properties
+  @NSManaged dynamic var analyzed: NSNumber?
   @NSManaged dynamic var dateAdded: NSDate?
   @NSManaged dynamic var duration: NSNumber?
   @NSManaged dynamic var filename: String?
