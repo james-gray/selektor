@@ -19,11 +19,11 @@ class SongEntity: SelektorObject {
   @NSManaged dynamic var filename: String?
   @NSManaged dynamic var loudness: NSNumber?
   @NSManaged dynamic var tempo: NSNumber?
-  @NSManaged dynamic var album: AlbumEntity?
-  @NSManaged dynamic var artist: ArtistEntity?
-  @NSManaged dynamic var genre: GenreEntity?
-  @NSManaged dynamic var key: KeyEntity?
-  @NSManaged dynamic var label: LabelEntity?
+  @NSManaged dynamic var album: String?
+  @NSManaged dynamic var artist: String?
+  @NSManaged dynamic var genre: String?
+  @NSManaged dynamic var key: String?
+  @NSManaged dynamic var label: String?
 
   override class func getEntityName() -> String {
     return "Song"

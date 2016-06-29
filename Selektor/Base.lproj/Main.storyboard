@@ -739,22 +739,6 @@
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="plr-1a-8oH">
-                                            <rect key="frame" x="90" y="170" width="177" height="17"/>
-                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="Label" id="Ivj-6W-JRw">
-                                                <font key="font" metaFont="systemBold"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                            <connections>
-                                                <action selector="handleArtistEdit:" target="XfG-lQ-9wD" id="yh4-AU-Q65"/>
-                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.artist.name" id="bXe-sL-gfb">
-                                                    <dictionary key="options">
-                                                        <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
-                                                    </dictionary>
-                                                </binding>
-                                            </connections>
-                                        </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="znI-sl-FVR">
                                             <rect key="frame" x="18" y="95" width="41" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label:" id="h0h-71-ip2">
@@ -803,8 +787,7 @@
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
-                                                <action selector="handleGenreEdit:" target="XfG-lQ-9wD" id="PZz-YN-V44"/>
-                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.genre.name" id="f84-Jc-klk">
+                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.genre" id="pFR-Rb-9wS">
                                                     <dictionary key="options">
                                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                                     </dictionary>
@@ -819,8 +802,7 @@
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
-                                                <action selector="handleKeyEdit:" target="XfG-lQ-9wD" id="g5y-cD-yba"/>
-                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.key.name" id="WpS-mp-ZgB">
+                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.key" id="gR0-Tx-Uga">
                                                     <dictionary key="options">
                                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                                     </dictionary>
@@ -883,8 +865,7 @@
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
-                                                <action selector="handleAlbumEdit:" target="XfG-lQ-9wD" id="F1e-3T-Oex"/>
-                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.album.name" id="RMt-Yw-13L">
+                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.album" id="0HD-TU-K5u">
                                                     <dictionary key="options">
                                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                                     </dictionary>
@@ -899,8 +880,22 @@
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
-                                                <action selector="handleLabelEdit:" target="XfG-lQ-9wD" id="tkZ-Le-g7e"/>
-                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.label.name" id="Snc-ja-W56">
+                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.label" id="10g-Wc-UVo">
+                                                    <dictionary key="options">
+                                                        <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                                    </dictionary>
+                                                </binding>
+                                            </connections>
+                                        </textField>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="plr-1a-8oH">
+                                            <rect key="frame" x="90" y="170" width="177" height="17"/>
+                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="Label" id="Ivj-6W-JRw">
+                                                <font key="font" metaFont="systemBold"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                            <connections>
+                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.artist" id="jZd-dN-wkY">
                                                     <dictionary key="options">
                                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                                     </dictionary>
@@ -963,7 +958,7 @@ CA
                                     <rect key="frame" x="1" y="0.0" width="421" height="498"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" autosaveColumns="NO" rowHeight="23" rowSizeStyle="automatic" headerView="WLF-oi-wQA" viewBased="YES" id="1nm-gb-X4G">
+                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" autosaveColumns="NO" rowHeight="23" rowSizeStyle="automatic" headerView="WLF-oi-wQA" viewBased="YES" id="1nm-gb-X4G" customClass="MyTableView" customModule="Selektor" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="421" height="475"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
@@ -996,7 +991,8 @@ CA
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
-                                                                        <binding destination="KPW-uU-kMp" name="value" keyPath="objectValue.name" id="rgP-De-PAd"/>
+                                                                        <binding destination="KPW-uU-kMp" name="value" keyPath="objectValue.name" id="7uk-3s-pd5"/>
+                                                                        <outlet property="delegate" destination="XfG-lQ-9wD" id="lvY-Jz-Toe"/>
                                                                     </connections>
                                                                 </textField>
                                                             </subviews>
@@ -1029,7 +1025,7 @@ CA
                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
-                                                    <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="artist.name"/>
+                                                    <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="artist"/>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView id="3tr-Gd-4aG">
@@ -1043,11 +1039,12 @@ CA
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                         <connections>
-                                                                            <binding destination="3tr-Gd-4aG" name="value" keyPath="objectValue.artist.name" id="knJ-BU-ahT"/>
+                                                                            <binding destination="3tr-Gd-4aG" name="value" keyPath="objectValue.artist" id="MFk-Wl-qgB"/>
                                                                         </connections>
                                                                     </textFieldCell>
                                                                     <connections>
-                                                                        <action selector="handleArtistEdit:" target="XfG-lQ-9wD" id="OFM-1z-5cu"/>
+                                                                        <binding destination="3tr-Gd-4aG" name="value" keyPath="objectValue.artist" id="AfE-Xw-BOX"/>
+                                                                        <outlet property="delegate" destination="XfG-lQ-9wD" id="OzQ-K1-tMD"/>
                                                                     </connections>
                                                                 </textField>
                                                             </subviews>
@@ -1062,7 +1059,7 @@ CA
                                                         </tableCellView>
                                                     </prototypeCellViews>
                                                     <connections>
-                                                        <binding destination="JdN-Fp-fVn" name="value" keyPath="arrangedObjects.artist" id="tlJ-R2-izr">
+                                                        <binding destination="JdN-Fp-fVn" name="value" keyPath="arrangedObjects.artist" id="eC1-mf-c5b">
                                                             <dictionary key="options">
                                                                 <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                                             </dictionary>
@@ -1080,7 +1077,7 @@ CA
                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
-                                                    <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="genre.name"/>
+                                                    <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="genre"/>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView id="1WT-4U-Vp9">
@@ -1094,11 +1091,12 @@ CA
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                         <connections>
-                                                                            <binding destination="1WT-4U-Vp9" name="value" keyPath="objectValue.genre.name" id="bQx-B3-elh"/>
+                                                                            <binding destination="1WT-4U-Vp9" name="value" keyPath="objectValue.genre" id="HF4-Hl-uap"/>
                                                                         </connections>
                                                                     </textFieldCell>
                                                                     <connections>
-                                                                        <action selector="handleGenreEdit:" target="XfG-lQ-9wD" id="heo-4g-OJD"/>
+                                                                        <binding destination="1WT-4U-Vp9" name="value" keyPath="objectValue.genre" id="53p-Fy-SLn"/>
+                                                                        <outlet property="delegate" destination="XfG-lQ-9wD" id="gYT-wH-lPW"/>
                                                                     </connections>
                                                                 </textField>
                                                             </subviews>
@@ -1149,6 +1147,10 @@ CA
                                                                             <binding destination="seL-7e-u6t" name="value" keyPath="objectValue.tempo" id="5oS-1V-dnc"/>
                                                                         </connections>
                                                                     </textFieldCell>
+                                                                    <connections>
+                                                                        <binding destination="seL-7e-u6t" name="value" keyPath="objectValue.tempo" id="uL9-Qf-3Pc"/>
+                                                                        <outlet property="delegate" destination="XfG-lQ-9wD" id="KcV-0J-ZWa"/>
+                                                                    </connections>
                                                                 </textField>
                                                             </subviews>
                                                             <constraints>
@@ -1174,6 +1176,7 @@ CA
                                                 <binding destination="JdN-Fp-fVn" name="content" keyPath="arrangedObjects" id="fJa-SY-HUS"/>
                                                 <binding destination="JdN-Fp-fVn" name="selectionIndexes" keyPath="selectionIndexes" previousBinding="fJa-SY-HUS" id="8Eu-1M-gU9"/>
                                                 <binding destination="JdN-Fp-fVn" name="sortDescriptors" keyPath="sortDescriptors" previousBinding="8Eu-1M-gU9" id="xny-b3-KXj"/>
+                                                <outlet property="delegate" destination="XfG-lQ-9wD" id="DMj-Ia-Y9u"/>
                                             </connections>
                                         </tableView>
                                     </subviews>
