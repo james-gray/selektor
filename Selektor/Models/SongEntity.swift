@@ -21,7 +21,7 @@ enum AnalysisState: Int {
 class SongEntity: SelektorObject {
 
   // MARK: Properties
-  @NSManaged dynamic var analyzed: NSNumber = AnalysisState.ToDo
+  @NSManaged dynamic var analyzed: NSNumber?
   @NSManaged dynamic var dateAdded: NSDate?
   @NSManaged dynamic var duration: NSNumber?
   @NSManaged dynamic var filename: String?
@@ -42,5 +42,6 @@ class SongEntity: SelektorObject {
 
     // Set dateAdded to the current date on object creation
     dateAdded = NSDate()
+    analyzed = AnalysisState.ToDo.rawValue
   }
 }
