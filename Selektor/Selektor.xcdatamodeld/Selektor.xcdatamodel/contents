@@ -20,75 +20,27 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="TimbreVector" syncable="YES">
+    <entity name="TimbreVector" representedClassName="TimbreVectorEntity" syncable="YES">
         <attribute name="mammCentroid" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="mammFlux" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="mammMFCC0" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="mammMFCC1" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="mammMFCC2" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="mammMFCC3" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="mammMFCC4" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="mammMFCC5" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="mammMFCC6" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="mammMFCC7" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="mammMFCC8" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="mammMFCC9" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="mammMFCC10" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="mammMFCC11" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="mammMFCC12" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="mammMFCCString" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mammRolloff" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="masmCentroid" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="masmFlux" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="masmMFCC0" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="masmMFCC1" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="masmMFCC2" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="masmMFCC3" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="masmMFCC4" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="masmMFCC5" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="masmMFCC6" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="masmMFCC7" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="masmMFCC8" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="masmMFCC9" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="masmMFCC10" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="masmMFCC11" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="masmMFCC12" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="masmMFCCString" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="masmRolloff" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="sammCentroid" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="sammFlux" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="sammMFCC0" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="sammMFCC1" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="sammMFCC2" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="sammMFCC3" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="sammMFCC4" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="sammMFCC5" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="sammMFCC6" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="sammMFCC7" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="sammMFCC8" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="sammMFCC9" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="sammMFCC10" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="sammMFCC11" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="sammMFCC12" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="sammMFCCString" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sammRolloff" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="sasmCentroid" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="sasmFlux" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="sasmMFCC0" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="sasmMFCC1" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="sasmMFCC2" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="sasmMFCC3" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="sasmMFCC4" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="sasmMFCC5" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="sasmMFCC6" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="sasmMFCC7" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="sasmMFCC8" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="sasmMFCC9" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="sasmMFCC10" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="sasmMFCC11" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="sasmMFCC12" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="sasmMFCCString" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sasmRolloff" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <relationship name="song" optional="YES" maxCount="1" deletionRule="Deny" destinationEntity="Song" inverseName="timbre" inverseEntity="Song" syncable="YES"/>
     </entity>
     <elements>
         <element name="Song" positionX="-378" positionY="-340" width="128" height="240"/>
-        <element name="TimbreVector" positionX="-378" positionY="-252" width="128" height="1020"/>
+        <element name="TimbreVector" positionX="-378" positionY="-252" width="128" height="300"/>
     </elements>
 </model>
