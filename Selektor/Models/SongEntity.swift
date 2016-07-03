@@ -12,6 +12,9 @@ import Cocoa
 import ObjectiveC
 import QuartzCore
 
+let mirexPath: String? = NSBundle.mainBundle().pathForResource("mirex_extract", ofType: nil, inDirectory: "Lib/marsyas/bin")
+let ffmpegPath: String? = NSBundle.mainBundle().pathForResource("ffmpeg", ofType: nil, inDirectory: "Lib/ffmpeg")
+
 @objc(SongEntity)
 class SongEntity: SelektorObject {
 
@@ -29,7 +32,19 @@ class SongEntity: SelektorObject {
   @NSManaged dynamic var label: String?
   @NSManaged dynamic var timbreVectors: NSSet?
 
+  override class func getEntityName() -> String {
+    return "Song"
+  }
+
+  override func awakeFromInsert() {
+    super.awakeFromInsert()
+
+    // Set default values for NSManaged properties
+    dateAdded = NSDate()
+  }
+
   // MARK: Convenience properties
+
   dynamic var relativeFilename: String? {
     get { return NSURL(fileURLWithPath: self.filename!).lastPathComponent ?? nil }
   }
@@ -60,6 +75,7 @@ class SongEntity: SelektorObject {
 
   // MARK: Convenience getter and setter functions for retrieving/storing timbre vectors
   // of a given summary type
+
   func getTimbreForSummaryType(summaryType: SummaryType) -> TimbreVectorEntity? {
     return timbreVectorSet.filter({
       ($0 as! TimbreVectorEntity).summaryType == summaryType.rawValue
@@ -80,6 +96,20 @@ class SongEntity: SelektorObject {
       // Remove the old vector for the summary type
       timbreVectorSet.removeObject(oldVector)
     }
+  }
+
+  // MARK: Analysis Functions
+
+  func createTimbreVectorFromFeaturesArray(features: [Double]) -> TimbreVectorEntity {
+    let dc = self.appDelegate.dc
+    let vector: TimbreVectorEntity = dc.createEntity()
+
+    vector.centroid = features[0]
+    vector.rolloff = features[1]
+    vector.flux = features[2]
+    vector.mfcc = Array(features[3...11])
+
+    return vector
   }
 
   // MARK: Store
@@ -114,26 +144,91 @@ class SongEntity: SelektorObject {
     }
   }
 
-  func createTimbreVectorFromFeaturesArray(features: [Double]) -> TimbreVectorEntity {
-    let dc = delegate.dc
-    let vector: TimbreVectorEntity = dc.createEntity()
+  func getOrCreateWavURL() -> (NSURL, Bool)? {
+    let tempDir = self.appDelegate.tempDir
+    var wavURL: NSURL
 
-    vector.centroid = features[0]
-    vector.rolloff = features[1]
-    vector.flux = features[2]
-    vector.mfcc = Array(features[3...11])
+    let isWav = NSURL(fileURLWithPath: self.filename!).pathExtension == "wav"
+    if !isWav {
+      print("Converting \(self.relativeFilename!) to .wav")
 
-    return vector
+      // Use ffmpeg to create a temporary wav copy of the song
+      guard let ffmpegPath = ffmpegPath else {
+        print("Unable to locate the ffmpeg binary")
+        return nil
+      }
+
+      let filename = NSURL(fileURLWithPath: self.filename!).URLByDeletingPathExtension?.lastPathComponent
+      wavURL = tempDir.URLByAppendingPathComponent(filename! + "_temp.wav")
+
+      let task = NSTask()
+      task.launchPath = ffmpegPath
+      task.arguments = ["-i", self.filename!, wavURL.path!]
+      task.launch()
+      task.waitUntilExit()
+    } else {
+      // Simply use the song's file path as the WAV URL
+      wavURL = NSURL(fileURLWithPath: self.filename!)
+    }
+
+    // Invert the boolean to indicate whether or not we had to convert the file
+    let converted = !isWav
+    return (wavURL, converted)
   }
 
-  override class func getEntityName() -> String {
-    return "Song"
-  }
+  func analyze() {
+    // Get (or create via conversion) the WAV URL for the song
+    guard let (wavURL, converted) = self.getOrCreateWavURL() else {
+      // There was some issue creating the Wav file - most likely the
+      // FFMPEG binary couldn't be located
+      return
+    }
+    let tempDir = self.appDelegate.tempDir
+    let fileManager = self.appDelegate.fileManager
 
-  override func awakeFromInsert() {
-    super.awakeFromInsert()
+    // Write a temporary .mf file containing the song's URL for Marsyas
+    let tempMfURL = tempDir.URLByAppendingPathComponent("\(self.relativeFilename!).mf")
+    do {
+      try wavURL.path!.writeToURL(tempMfURL, atomically: false, encoding: NSUTF8StringEncoding)
+    } catch {
+      print("Error writing filename to temporary .mf file")
+      return
+    }
 
-    // Set default values for NSManaged properties
-    dateAdded = NSDate()
+    guard let mirexPath = mirexPath else {
+      print("Unable to locate the mirex_extract binary")
+      return
+    }
+    let tempArffURL = tempDir.URLByAppendingPathComponent("\(self.relativeFilename!).arff")
+
+    // Execute the mirex_extract command to analyze the song
+    let task = NSTask()
+    task.launchPath = mirexPath
+    task.arguments = [tempMfURL.path!, tempArffURL.path!]
+    task.launch()
+    task.waitUntilExit()
+
+    // Store the timbre data in the song object
+    self.store64DimensionalTimbreVector(tempArffURL)
+
+    // Clean up temporary files. Wav files are huge - we don't want them cluttering
+    // up the user's disk until the app quits!
+    do {
+      try fileManager.removeItemAtURL(tempMfURL)
+      try fileManager.removeItemAtURL(tempArffURL)
+    } catch {
+      print("Could not remove files at \(tempMfURL), \(tempArffURL): \(error)")
+    }
+
+    if converted {
+      do {
+        try fileManager.removeItemAtURL(wavURL)
+      } catch {
+        print("Could not remove file at \(wavURL): \(error)")
+      }
+    }
+
+    // Mark this song as analyzed
+    self.analyzed = true
   }
 }

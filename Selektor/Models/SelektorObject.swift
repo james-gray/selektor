@@ -20,7 +20,7 @@ class SelektorObject: NSManagedObject {
   // MARK: Properties
   @NSManaged var name: String?
 
-  let delegate = NSApplication.sharedApplication().delegate as! AppDelegate
+  let appDelegate = NSApplication.sharedApplication().delegate as! AppDelegate
 
   // XXX: Hack due to Swift's lack of support for class vars as of yet.
   // A `class func` is effectively equivalent to a `static func`, but can be
