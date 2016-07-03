@@ -170,6 +170,7 @@ class ViewController: NSViewController {
         (returnCode) -> Void in
         if returnCode == NSAlertSecondButtonReturn {
           self.songsController.removeObjectsAtArrangedObjectIndexes(self.songsController.selectionIndexes)
+          self.appDelegate.dc.save()
         }
       })
     }
