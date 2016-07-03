@@ -126,7 +126,9 @@ class ViewController: NSViewController {
     dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.rawValue), 0)) {
       var totalAnalyzed = 0
       for song in songsToAnalyze {
-        song.analyze()
+        if (song.managedObjectContext != nil) {
+          song.analyze()
+        }
         totalAnalyzed += 1
         if totalAnalyzed % 10 == 0 {
           dispatch_async(dispatch_get_main_queue()) {
