@@ -12,11 +12,6 @@ import Cocoa
 import ObjectiveC
 import QuartzCore
 
-// Enumeration to track song analysis state
-enum AnalysisState: Int {
-  case ToDo = 0, InProgress, Done
-}
-
 @objc(SongEntity)
 class SongEntity: SelektorObject {
 
@@ -89,6 +84,5 @@ class SongEntity: SelektorObject {
 
     // Set default values for NSManaged properties
     dateAdded = NSDate()
-    analyzed = AnalysisState.ToDo.rawValue
   }
 }
