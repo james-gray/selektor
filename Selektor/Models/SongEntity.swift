@@ -14,6 +14,7 @@ import QuartzCore
 
 let mirexPath: String? = NSBundle.mainBundle().pathForResource("mirex_extract", ofType: nil, inDirectory: "Lib/marsyas/bin")
 let ffmpegPath: String? = NSBundle.mainBundle().pathForResource("ffmpeg", ofType: nil, inDirectory: "Lib/ffmpeg")
+let tempoPath: String? = NSBundle.mainBundle().pathForResource("tempo", ofType: nil, inDirectory: "Lib/marsyas/bin")
 
 @objc(SongEntity)
 class SongEntity: SelektorObject {
@@ -144,6 +145,46 @@ class SongEntity: SelektorObject {
     }
   }
 
+  func computeTimbreVector(wavURL: NSURL) {
+    guard let mirexPath = mirexPath else {
+      print("Unable to locate the mirex_extract binary")
+      return
+    }
+
+    let tempDir = self.appDelegate.tempDir
+    let fileManager = self.appDelegate.fileManager
+
+    let tempMfURL = tempDir.URLByAppendingPathComponent("\(self.relativeFilename!).mf")
+    let tempArffURL = tempDir.URLByAppendingPathComponent("\(self.relativeFilename!).arff")
+
+    // Write a temporary .mf file containing the song's URL for Marsyas
+    do {
+      try wavURL.path!.writeToURL(tempMfURL, atomically: false, encoding: NSUTF8StringEncoding)
+    } catch {
+      print("Error writing filename to temporary .mf file")
+      return
+    }
+
+    // Execute the mirex_extract command to analyze the song
+    let task = NSTask()
+    task.launchPath = mirexPath
+    task.arguments = [tempMfURL.path!, tempArffURL.path!]
+    task.launch()
+    task.waitUntilExit()
+
+    // Store the timbre data in the song object
+    self.store64DimensionalTimbreVector(tempArffURL)
+
+    // Clean up temporary files. Wav files are huge - we don't want them cluttering
+    // up the user's disk until the app quits!
+    do {
+      try fileManager.removeItemAtURL(tempMfURL)
+      try fileManager.removeItemAtURL(tempArffURL)
+    } catch {
+      print("Could not remove files at \(tempMfURL), \(tempArffURL): \(error)")
+    }
+  }
+
   func getOrCreateWavURL() -> (NSURL, Bool)? {
     let tempDir = self.appDelegate.tempDir
     var wavURL: NSURL
@@ -183,46 +224,14 @@ class SongEntity: SelektorObject {
       // FFMPEG binary couldn't be located
       return
     }
-    let tempDir = self.appDelegate.tempDir
-    let fileManager = self.appDelegate.fileManager
 
-    // Write a temporary .mf file containing the song's URL for Marsyas
-    let tempMfURL = tempDir.URLByAppendingPathComponent("\(self.relativeFilename!).mf")
-    do {
-      try wavURL.path!.writeToURL(tempMfURL, atomically: false, encoding: NSUTF8StringEncoding)
-    } catch {
-      print("Error writing filename to temporary .mf file")
-      return
-    }
+    // Compute timbre vector and (if necessary) tempo
+    self.computeTimbreVector(wavURL)
 
-    guard let mirexPath = mirexPath else {
-      print("Unable to locate the mirex_extract binary")
-      return
-    }
-    let tempArffURL = tempDir.URLByAppendingPathComponent("\(self.relativeFilename!).arff")
-
-    // Execute the mirex_extract command to analyze the song
-    let task = NSTask()
-    task.launchPath = mirexPath
-    task.arguments = [tempMfURL.path!, tempArffURL.path!]
-    task.launch()
-    task.waitUntilExit()
-
-    // Store the timbre data in the song object
-    self.store64DimensionalTimbreVector(tempArffURL)
-
-    // Clean up temporary files. Wav files are huge - we don't want them cluttering
-    // up the user's disk until the app quits!
-    do {
-      try fileManager.removeItemAtURL(tempMfURL)
-      try fileManager.removeItemAtURL(tempArffURL)
-    } catch {
-      print("Could not remove files at \(tempMfURL), \(tempArffURL): \(error)")
-    }
-
+    // Delete the WAV file if we converted from another format
     if converted {
       do {
-        try fileManager.removeItemAtURL(wavURL)
+        try self.appDelegate.fileManager.removeItemAtURL(wavURL)
       } catch {
         print("Could not remove file at \(wavURL): \(error)")
       }
