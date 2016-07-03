@@ -122,9 +122,18 @@ class ViewController: NSViewController {
     let songsToAnalyze = self.songs.filter { Bool($0.analyzed) == false }
 
     dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.rawValue), 0)) {
+      var totalAnalyzed = 0
       for song in songsToAnalyze {
         self.analyzeSong(song)
         song.analyzed = true
+        totalAnalyzed += 1
+        if totalAnalyzed % 10 == 0 {
+          dispatch_async(dispatch_get_main_queue()) {
+            // TODO: Add some sort of UI indicator for song analysis in the
+            // table - green checkmark, perhaps?
+            self.songsTableView.reloadData()
+          }
+        }
       }
       self.appDelegate.dc.save()
     }
