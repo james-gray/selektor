@@ -13,6 +13,7 @@
 		4A0402A91CF7F18F0031011A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A0402A81CF7F18F0031011A /* Assets.xcassets */; };
 		4A0402AC1CF7F18F0031011A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A0402AA1CF7F18F0031011A /* Main.storyboard */; };
 		4A0402B71CF7F18F0031011A /* SelektorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0402B61CF7F18F0031011A /* SelektorTests.swift */; };
+		4A5070431D2832E7007208BC /* Lib in Resources */ = {isa = PBXBuildFile; fileRef = 4A5070421D2832E7007208BC /* Lib */; };
 		4A51B7C31D18E7D800F7D9EE /* SelektorAVMetadataItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A51B7C21D18E7D800F7D9EE /* SelektorAVMetadataItem.swift */; };
 		4A51B7C71D18FE6A00F7D9EE /* MetadataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A51B7C61D18FE6A00F7D9EE /* MetadataParser.swift */; };
 		4A5750301CFA9F89007ED42C /* SongEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5750201CFA9F89007ED42C /* SongEntity.swift */; };
@@ -67,6 +68,7 @@
 		4A0402B21CF7F18F0031011A /* SelektorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SelektorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A0402B61CF7F18F0031011A /* SelektorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelektorTests.swift; sourceTree = "<group>"; };
 		4A0402B81CF7F18F0031011A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4A5070421D2832E7007208BC /* Lib */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Lib; sourceTree = "<group>"; };
 		4A51B7C21D18E7D800F7D9EE /* SelektorAVMetadataItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelektorAVMetadataItem.swift; sourceTree = "<group>"; };
 		4A51B7C61D18FE6A00F7D9EE /* MetadataParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetadataParser.swift; sourceTree = "<group>"; };
 		4A5750201CFA9F89007ED42C /* SongEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SongEntity.swift; path = Models/SongEntity.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 		4A0402A01CF7F18F0031011A /* Selektor */ = {
 			isa = PBXGroup;
 			children = (
+				4A5070421D2832E7007208BC /* Lib */,
 				4AFA945B1D1BB04700F8102A /* Transformers */,
 				4A0AD10E1D0A7D5100DC98E4 /* Views */,
 				4A0402A11CF7F18F0031011A /* AppDelegate.swift */,
@@ -313,6 +316,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A5070431D2832E7007208BC /* Lib in Resources */,
 				4A0402A91CF7F18F0031011A /* Assets.xcassets in Resources */,
 				4A0402AC1CF7F18F0031011A /* Main.storyboard in Resources */,
 			);
