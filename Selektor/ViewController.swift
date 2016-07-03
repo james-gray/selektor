@@ -122,10 +122,12 @@ class ViewController: NSViewController {
   func analyzeSongs() {
     let songsToAnalyze = self.songs.filter { Bool($0.analyzed) == false }
 
-    for song in songsToAnalyze {
-      dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.rawValue), 0)) {
+    dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.rawValue), 0)) {
+      for song in songsToAnalyze {
         self.analyzeSong(song)
+        song.analyzed = true
       }
+      self.appDelegate.dc.save()
     }
   }
 
