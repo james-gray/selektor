@@ -16,7 +16,8 @@ import QuartzCore
 class SongEntity: SelektorObject {
 
   // MARK: Properties
-  @NSManaged dynamic var analyzed: NSNumber?
+  let delegate = NSApplication.sharedApplication().delegate as! AppDelegate
+  @NSManaged dynamic var analyzed: NSNumber
   @NSManaged dynamic var dateAdded: NSDate?
   @NSManaged dynamic var duration: NSNumber?
   @NSManaged dynamic var filename: String?
