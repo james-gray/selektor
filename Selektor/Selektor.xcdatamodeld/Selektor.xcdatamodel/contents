@@ -20,12 +20,12 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="TimbreVector" representedClassName="TimbreVectorEntity" parentEntity="Song" syncable="YES">
+    <entity name="TimbreVector" representedClassName="TimbreVectorEntity" syncable="YES">
         <attribute name="centroid" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="flux" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="mfccString" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="rolloff" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="summaryType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="song" optional="YES" maxCount="1" deletionRule="Deny" destinationEntity="Song" inverseName="timbreVectors" inverseEntity="Song" syncable="YES"/>
     </entity>
     <elements>
