@@ -109,6 +109,7 @@ class ViewController: NSViewController {
     song.name = meta["name"] as? String ?? url.lastPathComponent
     song.filename = url.path
     song.tempo = meta["tempo"] as? Int ?? 0
+    song.duration = Int(asset.duration.seconds)
     song.artist = meta["artist"] as? String ?? "Unknown Artist"
     song.album = meta["album"] as? String ?? "Unknown Album"
     song.genre = meta["genre"] as? String

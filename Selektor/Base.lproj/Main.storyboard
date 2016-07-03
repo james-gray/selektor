@@ -811,16 +811,16 @@
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VQr-Mx-A87">
                                             <rect key="frame" x="90" y="45" width="177" height="17"/>
-                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="Label" id="HfR-W7-Tf2">
-                                                <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="BRj-qj-lfN"/>
+                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Label" id="HfR-W7-Tf2">
                                                 <font key="font" metaFont="systemBold"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
-                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.duration" id="wSd-3C-VZJ">
+                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.duration" id="Qpb-cs-muZ">
                                                     <dictionary key="options">
                                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                                        <string key="NSValueTransformerName">DurationTransformer</string>
                                                     </dictionary>
                                                 </binding>
                                             </connections>

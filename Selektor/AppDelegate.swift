@@ -18,8 +18,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   override class func initialize() {
     let filenameTransformer = FilenameTransformer()
     let countTransformer = CountTransformer()
+    let durationTransformer = DurationTransformer()
+
     NSValueTransformer.setValueTransformer(filenameTransformer, forName: "FilenameTransformer")
     NSValueTransformer.setValueTransformer(countTransformer, forName: "CountTransformer")
+    NSValueTransformer.setValueTransformer(durationTransformer, forName: "DurationTransformer")
   }
 
   func applicationDidFinishLaunching(aNotification: NSNotification) {

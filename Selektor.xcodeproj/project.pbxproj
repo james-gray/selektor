@@ -13,6 +13,7 @@
 		4A0402A91CF7F18F0031011A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A0402A81CF7F18F0031011A /* Assets.xcassets */; };
 		4A0402AC1CF7F18F0031011A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A0402AA1CF7F18F0031011A /* Main.storyboard */; };
 		4A0402B71CF7F18F0031011A /* SelektorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0402B61CF7F18F0031011A /* SelektorTests.swift */; };
+		4A0DBFD01D29D85A004EB584 /* DurationTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0DBFCF1D29D85A004EB584 /* DurationTransformer.swift */; };
 		4A5070431D2832E7007208BC /* Lib in Resources */ = {isa = PBXBuildFile; fileRef = 4A5070421D2832E7007208BC /* Lib */; };
 		4A51B7C31D18E7D800F7D9EE /* SelektorAVMetadataItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A51B7C21D18E7D800F7D9EE /* SelektorAVMetadataItem.swift */; };
 		4A51B7C71D18FE6A00F7D9EE /* MetadataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A51B7C61D18FE6A00F7D9EE /* MetadataParser.swift */; };
@@ -68,6 +69,7 @@
 		4A0402B21CF7F18F0031011A /* SelektorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SelektorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A0402B61CF7F18F0031011A /* SelektorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelektorTests.swift; sourceTree = "<group>"; };
 		4A0402B81CF7F18F0031011A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4A0DBFCF1D29D85A004EB584 /* DurationTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DurationTransformer.swift; path = Transformers/DurationTransformer.swift; sourceTree = "<group>"; };
 		4A5070421D2832E7007208BC /* Lib */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Lib; sourceTree = "<group>"; };
 		4A51B7C21D18E7D800F7D9EE /* SelektorAVMetadataItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelektorAVMetadataItem.swift; sourceTree = "<group>"; };
 		4A51B7C61D18FE6A00F7D9EE /* MetadataParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetadataParser.swift; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 			children = (
 				4AFA94581D1BB03B00F8102A /* CountTransformer.swift */,
 				4AFA945C1D1BB05400F8102A /* FilenameTransformer.swift */,
+				4A0DBFCF1D29D85A004EB584 /* DurationTransformer.swift */,
 			);
 			name = Transformers;
 			sourceTree = "<group>";
@@ -351,6 +354,7 @@
 				4AFA945D1D1BB05400F8102A /* FilenameTransformer.swift in Sources */,
 				4AED17681D26E27D007F2908 /* TimbreVectorEntity.swift in Sources */,
 				4A51B7C31D18E7D800F7D9EE /* SelektorAVMetadataItem.swift in Sources */,
+				4A0DBFD01D29D85A004EB584 /* DurationTransformer.swift in Sources */,
 				4AFA94591D1BB03B00F8102A /* CountTransformer.swift in Sources */,
 				4AAA2E361CFA39C00001D767 /* DataController.swift in Sources */,
 				4A57503C1CFA9FBF007ED42C /* SelektorObject.swift in Sources */,
