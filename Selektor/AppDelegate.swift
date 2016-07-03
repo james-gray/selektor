@@ -58,8 +58,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   }
 
   func applicationShouldTerminate(sender: NSApplication) -> NSApplicationTerminateReply {
-    // Save changes in the application's managed object context before the application terminates.
+    // Clean up tempfiles
+    do {
+      let tempFiles = try fileManager.contentsOfDirectoryAtPath(NSTemporaryDirectory())
+      for tempFile in tempFiles {
+        let path = String.init(format: "%@%@", NSTemporaryDirectory(), tempFile)
+        try fileManager.removeItemAtPath(path)
+      }
+    } catch {
+      print(error)
+    }
 
+    // Save changes in the application's managed object context before the application terminates.
     if !managedObjectContext.commitEditing() {
       NSLog("\(NSStringFromClass(self.dynamicType)) unable to commit editing to terminate")
       return .TerminateCancel
