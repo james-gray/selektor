@@ -28,10 +28,17 @@ class SongEntity: SelektorObject {
   @NSManaged dynamic var genre: String?
   @NSManaged dynamic var key: String?
   @NSManaged dynamic var label: String?
-  @NSManaged dynamic var timbres: NSSet?
+  @NSManaged dynamic var timbreVectors: NSSet?
 
-  // MARK: Convenience getters for obtaining timbre vectors of different
-  // summarization types
+  // MARK: Convenience properties
+  dynamic var relativeFilename: String? {
+    get { return NSURL(fileURLWithPath: self.filename!).lastPathComponent ?? nil }
+  }
+
+  dynamic var timbreVectorSet: NSMutableSet {
+    get { return self.mutableSetValueForKey("timbreVectors") }
+  }
+
   dynamic var mammTimbre: TimbreVectorEntity? {
     get { return self.getTimbreForSummaryType(SummaryType.MeanAccMeanMem) }
     set { self.setTimbreForSummaryType(newValue!, summaryType: SummaryType.MeanAccMeanMem) }
@@ -52,28 +59,72 @@ class SongEntity: SelektorObject {
     set { self.setTimbreForSummaryType(newValue!, summaryType: SummaryType.StdAccStdMem) }
   }
 
+  // MARK: Convenience getter and setter functions for retrieving/storing timbre vectors
+  // of a given summary type
   func getTimbreForSummaryType(summaryType: SummaryType) -> TimbreVectorEntity? {
-    return timbres!.filter({
+    return timbreVectorSet.filter({
       ($0 as! TimbreVectorEntity).summaryType == summaryType.rawValue
     }).first as? TimbreVectorEntity
   }
 
   func setTimbreForSummaryType(newVector: TimbreVectorEntity, summaryType: SummaryType) {
-    let timbresSet = self.mutableSetValueForKey("timbres")
     // Remove old timbre vector if necessary
-    self.removeTimbreForSummaryType(timbresSet, summaryType: summaryType)
+    self.removeTimbreForSummaryType(summaryType)
 
     // Set the summary type for the new vector and add it to the timbres set
     newVector.summaryType = summaryType.rawValue
-    timbresSet.addObject(newVector)
+    timbreVectorSet.addObject(newVector)
   }
 
-  func removeTimbreForSummaryType(timbresSet: NSMutableSet?, summaryType: SummaryType) {
-    let timbresSet = timbresSet ?? self.mutableSetValueForKey("timbres")
+  func removeTimbreForSummaryType(summaryType: SummaryType) {
     if let oldVector = self.getTimbreForSummaryType(summaryType) {
       // Remove the old vector for the summary type
-      timbresSet.removeObject(oldVector)
+      timbreVectorSet.removeObject(oldVector)
     }
+  }
+
+  // MARK: Store
+  func store64DimensionalTimbreVector(arffFileURL: NSURL) {
+    do {
+      let arffContents = try String(contentsOfURL: arffFileURL)
+      let arffLines = arffContents.componentsSeparatedByString("\n")
+
+      // Extract the vector from the ARFF file.
+      // Since only one song was analyzed, only one vector will be contained
+      // in the file, so we always know the position of the vector relative to
+      // the end of the file.
+      let vectorString = arffLines[arffLines.endIndex - 2]
+      var stringFeatures = vectorString.componentsSeparatedByString(",")
+      stringFeatures.removeLast(1) // Remove the file label
+      let features = (stringFeatures.map({ Double($0)! }) as [Double]) // Cast strings to doubles
+
+      // Split array into 16-dimensional vectors for each summary type
+      let mammFeatures = Array(features[0...15])
+      let masmFeatures = Array(features[16...31])
+      let sammFeatures = Array(features[32...47])
+      let sasmFeatures = Array(features[48...63])
+
+      // Set up vectors
+      self.mammTimbre = self.createTimbreVectorFromFeaturesArray(mammFeatures)
+      self.masmTimbre = self.createTimbreVectorFromFeaturesArray(masmFeatures)
+      self.sammTimbre = self.createTimbreVectorFromFeaturesArray(sammFeatures)
+      self.sasmTimbre = self.createTimbreVectorFromFeaturesArray(sasmFeatures)
+
+    } catch {
+      print("Error reading from ARFF file at \(arffFileURL)")
+    }
+  }
+
+  func createTimbreVectorFromFeaturesArray(features: [Double]) -> TimbreVectorEntity {
+    let dc = delegate.dc
+    let vector: TimbreVectorEntity = dc.createEntity()
+
+    vector.centroid = features[0]
+    vector.rolloff = features[1]
+    vector.flux = features[2]
+    vector.mfcc = Array(features[3...11])
+
+    return vector
   }
 
   override class func getEntityName() -> String {
