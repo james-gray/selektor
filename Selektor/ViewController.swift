@@ -131,7 +131,7 @@ class ViewController: NSViewController {
     }
   }
 
-  func getOrCreateWavURLForSong(song: SongEntity) -> (NSURL, Bool) {
+  func getOrCreateWavURLForSong(song: SongEntity) -> (NSURL, Bool)? {
     var wavURL: NSURL
 
     let isWav = NSURL(fileURLWithPath: song.filename!).pathExtension == "wav"
@@ -140,7 +140,8 @@ class ViewController: NSViewController {
 
       // Use ffmpeg to create a temporary wav copy of the song
       guard let ffmpegPath = self.ffmpegPath else {
-        fatalError("Unable to locate the ffmpeg binary")
+        print("Unable to locate the ffmpeg binary")
+        return nil
       }
 
       let filename = NSURL(fileURLWithPath: song.filename!).URLByDeletingPathExtension?.lastPathComponent
@@ -155,7 +156,10 @@ class ViewController: NSViewController {
       // Simply use the song's file path as the WAV URL
       wavURL = NSURL(fileURLWithPath: song.filename!)
     }
-    return (wavURL, isWav)
+
+    // Invert the boolean to indicate whether or not we had to convert the file
+    let converted = !isWav
+    return (wavURL, converted)
   }
 
   func analyzeSong(song: SongEntity) {
@@ -163,34 +167,39 @@ class ViewController: NSViewController {
     let tempDir = NSURL(fileURLWithPath: NSTemporaryDirectory() as String)
 
     // Get (or create via conversion) the WAV URL for the song
-    let (wavURL, isWav) = getOrCreateWavURLForSong(song)
-    let converted = !isWav
+    guard let (wavURL, converted) = getOrCreateWavURLForSong(song) else {
+      // There was some issue creating the Wav file - most likely the
+      // FFMPEG binary couldn't be located
+      return
+    }
 
     // Write a temporary .mf file containing the song's URL for Marsyas
     let tempMfURL = tempDir.URLByAppendingPathComponent("\(song.relativeFilename!).mf")
     do {
       try wavURL.path!.writeToURL(tempMfURL, atomically: false, encoding: NSUTF8StringEncoding)
     } catch {
-      fatalError("Error writing filename to temporary .mf file")
+      print("Error writing filename to temporary .mf file")
+      return
     }
 
     guard let mirexPath = self.mirexPath else {
-      fatalError("Unable to locate the mirex_extract binary")
+      print("Unable to locate the mirex_extract binary")
+      return
     }
-
     let tempArffURL = tempDir.URLByAppendingPathComponent("\(song.relativeFilename!).arff")
 
+    // Execute the mirex_extract command to analyze the song
     task = NSTask()
     task.launchPath = mirexPath
     task.arguments = [tempMfURL.path!, tempArffURL.path!]
-
     task.launch()
     task.waitUntilExit()
 
     // Store the timbre data in the song object
     song.store64DimensionalTimbreVector(tempArffURL)
 
-    // Clean up temporary files
+    // Clean up temporary files. Wav files are huge - we don't want them cluttering
+    // up the user's disk until the app quits!
     do {
       try fileManager.removeItemAtURL(tempMfURL)
       try fileManager.removeItemAtURL(tempArffURL)
