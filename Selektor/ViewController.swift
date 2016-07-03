@@ -21,6 +21,7 @@ class ViewController: NSViewController {
   // Data controller acts as the interface to the Core Data stack, allowing
   // interaction with the database.
   let appDelegate = NSApplication.sharedApplication().delegate as! AppDelegate
+  let fileManager = NSFileManager.defaultManager()
 
   lazy var managedObjectContext: NSManagedObjectContext = {
     return (NSApplication.sharedApplication().delegate
@@ -34,7 +35,10 @@ class ViewController: NSViewController {
   var songs = [SongEntity]()
 
   // Set of supported audio file extensions
-  let validExtensions: Set<String> = ["mp3", "m4a", "wav", "m3u", "wma", "aif", "ogg"]
+  let validExtensions: Set<String> = ["wav", "mp3", "m4a", "m3u", "wma", "aif", "ogg"]
+
+  let mirexPath: String? = NSBundle.mainBundle().pathForResource("mirex_extract", ofType: nil, inDirectory: "Lib/marsyas/bin")
+  let ffmpegPath: String? = NSBundle.mainBundle().pathForResource("ffmpeg", ofType: nil, inDirectory: "Lib/ffmpeg")
 
   // MARK: UI Elements
   lazy var openPanel: NSOpenPanel = {
@@ -68,6 +72,9 @@ class ViewController: NSViewController {
     dispatch_async(dispatch_get_main_queue()) {
       self.songs = self.appDelegate.dc.fetchEntities()
       self.songsController.content = self.songs
+      if self.songs.count > 0 {
+        self.analyzeSongs() // Process any un-analyzed songs
+      }
     }
   }
 
@@ -112,21 +119,106 @@ class ViewController: NSViewController {
     self.songs.append(song)
   }
 
+  func analyzeSongs() {
+    let songsToAnalyze = self.songs.filter { Bool($0.analyzed) == false }
+
+    for song in songsToAnalyze {
+      dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.rawValue), 0)) {
+        self.analyzeSong(song)
+      }
+    }
+  }
+
+  func getOrCreateWavURLForSong(song: SongEntity) -> (NSURL, Bool) {
+    var wavURL: NSURL
+
+    let isWav = NSURL(fileURLWithPath: song.filename!).pathExtension == "wav"
+    if !isWav {
+      print("Converting \(song.relativeFilename!) to .wav")
+
+      // Use ffmpeg to create a temporary wav copy of the song
+      guard let ffmpegPath = self.ffmpegPath else {
+        fatalError("Unable to locate the ffmpeg binary")
+      }
+
+      let filename = NSURL(fileURLWithPath: song.filename!).URLByDeletingPathExtension?.lastPathComponent
+      wavURL = NSURL(fileURLWithPath: NSTemporaryDirectory() as String).URLByAppendingPathComponent(filename! + "_temp.wav")
+
+      let task = NSTask()
+      task.launchPath = ffmpegPath
+      task.arguments = ["-i", song.filename!, wavURL.path!]
+      task.launch()
+      task.waitUntilExit()
+    } else {
+      // Simply use the song's file path as the WAV URL
+      wavURL = NSURL(fileURLWithPath: song.filename!)
+    }
+    return (wavURL, isWav)
+  }
+
+  func analyzeSong(song: SongEntity) {
+    var task: NSTask
+    let tempDir = NSURL(fileURLWithPath: NSTemporaryDirectory() as String)
+
+    // Get (or create via conversion) the WAV URL for the song
+    let (wavURL, isWav) = getOrCreateWavURLForSong(song)
+    let converted = !isWav
+
+    // Write a temporary .mf file containing the song's URL for Marsyas
+    let tempMfURL = tempDir.URLByAppendingPathComponent("\(song.relativeFilename!).mf")
+    do {
+      try wavURL.path!.writeToURL(tempMfURL, atomically: false, encoding: NSUTF8StringEncoding)
+    } catch {
+      fatalError("Error writing filename to temporary .mf file")
+    }
+
+    guard let mirexPath = self.mirexPath else {
+      fatalError("Unable to locate the mirex_extract binary")
+    }
+
+    let tempArffURL = tempDir.URLByAppendingPathComponent("\(song.relativeFilename!).arff")
+
+    task = NSTask()
+    task.launchPath = mirexPath
+    task.arguments = [tempMfURL.path!, tempArffURL.path!]
+
+    task.launch()
+    task.waitUntilExit()
+
+    // Store the timbre data in the song object
+    song.store64DimensionalTimbreVector(tempArffURL)
+
+    // Clean up temporary files
+    do {
+      try fileManager.removeItemAtURL(tempMfURL)
+      try fileManager.removeItemAtURL(tempArffURL)
+    } catch {
+      print("Could not remove files at \(tempMfURL), \(tempArffURL): \(error)")
+    }
+
+    if converted {
+      do {
+        try fileManager.removeItemAtURL(wavURL)
+      } catch {
+        print("Could not remove file at \(wavURL): \(error)")
+      }
+    }
+  }
+
   // MARK: Actions
   @IBAction func chooseMusicFolder(sender: AnyObject) {
-    if self.openPanel.runModal() == NSFileHandlingPanelOKButton {
-
-      dispatch_async(dispatch_get_main_queue()) {
+    dispatch_async(dispatch_get_main_queue()) {
+      if self.openPanel.runModal() == NSFileHandlingPanelOKButton {
         self.importProgressAlert.beginSheetModalForWindow(self.view.window!, completionHandler: nil)
         self.importMusicFolder(self.openPanel.URL!)
         self.view.window!.endSheet(self.importProgressAlert.window)
+        self.analyzeSongs()
       }
       self.openPanel.close()
     }
   }
 
   @IBAction func handleSongRemove(sender: AnyObject) {
-    dispatch_async(dispatch_get_main_queue()) {
       let selectedSongs = self.songsController.selectedObjects as! [SongEntity]
 
       if selectedSongs.count > 1 {
@@ -135,6 +227,7 @@ class ViewController: NSViewController {
         self.deleteAlert.informativeText = "Are you sure you want to delete the song '\(selectedSongs[0].name!)'?"
       }
 
+    dispatch_async(dispatch_get_main_queue()) {
       self.deleteAlert.beginSheetModalForWindow(self.view.window!, completionHandler: {
         (returnCode) -> Void in
         if returnCode == NSAlertSecondButtonReturn {
