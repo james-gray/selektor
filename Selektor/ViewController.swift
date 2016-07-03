@@ -21,6 +21,7 @@ class ViewController: NSViewController {
   // Data controller acts as the interface to the Core Data stack, allowing
   // interaction with the database.
   let appDelegate = NSApplication.sharedApplication().delegate as! AppDelegate
+  let tempDir = NSURL(fileURLWithPath: NSTemporaryDirectory() as String)
   let fileManager = NSFileManager.defaultManager()
 
   lazy var managedObjectContext: NSManagedObjectContext = {
@@ -145,7 +146,7 @@ class ViewController: NSViewController {
       }
 
       let filename = NSURL(fileURLWithPath: song.filename!).URLByDeletingPathExtension?.lastPathComponent
-      wavURL = NSURL(fileURLWithPath: NSTemporaryDirectory() as String).URLByAppendingPathComponent(filename! + "_temp.wav")
+      wavURL = tempDir.URLByAppendingPathComponent(filename! + "_temp.wav")
 
       let task = NSTask()
       task.launchPath = ffmpegPath
@@ -163,9 +164,6 @@ class ViewController: NSViewController {
   }
 
   func analyzeSong(song: SongEntity) {
-    var task: NSTask
-    let tempDir = NSURL(fileURLWithPath: NSTemporaryDirectory() as String)
-
     // Get (or create via conversion) the WAV URL for the song
     guard let (wavURL, converted) = getOrCreateWavURLForSong(song) else {
       // There was some issue creating the Wav file - most likely the
@@ -189,7 +187,7 @@ class ViewController: NSViewController {
     let tempArffURL = tempDir.URLByAppendingPathComponent("\(song.relativeFilename!).arff")
 
     // Execute the mirex_extract command to analyze the song
-    task = NSTask()
+    let task = NSTask()
     task.launchPath = mirexPath
     task.arguments = [tempMfURL.path!, tempArffURL.path!]
     task.launch()
