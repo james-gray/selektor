@@ -16,6 +16,7 @@ enum SummaryType: Int {
   case StdAccStdMem
 }
 
+@objc(TimbreVectorEntity)
 class TimbreVectorEntity: SelektorObject {
 
   // MARK: Properties
@@ -25,6 +26,10 @@ class TimbreVectorEntity: SelektorObject {
   @NSManaged var rolloff: NSNumber?
   @NSManaged var mfccString: String?
   @NSManaged var song: SongEntity?
+
+  override class func getEntityName() -> String {
+    return "TimbreVector"
+  }
 
   // MARK: Public getters/setters for managed MFCC properties
   var mfcc: [Double] {
