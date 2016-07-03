@@ -12,6 +12,8 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate {
 
   let dc = DataController()
+  let tempDir = NSURL(fileURLWithPath: NSTemporaryDirectory() as String)
+  let fileManager = NSFileManager.defaultManager()
 
   override class func initialize() {
     let filenameTransformer = FilenameTransformer()

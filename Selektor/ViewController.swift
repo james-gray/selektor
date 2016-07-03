@@ -21,8 +21,6 @@ class ViewController: NSViewController {
   // Data controller acts as the interface to the Core Data stack, allowing
   // interaction with the database.
   let appDelegate = NSApplication.sharedApplication().delegate as! AppDelegate
-  let tempDir = NSURL(fileURLWithPath: NSTemporaryDirectory() as String)
-  let fileManager = NSFileManager.defaultManager()
 
   lazy var managedObjectContext: NSManagedObjectContext = {
     return (NSApplication.sharedApplication().delegate
@@ -80,7 +78,7 @@ class ViewController: NSViewController {
   }
 
   func importMusicFolder(directoryURL: NSURL) {
-    let fileMgr = NSFileManager.defaultManager()
+    let fileMgr = self.appDelegate.fileManager
     let options: NSDirectoryEnumerationOptions = [.SkipsHiddenFiles, .SkipsPackageDescendants]
 
     if let fileUrls = fileMgr.enumeratorAtURL(directoryURL, includingPropertiesForKeys: nil,
@@ -102,7 +100,7 @@ class ViewController: NSViewController {
 
   func importSong(url: NSURL) {
     print("Importing song '\(url.absoluteString)'")
-    let dc = appDelegate.dc
+    let dc = self.appDelegate.dc
 
     let song: SongEntity = dc.createEntity()
     let asset = AVURLAsset(URL: url)
@@ -133,6 +131,7 @@ class ViewController: NSViewController {
   }
 
   func getOrCreateWavURLForSong(song: SongEntity) -> (NSURL, Bool)? {
+    let tempDir = self.appDelegate.tempDir
     var wavURL: NSURL
 
     let isWav = NSURL(fileURLWithPath: song.filename!).pathExtension == "wav"
@@ -170,6 +169,8 @@ class ViewController: NSViewController {
       // FFMPEG binary couldn't be located
       return
     }
+    let tempDir = self.appDelegate.tempDir
+    let fileManager = self.appDelegate.fileManager
 
     // Write a temporary .mf file containing the song's URL for Marsyas
     let tempMfURL = tempDir.URLByAppendingPathComponent("\(song.relativeFilename!).mf")
