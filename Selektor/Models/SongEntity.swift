@@ -185,6 +185,33 @@ class SongEntity: SelektorObject {
     }
   }
 
+  func parseTempoOutput(pipe: NSPipe) -> Int {
+    let data = NSString(data: pipe.fileHandleForReading.readDataToEndOfFile(), encoding: NSASCIIStringEncoding) as! String
+    let lines = data.componentsSeparatedByString("\n")
+    let tempoLine = lines.filter { $0.hasPrefix("Estimated tempo") }.first
+    let tempo = tempoLine?.componentsSeparatedByString(" ").last
+
+    return Int(tempo!)!
+  }
+
+  func computeTempo(wavURL: NSURL) {
+    guard let tempoPath = tempoPath else {
+      print("Unable to locate the tempo binary")
+      return
+    }
+
+    // Execute the tempo command to analyze the song's BPM
+    let task = NSTask()
+    let pipe = NSPipe()
+    task.launchPath = tempoPath
+    task.arguments = [wavURL.path!]
+    task.standardOutput = pipe
+    task.launch()
+    task.waitUntilExit()
+
+    self.tempo = self.parseTempoOutput(pipe)
+  }
+
   func getOrCreateWavURL() -> (NSURL, Bool)? {
     let tempDir = self.appDelegate.tempDir
     var wavURL: NSURL
@@ -227,6 +254,7 @@ class SongEntity: SelektorObject {
 
     // Compute timbre vector and (if necessary) tempo
     self.computeTimbreVector(wavURL)
+    if self.tempo == 0 { self.computeTempo(wavURL) }
 
     // Delete the WAV file if we converted from another format
     if converted {
