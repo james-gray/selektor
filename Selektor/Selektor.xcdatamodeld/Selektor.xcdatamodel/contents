@@ -2,7 +2,7 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15F34" minimumToolsVersion="Automatic">
     <entity name="Song" representedClassName="SongEntity" syncable="YES">
         <attribute name="album" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="analyzed" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="analyzed" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="artist" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="dateAdded" attributeType="Date" syncable="YES"/>
         <attribute name="duration" attributeType="Double" minValueString="0" defaultValueString="0" syncable="YES"/>
