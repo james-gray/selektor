@@ -262,7 +262,17 @@ class SongEntity: SelektorObject {
 
     // Compute timbre vector and (if necessary) tempo
     self.computeTimbreVector(wavURL)
-    if self.tempo == 0 { self.computeTempo(wavURL) }
+
+    // Compute the tempo for songs shorter than 20 minutes long.
+    // The vast majority of electronic dance songs clock in somewhere between
+    // 5 and ~10 minutes long - allowing for up to 20 minutes gives a bit of
+    // a buffer for this. Files longer than 20 minutes are more likely to be
+    // non-song files (for example, DJ mixes or podcasts.)
+    // The tempo executable is extremely slow on files of long lengths, so
+    // forgo processing files that are likely not songs anyway.
+    if self.tempo! == 0 && Int(self.duration!) < 1200 {
+      self.computeTempo(wavURL)
+    }
 
     // Delete the WAV file if we converted from another format
     if converted {
