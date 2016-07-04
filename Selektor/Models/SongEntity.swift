@@ -264,6 +264,7 @@ class SongEntity: SelektorObject {
 
   func analyze() {
     self.analyzed = AnalysisState.InProgress.rawValue
+    self.dc.save()
 
     // Get (or create via conversion) the WAV URL for the song
     guard let (wavURL, converted) = self.getOrCreateWavURL() else {
@@ -297,5 +298,6 @@ class SongEntity: SelektorObject {
 
     // Mark this song as analyzed
     self.analyzed = AnalysisState.Complete.rawValue
+    self.dc.save()
   }
 }
