@@ -133,12 +133,21 @@ class ViewController: NSViewController {
         // of the loop concurrently - the body of its closure (one iteration of the
         // 'loop') is an asynchronous task. This allows for each song in the subgroup
         // to be analyzed concurrently.
-        dispatch_apply(subgroup.count, dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.rawValue), 0)) {
+        let songIds = subgroup.map { $0.objectID }
+        dispatch_apply(songIds.count, dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.rawValue), 0)) {
           i in
-          let index = Int(i)
-
-          let song = subgroup[index]
           dispatch_group_enter(analysisTaskGroup)
+
+          // Set up a threadlocal data controller and store it in the current thread's dictionary.
+          // This way when the SongEntity instance attempts to create a TimbreVectorEntity it will be
+          // able to use the same managed object context as the SongEntity.
+          let localDc = DataController()
+          localDc.managedObjectContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+          localDc.managedObjectContext.parentContext = self.managedObjectContext
+          NSThread.currentThread().threadDictionary.setObject(localDc, forKey: "dc")
+
+          let songId = songIds[Int(i)]
+          let song = localDc.managedObjectContext.objectWithID(songId) as! SongEntity
           if (song.managedObjectContext != nil) {
             song.analyze()
           }
@@ -149,7 +158,6 @@ class ViewController: NSViewController {
         // saving the context and analyzing the next group
         dispatch_group_wait(analysisTaskGroup, DISPATCH_TIME_FOREVER)
       }
-      self.appDelegate.dc.save()
     }
   }
 
