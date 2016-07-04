@@ -16,6 +16,12 @@ let mirexPath: String? = NSBundle.mainBundle().pathForResource("mirex_extract", 
 let ffmpegPath: String? = NSBundle.mainBundle().pathForResource("ffmpeg", ofType: nil, inDirectory: "Lib/ffmpeg")
 let tempoPath: String? = NSBundle.mainBundle().pathForResource("tempo", ofType: nil, inDirectory: "Lib/marsyas/bin")
 
+enum AnalysisState: Int {
+  case ToDo = 0
+  case InProgress
+  case Complete
+}
+
 @objc(SongEntity)
 class SongEntity: SelektorObject {
 
@@ -245,6 +251,8 @@ class SongEntity: SelektorObject {
   }
 
   func analyze() {
+    self.analyzed = AnalysisState.InProgress.rawValue
+
     // Get (or create via conversion) the WAV URL for the song
     guard let (wavURL, converted) = self.getOrCreateWavURL() else {
       // There was some issue creating the Wav file - most likely the
@@ -266,6 +274,6 @@ class SongEntity: SelektorObject {
     }
 
     // Mark this song as analyzed
-    self.analyzed = true
+    self.analyzed = AnalysisState.Complete.rawValue
   }
 }

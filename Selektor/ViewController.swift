@@ -120,7 +120,7 @@ class ViewController: NSViewController {
   }
 
   func analyzeSongs() {
-    let songsToAnalyze = self.songs.filter { Bool($0.analyzed) == false }
+    let songsToAnalyze = self.songs.filter { $0.analyzed != AnalysisState.Complete.rawValue }
 
     // Serially analyze each song in the background, every so often updating the UI.
     dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.rawValue), 0)) {
