@@ -36,7 +36,6 @@ class SongEntity: SelektorObject {
   @NSManaged dynamic var artist: String?
   @NSManaged dynamic var genre: String?
   @NSManaged dynamic var key: String?
-  @NSManaged dynamic var label: String?
   @NSManaged dynamic var timbreVectors: NSSet?
 
   override class func getEntityName() -> String {

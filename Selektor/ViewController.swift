@@ -113,7 +113,6 @@ class ViewController: NSViewController {
     song.artist = meta["artist"] as? String ?? "Unknown Artist"
     song.album = meta["album"] as? String ?? "Unknown Album"
     song.genre = meta["genre"] as? String
-    song.label = meta["label"] as? String
     song.key = meta["key"] as? String
 
     self.songs.append(song)

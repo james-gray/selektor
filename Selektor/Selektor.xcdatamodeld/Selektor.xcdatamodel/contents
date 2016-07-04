@@ -9,7 +9,6 @@
         <attribute name="filename" attributeType="String" syncable="YES"/>
         <attribute name="genre" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="key" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="label" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="loudness" attributeType="Double" minValueString="0" defaultValueString="0.0" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="tempo" attributeType="Double" minValueString="0" defaultValueString="0" syncable="YES"/>
@@ -29,7 +28,7 @@
         <relationship name="song" optional="YES" maxCount="1" deletionRule="Deny" destinationEntity="Song" inverseName="timbreVectors" inverseEntity="Song" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Song" positionX="-378" positionY="-340" width="128" height="240"/>
+        <element name="Song" positionX="-378" positionY="-340" width="128" height="225"/>
         <element name="TimbreVector" positionX="-378" positionY="-252" width="128" height="135"/>
     </elements>
 </model>

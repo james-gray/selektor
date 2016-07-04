@@ -30,7 +30,6 @@ class MetadataParser {
       AVMetadataiTunesMetadataKeyAlbum: "album",
       AVMetadataiTunesMetadataKeyUserGenre: "genre",
       AVMetadataiTunesMetadataKeyBeatsPerMin: "tempo",
-      AVMetadataiTunesMetadataKeyPublisher: "label",
     ],
     // id3
     AVMetadataFormatID3Metadata: [
@@ -46,7 +45,6 @@ class MetadataParser {
       AVMetadataID322MetadataKeyAlbum: "album",
       AVMetadataID322MetadataKeyInitialKey: "key",
       AVMetadataID322MetadataKeyBeatsPerMin: "tempo",
-      AVMetadataID3MetadataKeyPublisher: "label",
     ],
     // Quicktime Meta
     AVMetadataFormatQuickTimeMetadata: [
@@ -55,7 +53,6 @@ class MetadataParser {
       AVMetadataQuickTimeMetadataKeyOriginalArtist: "artist",
       AVMetadataQuickTimeMetadataKeyAlbum: "album",
       AVMetadataQuickTimeMetadataKeyGenre: "genre",
-      AVMetadataQuickTimeMetadataKeyPublisher: "label",
     ],
     // Quicktime User
     AVMetadataFormatQuickTimeUserData: [
@@ -63,11 +60,7 @@ class MetadataParser {
       AVMetadataQuickTimeUserDataKeyArtist: "artist",
       AVMetadataQuickTimeUserDataKeyOriginalArtist: "artist",
       AVMetadataQuickTimeUserDataKeyAlbum: "album",
-      AVMetadataQuickTimeUserDataKeyPublisher: "label",
     ],
-    AVMetadataFormatISOUserData: [
-      AVMetadataISOUserDataKeyCopyright: "label",
-    ]
   ]
 
   /**
