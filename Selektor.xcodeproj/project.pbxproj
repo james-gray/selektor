@@ -26,6 +26,7 @@
 		4A5EC7171CFBD8800019FFF6 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4A0402AD1CF7F18F0031011A /* Info.plist */; };
 		4A5EC7181CFBD91D0019FFF6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A0402AA1CF7F18F0031011A /* Main.storyboard */; };
 		4A5EC7191CFBD9210019FFF6 /* Selektor.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4A0402A51CF7F18F0031011A /* Selektor.xcdatamodeld */; };
+		4A8FF5E51D2A0DD30077B704 /* SelektorArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FF5E41D2A0DD30077B704 /* SelektorArray.swift */; };
 		4AAA2E361CFA39C00001D767 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAA2E351CFA39C00001D767 /* DataController.swift */; };
 		4AAC4D921CFBD5AC0060149C /* Selektor-OSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 4AAC4D911CFBD5AC0060149C /* Selektor-OSX.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4AAC4DA11CFBD6200060149C /* SongEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5750201CFA9F89007ED42C /* SongEntity.swift */; };
@@ -77,6 +78,7 @@
 		4A51B7C61D18FE6A00F7D9EE /* MetadataParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetadataParser.swift; sourceTree = "<group>"; };
 		4A5750201CFA9F89007ED42C /* SongEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SongEntity.swift; path = Models/SongEntity.swift; sourceTree = "<group>"; };
 		4A57503B1CFA9FBF007ED42C /* SelektorObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelektorObject.swift; path = Models/SelektorObject.swift; sourceTree = "<group>"; };
+		4A8FF5E41D2A0DD30077B704 /* SelektorArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelektorArray.swift; sourceTree = "<group>"; };
 		4AAA2E351CFA39C00001D767 /* DataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		4AAC4D891CFBD5320060149C /* Playground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Playground.playground; sourceTree = "<group>"; };
 		4AAC4D8F1CFBD5AC0060149C /* Selektor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Selektor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -173,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				4A51B7C21D18E7D800F7D9EE /* SelektorAVMetadataItem.swift */,
+				4A8FF5E41D2A0DD30077B704 /* SelektorArray.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -358,6 +361,7 @@
 				4AED17681D26E27D007F2908 /* TimbreVectorEntity.swift in Sources */,
 				4A51B7C31D18E7D800F7D9EE /* SelektorAVMetadataItem.swift in Sources */,
 				4A0DBFD01D29D85A004EB584 /* DurationTransformer.swift in Sources */,
+				4A8FF5E51D2A0DD30077B704 /* SelektorArray.swift in Sources */,
 				4AFA94591D1BB03B00F8102A /* CountTransformer.swift in Sources */,
 				4A0DBFD21D29FA35004EB584 /* AnalysisStateTransformer.swift in Sources */,
 				4AAA2E361CFA39C00001D767 /* DataController.swift in Sources */,
