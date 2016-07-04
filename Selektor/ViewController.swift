@@ -119,34 +119,33 @@ class ViewController: NSViewController {
   }
 
   func analyzeSongs() {
-    let songsToAnalyze = self.songs.filter { $0.analyzed != AnalysisState.Complete.rawValue }.splitBy(10)
-
     // Serially analyze groups of ten songs at a time concurrently in the background.
     // i.e., up to 10 songs will be analyzed concurrently at any given time, but the
     // current 10 must all finish analyzing before the next 10 begin. This should be
     // slightly faster than analyzing the songs serially.
+    let songsToAnalyze = self.songs.filter {
+      $0.analyzed != AnalysisState.Complete.rawValue
+    }.splitBy(10)
+    let songIds = songsToAnalyze.map { $0.map { $0.objectID } }
+
     dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.rawValue), 0)) {
       let analysisTaskGroup = dispatch_group_create()
-
-      for subgroup in songsToAnalyze {
+      for subgroup in songIds {
         // dispatch_apply acts similar to a for loop, but it executes each iteration
         // of the loop concurrently - the body of its closure (one iteration of the
         // 'loop') is an asynchronous task. This allows for each song in the subgroup
         // to be analyzed concurrently.
-        let songIds = subgroup.map { $0.objectID }
-        dispatch_apply(songIds.count, dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.rawValue), 0)) {
+        dispatch_apply(subgroup.count, dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.rawValue), 0)) {
           i in
           dispatch_group_enter(analysisTaskGroup)
 
           // Set up a threadlocal data controller and store it in the current thread's dictionary.
           // This way when the SongEntity instance attempts to create a TimbreVectorEntity it will be
           // able to use the same managed object context as the SongEntity.
-          let localDc = DataController()
-          localDc.managedObjectContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-          localDc.managedObjectContext.parentContext = self.managedObjectContext
-          NSThread.currentThread().threadDictionary.setObject(localDc, forKey: "dc")
 
-          let songId = songIds[Int(i)]
+          let localDc = self.appDelegate.getThreadlocalDataController()
+
+          let songId = subgroup[Int(i)]
           let song = localDc.managedObjectContext.objectWithID(songId) as! SongEntity
           if (song.managedObjectContext != nil) {
             song.analyze()

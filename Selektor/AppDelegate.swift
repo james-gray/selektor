@@ -36,6 +36,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
   }
 
+  func getThreadlocalDataController() -> DataController {
+    let localDc = DataController()
+    localDc.managedObjectContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+    localDc.managedObjectContext.parentContext = self.managedObjectContext
+    NSThread.currentThread().threadDictionary.setObject(localDc, forKey: "dc")
+    return localDc
+  }
+
   lazy var managedObjectContext: NSManagedObjectContext = {
     return self.dc.managedObjectContext
   }()
