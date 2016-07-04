@@ -119,24 +119,35 @@ class ViewController: NSViewController {
   }
 
   func analyzeSongs() {
-    let songsToAnalyze = self.songs.filter { $0.analyzed != AnalysisState.Complete.rawValue }
+    let songsToAnalyze = self.songs.filter { $0.analyzed != AnalysisState.Complete.rawValue }.splitBy(10)
 
-    // Serially analyze each song in the background, every so often updating the UI.
-    dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.rawValue), 0)) {
-      var totalAnalyzed = 0
-      for song in songsToAnalyze {
-        if (song.managedObjectContext != nil) {
-          song.analyze()
-        }
-        totalAnalyzed += 1
-        if totalAnalyzed % 10 == 0 {
-          dispatch_async(dispatch_get_main_queue()) {
-            // TODO: Add some sort of UI indicator for song analysis in the
-            // table - green checkmark, perhaps?
-            self.songsTableView.reloadData()
-            self.appDelegate.dc.save()
+    // Serially analyze groups of ten songs at a time concurrently in the background.
+    // i.e., up to 10 songs will be analyzed concurrently at any given time, but the
+    // current 10 must all finish analyzing before the next 10 begin. This should be
+    // slightly faster than analyzing the songs serially.
+    dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.rawValue), 0)) {
+      let analysisTaskGroup = dispatch_group_create()
+
+      for subgroup in songsToAnalyze {
+        // dispatch_apply acts similar to a for loop, but it executes each iteration
+        // of the loop concurrently - the body of its closure (one iteration of the
+        // 'loop') is an asynchronous task. This allows for each song in the subgroup
+        // to be analyzed concurrently.
+        dispatch_apply(subgroup.count, dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.rawValue), 0)) {
+          i in
+          let index = Int(i)
+
+          let song = subgroup[index]
+          dispatch_group_enter(analysisTaskGroup)
+          if (song.managedObjectContext != nil) {
+            song.analyze()
           }
+          dispatch_group_leave(analysisTaskGroup)
         }
+
+        // Wait for the analysis of the current subgroup of songs to finish before
+        // saving the context and analyzing the next group
+        dispatch_group_wait(analysisTaskGroup, DISPATCH_TIME_FOREVER)
       }
       self.appDelegate.dc.save()
     }
