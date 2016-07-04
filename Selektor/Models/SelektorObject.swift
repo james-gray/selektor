@@ -22,6 +22,14 @@ class SelektorObject: NSManagedObject {
 
   let appDelegate = NSApplication.sharedApplication().delegate as! AppDelegate
 
+  lazy var dc: DataController = {
+    let currentThread = NSThread.currentThread()
+    let td = currentThread.threadDictionary
+    let dc = td.valueForKey("dc") as? DataController ?? (NSApplication.sharedApplication().delegate
+      as? AppDelegate)?.dc
+    return dc!
+  }()
+
   // XXX: Hack due to Swift's lack of support for class vars as of yet.
   // A `class func` is effectively equivalent to a `static func`, but can be
   // overridden by subclasses (unlike static funcs.)

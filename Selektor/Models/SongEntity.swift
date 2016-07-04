@@ -107,7 +107,6 @@ class SongEntity: SelektorObject {
   // MARK: Analysis Functions
 
   func createTimbreVectorFromFeaturesArray(features: [Double]) -> TimbreVectorEntity {
-    let dc = self.appDelegate.dc
     let vector: TimbreVectorEntity = dc.createEntity()
 
     vector.centroid = features[0]
