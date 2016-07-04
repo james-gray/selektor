@@ -19,10 +19,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let filenameTransformer = FilenameTransformer()
     let countTransformer = CountTransformer()
     let durationTransformer = DurationTransformer()
+    let analysisStateTransformer = AnalysisStateTransformer()
 
     NSValueTransformer.setValueTransformer(filenameTransformer, forName: "FilenameTransformer")
     NSValueTransformer.setValueTransformer(countTransformer, forName: "CountTransformer")
     NSValueTransformer.setValueTransformer(durationTransformer, forName: "DurationTransformer")
+    NSValueTransformer.setValueTransformer(analysisStateTransformer, forName: "AnalysisStateTransformer")
   }
 
   func applicationDidFinishLaunching(aNotification: NSNotification) {
