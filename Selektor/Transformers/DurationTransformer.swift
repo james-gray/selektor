@@ -23,7 +23,7 @@ class DurationTransformer: NSValueTransformer {
     }
 
     let minutes = num / 60
-    let seconds = num % 60
-    return "\(minutes):\(String(format: "%02d", seconds))"
+    let seconds = String(format: "%02d", num % 60)
+    return "\(minutes):\(seconds)"
   }
 }
