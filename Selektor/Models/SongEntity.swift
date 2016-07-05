@@ -217,18 +217,20 @@ class SongEntity: SelektorObject {
     task.launch()
     task.waitUntilExit()
 
-    var tempo = self.parseTempoOutput(pipe)
+    var tempo = abs(self.parseTempoOutput(pipe))
 
     // Account (somewhat heavy-handedly) for octave errors.
     // Most electronic dance music's BPM ranges from about 80 to 180
     // (give or take 10 bpm) depending on the genre. In order to ensure the
     // BPM is (most likely) in the correct octave, arbitrarily set BPM limits
     // to within 70...190 bpm.
-    while tempo > 190 {
-      tempo /= 2
-    }
-    while tempo < 70 {
-      tempo *= 2
+    if tempo != 0 {
+      while tempo > 190 {
+        tempo /= 2
+      }
+      while tempo < 70 {
+        tempo *= 2
+      }
     }
 
     self.tempo = tempo
