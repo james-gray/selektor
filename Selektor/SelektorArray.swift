@@ -17,19 +17,21 @@ extension _ArrayType where Generator.Element == Double {
 
     switch formula {
       case "euclidean":
-        // Compute the Euclidean distance between
+        // Compute the Euclidean distance between self and array
         var runningSum: Double = 0
         for i in 0..<self.count {
           let p = self[i]
           let q = array[i]
           runningSum += pow((q-p), Double(2)) // (q-p)^2
         }
-
         return sqrt(runningSum)
+
       case "manhattan":
         fatalError("Manhattan distance has not yet been implemented")
+
       default:
         fatalError("Invalid formula specified")
+
     }
   }
 }
