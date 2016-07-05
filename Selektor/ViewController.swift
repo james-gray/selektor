@@ -28,6 +28,8 @@ class ViewController: NSViewController {
     }()!
 
   let mp = MetadataParser()
+  var selektor = GrandSelektor()
+
   var localDc: DataController?
 
   // Array of songs which will be used by the songsController for
