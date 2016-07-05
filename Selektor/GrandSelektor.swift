@@ -12,7 +12,7 @@ import Cocoa
 class GrandSelektor: NSObject {
 
   let appDelegate = NSApplication.sharedApplication().delegate as! AppDelegate
-  var algorithms: [String: (SongEntity) -> SongEntity] = [:]
+  var algorithms: [String: (SongEntity, [SongEntity]) -> SongEntity] = [:]
   var algorithm: String = ""
 
   override init() {
@@ -25,16 +25,26 @@ class GrandSelektor: NSObject {
 
   }
 
-  func selectSong(song: SongEntity) -> SongEntity {
+  func selectSong(currentSong: SongEntity) -> SongEntity {
+    let songs = self.appDelegate.songs.filter {
+      $0.objectID != currentSong.objectID && $0.analyzed == AnalysisState.Complete.rawValue
+    }
+
+    if songs.count == 0 {
+      // TODO: UI to show a useful error when there's only one song in the
+      // library
+      return currentSong
+    }
+
     if !self.algorithms.keys.contains(algorithm) {
       fatalError("Invalid selektorAlgorithm specified in Settings.plist")
     }
 
-    return self.algorithms[algorithm]!(song)
+    return self.algorithms[algorithm]!(currentSong, songs)
   }
 
-  func selectSongDummy(song: SongEntity) -> SongEntity {
-    let index = Int(arc4random_uniform(UInt32(self.appDelegate.songs.count)))
-    return self.appDelegate.songs[index]
+  func selectSongDummy(currentSong: SongEntity, songs: [SongEntity]) -> SongEntity {
+    let index = Int(arc4random_uniform(UInt32(songs.count)))
+    return songs[index]
   }
 }
