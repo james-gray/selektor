@@ -104,6 +104,13 @@ class SongEntity: SelektorObject {
     }).first as? TimbreVectorEntity
   }
 
+  func removeTimbreForSummaryType(summaryType: SummaryType) {
+    if let oldVector = self.getTimbreForSummaryType(summaryType) {
+      // Remove the old vector for the summary type
+      timbreVectorSet.removeObject(oldVector)
+    }
+  }
+
   func setTimbreForSummaryType(newVector: TimbreVectorEntity, summaryType: SummaryType) {
     // Remove old timbre vector if necessary
     self.removeTimbreForSummaryType(summaryType)
@@ -111,13 +118,6 @@ class SongEntity: SelektorObject {
     // Set the summary type for the new vector and add it to the timbres set
     newVector.summaryType = summaryType.rawValue
     timbreVectorSet.addObject(newVector)
-  }
-
-  func removeTimbreForSummaryType(summaryType: SummaryType) {
-    if let oldVector = self.getTimbreForSummaryType(summaryType) {
-      // Remove the old vector for the summary type
-      timbreVectorSet.removeObject(oldVector)
-    }
   }
 
   // MARK: Analysis Functions
