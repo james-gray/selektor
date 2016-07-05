@@ -55,6 +55,22 @@ class SongEntity: SelektorObject {
     get { return NSURL(fileURLWithPath: self.filename!).lastPathComponent ?? nil }
   }
 
+  dynamic var timbreVector64: [Double] {
+    get {
+      if self.analyzed != AnalysisState.Complete.rawValue {
+        return [Double](count: 64, repeatedValue: 0.0)
+      }
+
+      var vector: [Double] = []
+      vector += self.mammTimbre!.vector
+      vector += self.masmTimbre!.vector
+      vector += self.sammTimbre!.vector
+      vector += self.sasmTimbre!.vector
+
+      return vector
+    }
+  }
+
   dynamic var timbreVectorSet: NSMutableSet {
     get { return self.mutableSetValueForKey("timbreVectors") }
   }
@@ -313,5 +329,9 @@ class SongEntity: SelektorObject {
     if self.managedObjectContext != nil {
       self.dc.save()
     }
+  }
+
+  func compareTimbreWith(song: SongEntity) -> Double {
+    return self.timbreVector64.distanceFrom(song.timbreVector64)
   }
 }

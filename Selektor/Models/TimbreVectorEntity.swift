@@ -40,4 +40,14 @@ class TimbreVectorEntity: SelektorObject {
       self.mfccString = newValue.map({ String($0) }).joinWithSeparator(",")
     }
   }
+
+  var vector: [Double] {
+    get {
+      return [
+        Double(self.centroid!),
+        Double(self.flux!),
+        Double(self.rolloff!)
+      ] + self.mfcc.map { Double($0) }
+    }
+  }
 }
