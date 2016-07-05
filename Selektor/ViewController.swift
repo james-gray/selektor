@@ -127,7 +127,10 @@ class ViewController: NSViewController {
       // Set up a threadlocal data controller and store it in the current thread's dictionary.
       // This way when the SongEntity instance attempts to create a TimbreVectorEntity it will be
       // able to use the same managed object context as the SongEntity.
-      self.localDc = self.appDelegate.getThreadlocalDataController()
+      let localMoc = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+      localMoc.parentContext = self.managedObjectContext
+      self.localDc = DataController(managedObjectContext: localMoc)
+      NSThread.currentThread().threadDictionary.setObject(self.localDc!, forKey: "dc")
 
       for songId in songsIdsToAnalyze {
         let song = self.localDc!.managedObjectContext.objectWithID(songId) as! SongEntity

@@ -8,15 +8,16 @@
 
 import CoreData
 
-class DataController: NSObject {
+class DataController {
   // Based on sample code provided by Apple at:
   // developer.apple.com/library/mac/documentation/Cocoa/Conceptual/CoreData/
   //     InitializingtheCoreDataStack.html#//apple_ref/doc/uid/TP40001075-CH4-SW1
   //
   // Copyright © 2016 Apple Inc. All rights reserved.
   var managedObjectContext: NSManagedObjectContext
+  var psc: NSPersistentStoreCoordinator? = nil
   
-  override init() {
+  init(managedObjectContext: NSManagedObjectContext? = nil) {
     let dbName = "Selektor"
 
     guard let modelURL = NSBundle.mainBundle().URLForResource(dbName,
@@ -29,32 +30,39 @@ class DataController: NSObject {
     guard let mom = NSManagedObjectModel(contentsOfURL: modelURL) else {
       fatalError("Error initializing mom from: \(modelURL)")
     }
-    
-    let psc = NSPersistentStoreCoordinator(managedObjectModel: mom)
-
-    managedObjectContext = NSManagedObjectContext(
+  
+    if managedObjectContext != nil {
+      self.managedObjectContext = managedObjectContext!
+    } else {
+      self.managedObjectContext = NSManagedObjectContext(
         concurrencyType: .MainQueueConcurrencyType
-    )
-    managedObjectContext.persistentStoreCoordinator = psc
-    managedObjectContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
-
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
-      let urls = NSFileManager.defaultManager().URLsForDirectory(
-          .DocumentDirectory,
-          inDomains: .UserDomainMask
       )
+      self.psc = NSPersistentStoreCoordinator(managedObjectModel: mom)
+      self.managedObjectContext.persistentStoreCoordinator = psc
+      self.managedObjectContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
+    }
 
-      let docURL = urls[urls.endIndex-1]
+    // Add persistent store only if this is the first (i.e. global) DataController with the
+    // managed object context for the main thread, as we only need one persistent store
+    // coordinator per application.
+    if self.psc != nil {
+      dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
+        let urls = NSFileManager.defaultManager().URLsForDirectory(
+            .DocumentDirectory,
+            inDomains: .UserDomainMask
+        )
+        let docURL = urls[urls.endIndex-1]
 
-      // The directory the application uses to store the Core Data store file.
-      // This code uses a file named "DataModel.sqlite" in the application's
-      // documents directory.
-      let storeURL = docURL.URLByAppendingPathComponent(dbName + ".sqlite")
-      do {
-        try psc.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil,
-            URL: storeURL, options: nil)
-      } catch {
-        fatalError("Error migrating store: \(error)")
+        // The directory the application uses to store the Core Data store file.
+        // This code uses a file named "DataModel.sqlite" in the application's
+        // documents directory.
+        let storeURL = docURL.URLByAppendingPathComponent(dbName + ".sqlite")
+        do {
+          try self.psc!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil,
+              URL: storeURL, options: nil)
+        } catch {
+          fatalError("Error migrating store: \(error)")
+        }
       }
     }
   }
