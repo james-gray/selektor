@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>selektorAlgorithm</key>
-	<string>random</string>
+	<string>dummy</string>
 	<key>distanceFormula</key>
 	<string>manhattan</string>
 </dict>

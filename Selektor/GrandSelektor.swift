@@ -19,7 +19,7 @@ class GrandSelektor: NSObject {
     super.init()
 
     self.algorithms = [
-      "random": self.selectRandomSong,
+      "dummy": self.selectSongDummy,
     ]
     self.algorithm = appDelegate.settings?["selektorAlgorithm"] as! String
 
@@ -33,7 +33,7 @@ class GrandSelektor: NSObject {
     return self.algorithms[algorithm]!(song)
   }
 
-  func selectRandomSong(song: SongEntity) -> SongEntity {
+  func selectSongDummy(song: SongEntity) -> SongEntity {
     let index = Int(arc4random_uniform(UInt32(self.appDelegate.songs.count)))
     return self.appDelegate.songs[index]
   }
