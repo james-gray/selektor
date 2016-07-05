@@ -8,17 +8,28 @@
 
 import Foundation
 
-extension Array {
-  /**
-      Split an array into subarrays of size `subSize`.
-      Based on code by Eric D (eric@aya.io)
-      https://gist.github.com/ericdke/fa262bdece59ff786fcb
-  */
-  func splitBy(subSize: Int) -> [[Element]] {
-    return 0.stride(to: self.count, by: subSize).map {
-      startIndex in
-      let endIndex = startIndex.advancedBy(subSize, limit: self.count)
-      return Array(self[startIndex ..< endIndex])
+extension _ArrayType where Generator.Element == Double {
+  func distanceFrom(array: [Double], formula: String = "euclidean") -> Double {
+    if array.count != self.count {
+      print("Vector distance calculation only works on vectors of the same dimensionality")
+      return Double(FP_INFINITE)
+    }
+
+    switch formula {
+      case "euclidean":
+        // Compute the Euclidean distance between
+        var runningSum: Double = 0
+        for i in 0..<self.count {
+          let p = self[i]
+          let q = array[i]
+          runningSum += pow((q-p), Double(2)) // (q-p)^2
+        }
+
+        return sqrt(runningSum)
+      case "manhattan":
+        fatalError("Manhattan distance has not yet been implemented")
+      default:
+        fatalError("Invalid formula specified")
     }
   }
 }
