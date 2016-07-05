@@ -22,11 +22,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let countTransformer = CountTransformer()
     let durationTransformer = DurationTransformer()
     let analysisStateTransformer = AnalysisStateTransformer()
+    let selectionTransformer = SelectionTransformer()
 
     NSValueTransformer.setValueTransformer(filenameTransformer, forName: "FilenameTransformer")
     NSValueTransformer.setValueTransformer(countTransformer, forName: "CountTransformer")
     NSValueTransformer.setValueTransformer(durationTransformer, forName: "DurationTransformer")
     NSValueTransformer.setValueTransformer(analysisStateTransformer, forName: "AnalysisStateTransformer")
+    NSValueTransformer.setValueTransformer(selectionTransformer, forName: "SelectionTransformer")
   }
 
   func applicationDidFinishLaunching(aNotification: NSNotification) {
