@@ -158,8 +158,11 @@ class SongEntity: SelektorObject {
     let tempDir = self.appDelegate.tempDir
     let fileManager = self.appDelegate.fileManager
 
-    let tempMfURL = tempDir.URLByAppendingPathComponent("\(self.relativeFilename!).mf")
-    let tempArffURL = tempDir.URLByAppendingPathComponent("\(self.relativeFilename!).arff")
+    let mfUuid = NSUUID().UUIDString
+    let arffUuid = NSUUID().UUIDString
+
+    let tempMfURL = tempDir.URLByAppendingPathComponent("\(mfUuid).mf")
+    let tempArffURL = tempDir.URLByAppendingPathComponent("\(arffUuid).arff")
 
     // Write a temporary .mf file containing the song's URL for Marsyas
     do {
@@ -250,8 +253,8 @@ class SongEntity: SelektorObject {
         return nil
       }
 
-      let filename = NSURL(fileURLWithPath: self.filename!).URLByDeletingPathExtension?.lastPathComponent
-      wavURL = tempDir.URLByAppendingPathComponent(filename! + "_temp.wav")
+      let uuid = NSUUID().UUIDString
+      wavURL = tempDir.URLByAppendingPathComponent("\(uuid).wav")
 
       let task = NSTask()
       task.launchPath = ffmpegPath
