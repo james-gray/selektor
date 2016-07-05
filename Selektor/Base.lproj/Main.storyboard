@@ -930,7 +930,7 @@ CA
                                 <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <font key="titleFont" size="17" name=".AppleSystemUIFontBold"/>
                             </box>
-                            <box title="You're Currently Playing:" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="3sI-NR-qHN">
+                            <box title="You're currently playing:" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="3sI-NR-qHN">
                                 <rect key="frame" x="586" y="404" width="287" height="249"/>
                                 <view key="contentView" id="sW5-QU-Uf1">
                                     <rect key="frame" x="1" y="1" width="285" height="225"/>
@@ -1466,7 +1466,7 @@ CA
                                                             <rect key="frame" x="453" y="1" width="102" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="8yR-iC-pXn">
+                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8yR-iC-pXn">
                                                                     <rect key="frame" x="0.0" y="0.0" width="106" height="17"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="8eN-cG-vDq">
                                                                         <font key="font" metaFont="system"/>
