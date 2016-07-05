@@ -191,6 +191,10 @@ class SongEntity: SelektorObject {
 
   func parseTempoOutput(pipe: NSPipe) -> Int {
     let data = NSString(data: pipe.fileHandleForReading.readDataToEndOfFile(), encoding: NSASCIIStringEncoding) as! String
+    if data.rangeOfString("MRS_WARNING") != nil {
+        // Error computing tempo
+        return 0
+    }
     let lines = data.componentsSeparatedByString("\n")
     let tempoLine = lines.filter { $0.hasPrefix("Estimated tempo") }.first
     let tempo = tempoLine?.componentsSeparatedByString(" ").last
