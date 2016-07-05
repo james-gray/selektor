@@ -129,7 +129,7 @@ class SongEntity: SelektorObject {
       // the end of the file.
       let vectorString = arffLines[arffLines.endIndex - 2]
       var stringFeatures = vectorString.componentsSeparatedByString(",")
-      stringFeatures.removeLast(1) // Remove the file label
+      stringFeatures.removeLast() // Remove the file label
       let features = (stringFeatures.map({ Double($0)! }) as [Double]) // Cast strings to doubles
 
       // Split array into 16-dimensional vectors for each summary type
