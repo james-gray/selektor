@@ -121,7 +121,10 @@ class ViewController: NSViewController {
 
   func analyzeSongs() {
     // Serially analyze songs in the background
-    let songsIdsToAnalyze = self.songs.filter { $0.analyzed != AnalysisState.Complete.rawValue }.map { $0.objectID }
+    let songsIdsToAnalyze = self.songs
+        .filter {$0.analyzed != AnalysisState.Complete.rawValue } // Filter out analyzed songs
+        .sort { Int($0.analyzed) > Int($1.analyzed) } // Sort such that "in progress" songs are analyzed first
+        .map { $0.objectID } // Extract object IDs
 
     dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.rawValue), 0)) {
       // Set up a threadlocal data controller and store it in the current thread's dictionary.
