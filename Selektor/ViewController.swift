@@ -70,9 +70,10 @@ class ViewController: NSViewController {
 
     // Populate the songs array and attach to the songsController
     dispatch_async(dispatch_get_main_queue()) {
-      self.songs = self.appDelegate.dc.fetchEntities()
-      self.songsController.content = self.songs
-      if self.songs.count > 0 {
+      self.appDelegate.songs = self.appDelegate.dc.fetchEntities()
+      self.songsController.content = self.appDelegate.songs
+
+      if self.appDelegate.songs.count > 0 {
         self.analyzeSongs() // Process any un-analyzed songs
       }
     }
@@ -94,7 +95,7 @@ class ViewController: NSViewController {
       self.appDelegate.dc.save()
 
       // Update the table view by refreshing the array controller
-      self.songsController.content = self.songs
+      self.songsController.content = self.appDelegate.songs
       self.songsController.rearrangeObjects()
     }
   }
@@ -116,12 +117,12 @@ class ViewController: NSViewController {
     song.genre = meta["genre"] as? String
     song.key = meta["key"] as? String
 
-    self.songs.append(song)
+    self.appDelegate.songs.append(song)
   }
 
   func analyzeSongs() {
     // Serially analyze songs in the background
-    let songsIdsToAnalyze = self.songs
+    let songsIdsToAnalyze = self.appDelegate.songs
         .filter { $0.analyzed != AnalysisState.Complete.rawValue } // Filter out analyzed songs
         .sort { Int($0.analyzed) > Int($1.analyzed) } // Sort such that "in progress" songs are analyzed first
         .map { $0.objectID } // Extract object IDs
