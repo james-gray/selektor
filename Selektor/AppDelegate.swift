@@ -28,12 +28,25 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   }
 
   func applicationDidFinishLaunching(aNotification: NSNotification) {
-    // Insert code here to initialize your application
+    // Clean up tempfiles
+    self.clearTempDirectory()
   }
 
   func applicationWillTerminate(aNotification: NSNotification) {
     // Insert code here to tear down your application
     
+  }
+
+  func clearTempDirectory() {
+    do {
+        let tempFiles = try fileManager.contentsOfDirectoryAtPath(NSTemporaryDirectory())
+        for tempFile in tempFiles {
+            let path = String.init(format: "%@%@", NSTemporaryDirectory(), tempFile)
+            try fileManager.removeItemAtPath(path)
+        }
+    } catch {
+        print(error)
+    }
   }
 
   func getThreadlocalDataController() -> DataController {
@@ -72,15 +85,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
   func applicationShouldTerminate(sender: NSApplication) -> NSApplicationTerminateReply {
     // Clean up tempfiles
-    do {
-      let tempFiles = try fileManager.contentsOfDirectoryAtPath(NSTemporaryDirectory())
-      for tempFile in tempFiles {
-        let path = String.init(format: "%@%@", NSTemporaryDirectory(), tempFile)
-        try fileManager.removeItemAtPath(path)
-      }
-    } catch {
-      print(error)
-    }
+    self.clearTempDirectory()
 
     // Save changes in the application's managed object context before the application terminates.
     if !managedObjectContext.commitEditing() {
