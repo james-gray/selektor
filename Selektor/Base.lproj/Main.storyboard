@@ -1566,12 +1566,12 @@ CA
                 <userDefaultsController representsSharedInstance="YES" id="iPW-Ye-n6M"/>
                 <arrayController mode="entity" entityName="Song" automaticallyPreparesContent="YES" id="JdN-Fp-fVn">
                     <connections>
+                        <binding destination="XfG-lQ-9wD" name="contentArrayForMultipleSelection" keyPath="self.appDelegate.songs" previousBinding="eBN-qV-qVD" id="H3V-HO-rdm"/>
                         <binding destination="XfG-lQ-9wD" name="contentArray" keyPath="self.appDelegate.songs" id="eBN-qV-qVD">
                             <dictionary key="options">
                                 <bool key="NSDeletesObjectsOnRemove" value="YES"/>
                             </dictionary>
                         </binding>
-                        <binding destination="XfG-lQ-9wD" name="contentArrayForMultipleSelection" keyPath="self.songs" previousBinding="eBN-qV-qVD" id="W6o-so-BB7"/>
                         <binding destination="XfG-lQ-9wD" name="managedObjectContext" keyPath="self.managedObjectContext" id="gcf-py-fTh"/>
                     </connections>
                 </arrayController>
