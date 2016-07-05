@@ -27,7 +27,13 @@ extension _ArrayType where Generator.Element == Double {
         return sqrt(runningSum)
 
       case "manhattan":
-        fatalError("Manhattan distance has not yet been implemented")
+        var runningSum: Double = 0
+        for i in 0..<self.count {
+          let p = self[i]
+          let q = array[i]
+          runningSum += abs(p-q) // |p-q|
+        }
+        return runningSum
 
       default:
         fatalError("Invalid formula specified")

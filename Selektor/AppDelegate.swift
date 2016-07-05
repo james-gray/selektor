@@ -14,6 +14,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   let dc = DataController()
   let tempDir = NSURL(fileURLWithPath: NSTemporaryDirectory() as String)
   let fileManager = NSFileManager.defaultManager()
+  let settings = NSDictionary.init(contentsOfFile: NSBundle.mainBundle().pathForResource(
+    "Settings", ofType: "plist")!)
 
   override class func initialize() {
     let filenameTransformer = FilenameTransformer()

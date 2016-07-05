@@ -332,6 +332,7 @@ class SongEntity: SelektorObject {
   }
 
   func compareTimbreWith(song: SongEntity) -> Double {
-    return self.timbreVector64.distanceFrom(song.timbreVector64)
+    let formula = self.appDelegate.settings?["distanceFormula"] as! String
+    return self.timbreVector64.distanceFrom(song.timbreVector64, formula: formula)
   }
 }
