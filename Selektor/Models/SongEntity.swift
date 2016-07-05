@@ -107,7 +107,7 @@ class SongEntity: SelektorObject {
   // MARK: Analysis Functions
 
   func createTimbreVectorFromFeaturesArray(features: [Double]) -> TimbreVectorEntity {
-    let vector: TimbreVectorEntity = dc.createEntity()
+    let vector: TimbreVectorEntity = self.dc.createEntity()
 
     vector.centroid = features[0]
     vector.rolloff = features[1]
@@ -273,6 +273,7 @@ class SongEntity: SelektorObject {
 
   func analyze() {
     self.analyzed = AnalysisState.InProgress.rawValue
+    // Save the new analysis state to signal the UI
     if self.managedObjectContext != nil {
       self.dc.save()
     }
@@ -307,8 +308,8 @@ class SongEntity: SelektorObject {
       }
     }
 
-    // Mark this song as analyzed
     self.analyzed = AnalysisState.Complete.rawValue
+    // Save the new analysis state to signal the UI
     if self.managedObjectContext != nil {
       self.dc.save()
     }

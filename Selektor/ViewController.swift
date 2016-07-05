@@ -28,6 +28,7 @@ class ViewController: NSViewController {
     }()!
 
   let mp = MetadataParser()
+  var localDc: DataController?
 
   // Array of songs which will be used by the songsController for
   // populating the songs table view.
@@ -119,43 +120,20 @@ class ViewController: NSViewController {
   }
 
   func analyzeSongs() {
-    // Serially analyze groups of ten songs at a time concurrently in the background.
-    // i.e., up to 10 songs will be analyzed concurrently at any given time, but the
-    // current 10 must all finish analyzing before the next 10 begin. This should be
-    // slightly faster than analyzing the songs serially.
-    let songsToAnalyze = self.songs.filter {
-      $0.analyzed != AnalysisState.Complete.rawValue
-    }.splitBy(10)
-    let songIds = songsToAnalyze.map { $0.map { $0.objectID } }
+    // Serially analyze songs in the background
+    let songsIdsToAnalyze = self.songs.filter { $0.analyzed != AnalysisState.Complete.rawValue }.map { $0.objectID }
 
-    dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.rawValue), 0)) {
-      let analysisTaskGroup = dispatch_group_create()
-      for subgroup in songIds {
-        // dispatch_apply acts similar to a for loop, but it executes each iteration
-        // of the loop concurrently - the body of its closure (one iteration of the
-        // 'loop') is an asynchronous task. This allows for each song in the subgroup
-        // to be analyzed concurrently.
-        dispatch_apply(subgroup.count, dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.rawValue), 0)) {
-          i in
-          dispatch_group_enter(analysisTaskGroup)
+    dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.rawValue), 0)) {
+      // Set up a threadlocal data controller and store it in the current thread's dictionary.
+      // This way when the SongEntity instance attempts to create a TimbreVectorEntity it will be
+      // able to use the same managed object context as the SongEntity.
+      self.localDc = self.appDelegate.getThreadlocalDataController()
 
-          // Set up a threadlocal data controller and store it in the current thread's dictionary.
-          // This way when the SongEntity instance attempts to create a TimbreVectorEntity it will be
-          // able to use the same managed object context as the SongEntity.
-
-          let localDc = self.appDelegate.getThreadlocalDataController()
-
-          let songId = subgroup[Int(i)]
-          let song = localDc.managedObjectContext.objectWithID(songId) as! SongEntity
-          if (song.managedObjectContext != nil) {
-            song.analyze()
-          }
-          dispatch_group_leave(analysisTaskGroup)
+      for songId in songsIdsToAnalyze {
+        let song = self.localDc!.managedObjectContext.objectWithID(songId) as! SongEntity
+        if (song.managedObjectContext != nil) {
+          song.analyze()
         }
-
-        // Wait for the analysis of the current subgroup of songs to finish before
-        // saving the context and analyzing the next group
-        dispatch_group_wait(analysisTaskGroup, DISPATCH_TIME_FOREVER)
       }
     }
   }
