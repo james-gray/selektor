@@ -15,6 +15,9 @@ class ViewController: NSViewController {
 
   @IBOutlet weak var songsTableView: NSTableView!
   @IBOutlet var songsController: NSArrayController!
+  @IBOutlet var bestNextSongController: NSObjectController!
+  @IBOutlet weak var bestNextSongBox: NSBox!
+  @IBOutlet weak var playNextSongBtn: NSButton!
 
   // MARK: Properties
 
@@ -32,9 +35,7 @@ class ViewController: NSViewController {
 
   var localDc: DataController?
 
-  // Array of songs which will be used by the songsController for
-  // populating the songs table view.
-  var songs = [SongEntity]()
+  var bestNextSong: SongEntity? = nil
 
   // Set of supported audio file extensions
   let validExtensions: Set<String> = ["wav", "mp3", "m4a", "m3u", "wma", "aif", "ogg"]
@@ -70,6 +71,19 @@ class ViewController: NSViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    // Add observer to notify the view controller when the songs controller's
+    // selection changes (so it can hide the suggested song UI elements)
+    self.songsController.addObserver(
+      self,
+      forKeyPath: "selection",
+      options:(NSKeyValueObservingOptions.New),
+      context: nil
+    )
+
+    // Hide the suggested song UI elements at first
+    self.bestNextSongBox.hidden = true
+    self.playNextSongBtn.hidden = true
+
     // Populate the songs array and attach to the songsController
     dispatch_async(dispatch_get_main_queue()) {
       self.appDelegate.songs = self.appDelegate.dc.fetchEntities()
@@ -78,6 +92,13 @@ class ViewController: NSViewController {
       if self.appDelegate.songs.count > 0 {
         self.analyzeSongs() // Process any un-analyzed songs
       }
+    }
+  }
+
+  override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    if keyPath == "selection" {
+      self.bestNextSongBox.hidden = true
+      self.playNextSongBtn.hidden = true
     }
   }
 
@@ -158,6 +179,32 @@ class ViewController: NSViewController {
       }
       self.openPanel.close()
     }
+  }
+
+  @IBAction func selectBestNextSong(sender: AnyObject) {
+    let selectedSongs = self.songsController.selectedObjects as! [SongEntity]
+    if selectedSongs.count > 1 {
+      fatalError("selectBestNextSong called for multiple selected objects")
+    }
+
+    let song = selectedSongs[0]
+    self.bestNextSong = selektor.selectSong(song)
+    self.bestNextSongController.content = self.bestNextSong
+
+    self.bestNextSongBox.hidden = false
+    self.playNextSongBtn.hidden = false
+  }
+
+  @IBAction func playBestNextSong(sender: AnyObject) {
+    self.bestNextSongBox.hidden = true
+    self.playNextSongBtn.hidden = true
+
+    guard let bestNextSong = self.bestNextSong else {
+      fatalError("playBestNextSong called before a bestNextSong was selected!")
+    }
+    let indexSet = self.songsController.selectionIndexes
+    self.songsController.removeSelectionIndexes(indexSet)
+    self.songsController.addSelectedObjects([bestNextSong])
   }
 
   @IBAction func handleSongRemove(sender: AnyObject) {
