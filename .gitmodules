@@ -1,0 +1,3 @@
+[submodule "Selektor/Lib/ffmpeg_src"]
+	path = Selektor/Lib/ffmpeg_src
+	url = git://source.ffmpeg.org/ffmpeg.git
