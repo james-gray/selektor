@@ -43,24 +43,4 @@ class SelektorObject: NSManagedObject {
     print("Subclasses should override abstract method `getEntityName`!")
     abort()
   }
-
-  class func createOrFetchEntity<T: SelektorObject>(name: String, dc: DataController, inout entityDict: [String: T]) -> T {
-    // First check the memoization dictionary for the desired entity
-    if let entity: T = entityDict[name] {
-      return entity
-    }
-
-    // If the entity is not in the dict, check the database
-    let predicate = NSPredicate(format: "self.name = %@", name)
-    guard let entity: T = dc.fetchEntities(predicate).first else {
-      // Create the entity if it does not exist in the DB
-      let entity: T = dc.createEntity()
-      entity.name = name
-      entityDict[name] = entity // Memoize the newly created entity
-      return entity
-    }
-
-    entityDict[name] = entity // Memoize the fetched entity
-    return entity
-  }
 }
