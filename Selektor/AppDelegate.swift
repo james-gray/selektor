@@ -40,11 +40,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     self.clearTempDirectory()
   }
 
-  func applicationWillTerminate(aNotification: NSNotification) {
-    // Insert code here to tear down your application
-    
-  }
-
   func clearTempDirectory() {
     do {
         let tempFiles = try fileManager.contentsOfDirectoryAtPath(NSTemporaryDirectory())
