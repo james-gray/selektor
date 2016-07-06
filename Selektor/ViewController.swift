@@ -15,6 +15,8 @@ class ViewController: NSViewController {
 
   @IBOutlet weak var songsTableView: NSTableView!
   @IBOutlet var songsController: NSArrayController!
+  @IBOutlet weak var selectNextTrackBtn: NSButton!
+
   @IBOutlet var bestNextSongController: NSObjectController!
   @IBOutlet weak var bestNextSongBox: NSBox!
   @IBOutlet weak var playNextSongBtn: NSButton!
@@ -99,6 +101,9 @@ class ViewController: NSViewController {
     if keyPath == "selection" {
       self.bestNextSongBox.hidden = true
       self.playNextSongBtn.hidden = true
+
+      // Hide the "Select Next Track" button when no / multiple songs are selected
+      self.selectNextTrackBtn.hidden = self.songsController.selectionIndexes.count != 1
     }
   }
 

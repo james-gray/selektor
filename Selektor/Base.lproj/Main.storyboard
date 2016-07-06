@@ -1549,6 +1549,7 @@ CA
                         <outlet property="bestNextSongController" destination="QPI-IC-mGd" id="bQH-yQ-TFb"/>
                         <outlet property="chooseBtn" destination="tfv-u8-i1I" id="ARq-Zu-iVG"/>
                         <outlet property="playNextSongBtn" destination="Kk0-4Z-don" id="F4a-gX-1HJ"/>
+                        <outlet property="selectNextTrackBtn" destination="wfJ-ko-aCc" id="JSz-5x-bM6"/>
                         <outlet property="songsController" destination="JdN-Fp-fVn" id="oMS-qg-geC"/>
                         <outlet property="songsTableView" destination="1nm-gb-X4G" id="cai-qY-T2B"/>
                     </connections>
