@@ -1206,7 +1206,7 @@ CA
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="G6H-IH-gPw">
-                                <rect key="frame" x="28" y="29" width="532" height="17"/>
+                                <rect key="frame" x="55" y="29" width="478" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="Hgm-an-ZhP">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1525,7 +1525,7 @@ CA
                             <constraint firstAttribute="bottom" secondItem="G6H-IH-gPw" secondAttribute="bottom" constant="29" id="6KS-Fz-DBO"/>
                             <constraint firstItem="tho-r2-llV" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="30" id="DNe-EO-cSA"/>
                             <constraint firstItem="wfJ-ko-aCc" firstAttribute="trailing" secondItem="Kk0-4Z-don" secondAttribute="trailing" id="Dp7-q8-YDM"/>
-                            <constraint firstItem="G6H-IH-gPw" firstAttribute="trailing" secondItem="tho-r2-llV" secondAttribute="trailing" id="Fm9-kZ-hBE"/>
+                            <constraint firstItem="G6H-IH-gPw" firstAttribute="trailing" secondItem="tho-r2-llV" secondAttribute="trailing" constant="-27" id="Fm9-kZ-hBE"/>
                             <constraint firstItem="fs7-IN-1Mc" firstAttribute="bottom" secondItem="tho-r2-llV" secondAttribute="bottom" constant="-45" id="HBe-XZ-tBe"/>
                             <constraint firstAttribute="trailing" secondItem="3sI-NR-qHN" secondAttribute="trailing" constant="30" id="Q0i-Jm-lgT"/>
                             <constraint firstItem="Kk0-4Z-don" firstAttribute="bottom" secondItem="tho-r2-llV" secondAttribute="bottom" id="UiX-t4-LEq"/>
@@ -1538,7 +1538,7 @@ CA
                             <constraint firstItem="wfJ-ko-aCc" firstAttribute="leading" secondItem="Kk0-4Z-don" secondAttribute="leading" id="u2J-LO-TIP"/>
                             <constraint firstItem="Shv-UH-mIl" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="30" id="wpg-Tj-qSI"/>
                             <constraint firstItem="tfv-u8-i1I" firstAttribute="leading" secondItem="Shv-UH-mIl" secondAttribute="trailing" constant="280" id="x8Y-oa-1cd"/>
-                            <constraint firstItem="G6H-IH-gPw" firstAttribute="leading" secondItem="tho-r2-llV" secondAttribute="leading" id="ySs-M8-tiF"/>
+                            <constraint firstItem="G6H-IH-gPw" firstAttribute="leading" secondItem="tho-r2-llV" secondAttribute="leading" constant="27" id="ySs-M8-tiF"/>
                             <constraint firstItem="tho-r2-llV" firstAttribute="top" secondItem="Shv-UH-mIl" secondAttribute="bottom" constant="10" id="yqS-Nw-7L0"/>
                             <constraint firstItem="wfJ-ko-aCc" firstAttribute="leading" secondItem="3sI-NR-qHN" secondAttribute="leading" id="zTS-tR-Qkv"/>
                             <constraint firstItem="Kk0-4Z-don" firstAttribute="top" secondItem="fs7-IN-1Mc" secondAttribute="bottom" constant="8" symbolic="YES" id="ze8-Wl-Ugt"/>
