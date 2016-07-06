@@ -22,7 +22,7 @@ class MetadataParser {
     "id3": AVMetadataFormatID3Metadata,
   ]
 
-  let tags: Dictionary<String, Dictionary<String, String>> = [
+  let tags: [String: [String: String]] = [
     // iTunes
     AVMetadataFormatiTunesMetadata: [
       AVMetadataiTunesMetadataKeySongName: "name",
@@ -66,38 +66,38 @@ class MetadataParser {
   /**
       Parse a given asset's metadata, choosing from among the available metadata
       formats.
-   
-      - parameter asset: The song asset to parse metadata from.
-   
+
+      - parameter asset: The track asset to parse metadata from.
+
       - returns: A dictionary of values that can be used to instantiate
-          a `SongEntity`.
+          a `TrackEntity`.
   */
   func parse(asset: AVURLAsset) -> [String: AnyObject] {
-    var songMeta = [String: AnyObject]()
+    var trackMeta = [String: AnyObject]()
     for format in asset.availableMetadataFormats {
-      songMeta = parseMetadataFormat(asset, songMeta: songMeta, format: format)
+      trackMeta = parseMetadataFormat(asset, trackMeta: trackMeta, format: format)
     }
-    return songMeta
+    return trackMeta
   }
 
   /**
       Extract metadata of format `format` from the given asset's metadata tags
-      and add it to the `songMeta` dictionary.
+      and add it to the `trackMeta` dictionary.
    
       - parameter asset: The asset to extract metadata from
-      - parameter songMeta: The metadata dict to populate
+      - parameter trackMeta: The metadata dict to populate
       - parameter format: The string metadata format (for example "com.apple.itunes")
    
-      - returns: The mutated `songMeta` dict
+      - returns: The mutated `trackMeta` dict
   */
-  func parseMetadataFormat(asset: AVURLAsset, songMeta: [String: AnyObject], format: String)
+  func parseMetadataFormat(asset: AVURLAsset, trackMeta: [String: AnyObject], format: String)
       -> [String: AnyObject] {
-    var songMeta = songMeta
+    var trackMeta = trackMeta
     var key: String = ""
 
     guard let tags = self.tags[format] else {
       print("Found unknown tag format '\(format)', skipping")
-      return songMeta
+      return trackMeta
     }
 
     let meta = asset.metadataForFormat(format).filter {
@@ -105,14 +105,14 @@ class MetadataParser {
     }
 
     for item in meta {
-      // Set each metadata item in the song meta dict if it isn't already set
+      // Set each metadata item in the track meta dict if it isn't already set
       key = tags[item.keyString]!
       if let value = item.value {
-        songMeta[key] = songMeta[key] ?? value
+        trackMeta[key] = trackMeta[key] ?? value
       }
     }
 
-    return songMeta
+    return trackMeta
   }
 
 }

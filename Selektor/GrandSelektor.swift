@@ -12,39 +12,39 @@ import Cocoa
 class GrandSelektor: NSObject {
 
   let appDelegate = NSApplication.sharedApplication().delegate as! AppDelegate
-  var algorithms: [String: (SongEntity, [SongEntity]) -> SongEntity] = [:]
+  var algorithms: [String: (TrackEntity, [TrackEntity]) -> TrackEntity] = [:]
   var algorithm: String = ""
 
   override init() {
     super.init()
 
     self.algorithms = [
-      "dummy": self.selectSongDummy,
+      "dummy": self.selectTrackDummy,
     ]
     self.algorithm = appDelegate.settings?["selektorAlgorithm"] as! String
 
   }
 
-  func selectSong(currentSong: SongEntity) -> SongEntity {
-    let songs = self.appDelegate.songs.filter {
-      $0.objectID != currentSong.objectID && $0.analyzed == AnalysisState.Complete.rawValue
+  func selectTrack(currentTrack: TrackEntity) -> TrackEntity {
+    let tracks = self.appDelegate.tracks.filter {
+      $0.objectID != currentTrack.objectID && $0.analyzed == AnalysisState.Complete.rawValue
     }
 
-    if songs.count == 0 {
-      // TODO: UI to show a useful error when there's only one song in the
+    if tracks.count == 0 {
+      // TODO: UI to show a useful error when there's only one track in the
       // library
-      return currentSong
+      return currentTrack
     }
 
     if !self.algorithms.keys.contains(algorithm) {
       fatalError("Invalid selektorAlgorithm specified in Settings.plist")
     }
 
-    return self.algorithms[algorithm]!(currentSong, songs)
+    return self.algorithms[algorithm]!(currentTrack, tracks)
   }
 
-  func selectSongDummy(currentSong: SongEntity, songs: [SongEntity]) -> SongEntity {
-    let index = Int(arc4random_uniform(UInt32(songs.count)))
-    return songs[index]
+  func selectTrackDummy(currentTrack: TrackEntity, tracks: [TrackEntity]) -> TrackEntity {
+    let index = Int(arc4random_uniform(UInt32(tracks.count)))
+    return tracks[index]
   }
 }

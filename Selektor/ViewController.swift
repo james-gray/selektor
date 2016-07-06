@@ -11,17 +11,13 @@ import Cocoa
 
 class ViewController: NSViewController {
 
-  // MARK: Outlets
+  @IBOutlet var tracksController: NSArrayController!
+  @IBOutlet var bestNextTrackController: NSObjectController!
 
-  @IBOutlet weak var songsTableView: NSTableView!
-  @IBOutlet var songsController: NSArrayController!
+  @IBOutlet weak var tracksTableView: NSTableView!
   @IBOutlet weak var selectNextTrackBtn: NSButton!
-
-  @IBOutlet var bestNextSongController: NSObjectController!
-  @IBOutlet weak var bestNextSongBox: NSBox!
-  @IBOutlet weak var playNextSongBtn: NSButton!
-
-  // MARK: Properties
+  @IBOutlet weak var bestNextTrackBox: NSBox!
+  @IBOutlet weak var playNextTrackBtn: NSButton!
 
   // Data controller acts as the interface to the Core Data stack, allowing
   // interaction with the database.
@@ -37,7 +33,7 @@ class ViewController: NSViewController {
 
   var localDc: DataController?
 
-  var bestNextSong: SongEntity? = nil
+  var bestNextTrack: TrackEntity? = nil
 
   // Set of supported audio file extensions
   let validExtensions: Set<String> = ["wav", "mp3", "m4a", "m3u", "wma", "aif", "ogg"]
@@ -57,7 +53,7 @@ class ViewController: NSViewController {
 
   lazy var deleteAlert: NSAlert = {
     let alert = NSAlert()
-    alert.messageText = "Delete Songs"
+    alert.messageText = "Delete Tracks"
     alert.addButtonWithTitle("Cancel")
     alert.addButtonWithTitle("Delete")
     return alert
@@ -65,7 +61,7 @@ class ViewController: NSViewController {
 
   lazy var importProgressAlert: NSAlert = {
     let alert = NSAlert()
-    alert.messageText = "Importing songs. Please wait..."
+    alert.messageText = "Importing tracks. Please wait..."
     return alert
   }()
 
@@ -73,37 +69,37 @@ class ViewController: NSViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    // Add observer to notify the view controller when the songs controller's
-    // selection changes (so it can hide the suggested song UI elements)
-    self.songsController.addObserver(
+    // Add observer to notify the view controller when the tracks controller's
+    // selection changes (so it can hide the suggested track UI elements)
+    self.tracksController.addObserver(
       self,
       forKeyPath: "selection",
       options:(NSKeyValueObservingOptions.New),
       context: nil
     )
 
-    // Hide the suggested song UI elements at first
-    self.bestNextSongBox.hidden = true
-    self.playNextSongBtn.hidden = true
+    // Hide the suggested track UI elements at first
+    self.bestNextTrackBox.hidden = true
+    self.playNextTrackBtn.hidden = true
 
-    // Populate the songs array and attach to the songsController
+    // Populate the tracks array and attach to the tracksController
     dispatch_async(dispatch_get_main_queue()) {
-      self.appDelegate.songs = self.appDelegate.dc.fetchEntities()
-      self.songsController.content = self.appDelegate.songs
+      self.appDelegate.tracks = self.appDelegate.dc.fetchEntities()
+      self.tracksController.content = self.appDelegate.tracks
 
-      if self.appDelegate.songs.count > 0 {
-        self.analyzeSongs() // Process any un-analyzed songs
+      if self.appDelegate.tracks.count > 0 {
+        self.analyzeTracks() // Process any un-analyzed tracks
       }
     }
   }
 
   override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
     if keyPath == "selection" {
-      self.bestNextSongBox.hidden = true
-      self.playNextSongBtn.hidden = true
+      self.bestNextTrackBox.hidden = true
+      self.playNextTrackBtn.hidden = true
 
-      // Hide the "Select Next Track" button when no / multiple songs are selected
-      self.selectNextTrackBtn.hidden = self.songsController.selectionIndexes.count != 1
+      // Hide the "Select Next Track" button when no / multiple tracks are selected
+      self.selectNextTrackBtn.hidden = self.tracksController.selectionIndexes.count != 1
     }
   }
 
@@ -115,7 +111,7 @@ class ViewController: NSViewController {
                                               options: options, errorHandler: nil) {
       for url in fileUrls {
         if self.validExtensions.contains(url.pathExtension) {
-            self.importSong(url as! NSURL)
+            self.importTrack(url as! NSURL)
         }
       }
 
@@ -123,51 +119,51 @@ class ViewController: NSViewController {
       self.appDelegate.dc.save()
 
       // Update the table view by refreshing the array controller
-      self.songsController.content = self.appDelegate.songs
-      self.songsController.rearrangeObjects()
+      self.tracksController.content = self.appDelegate.tracks
+      self.tracksController.rearrangeObjects()
     }
   }
 
-  func importSong(url: NSURL) {
-    print("Importing song '\(url.absoluteString)'")
+  func importTrack(url: NSURL) {
+    print("Importing track '\(url.absoluteString)'")
     let dc = self.appDelegate.dc
 
-    let song: SongEntity = dc.createEntity()
+    let track: TrackEntity = dc.createEntity()
     let asset = AVURLAsset(URL: url)
     let meta = mp.parse(asset)
 
-    song.name = meta["name"] as? String ?? url.lastPathComponent
-    song.filename = url.path
-    song.tempo = meta["tempo"] as? Int ?? 0
-    song.duration = Int(asset.duration.seconds)
-    song.artist = meta["artist"] as? String ?? "Unknown Artist"
-    song.album = meta["album"] as? String ?? "Unknown Album"
-    song.genre = meta["genre"] as? String
-    song.key = meta["key"] as? String
+    track.name = meta["name"] as? String ?? url.lastPathComponent
+    track.filename = url.path
+    track.tempo = meta["tempo"] as? Int ?? 0
+    track.duration = Int(asset.duration.seconds)
+    track.artist = meta["artist"] as? String ?? "Unknown Artist"
+    track.album = meta["album"] as? String ?? "Unknown Album"
+    track.genre = meta["genre"] as? String
+    track.key = meta["key"] as? String
 
-    self.appDelegate.songs.append(song)
+    self.appDelegate.tracks.append(track)
   }
 
-  func analyzeSongs() {
-    // Serially analyze songs in the background
-    let songsIdsToAnalyze = self.appDelegate.songs
-        .filter { $0.analyzed != AnalysisState.Complete.rawValue } // Filter out analyzed songs
-        .sort { Int($0.analyzed) > Int($1.analyzed) } // Sort such that "in progress" songs are analyzed first
+  func analyzeTracks() {
+    // Serially analyze tracks in the background
+    let tracksIdsToAnalyze = self.appDelegate.tracks
+        .filter { $0.analyzed != AnalysisState.Complete.rawValue } // Filter out analyzed tracks
+        .sort { Int($0.analyzed) > Int($1.analyzed) } // Sort such that "in progress" tracks are analyzed first
         .map { $0.objectID } // Extract object IDs
 
     dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.rawValue), 0)) {
       // Set up a threadlocal data controller and store it in the current thread's dictionary.
-      // This way when the SongEntity instance attempts to create a TimbreVectorEntity it will be
-      // able to use the same managed object context as the SongEntity.
+      // This way when the TrackEntity instance attempts to create a TimbreVectorEntity it will be
+      // able to use the same managed object context as the TrackEntity.
       let localMoc = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
       localMoc.parentContext = self.managedObjectContext
       self.localDc = DataController(managedObjectContext: localMoc)
       NSThread.currentThread().threadDictionary.setObject(self.localDc!, forKey: "dc")
 
-      for songId in songsIdsToAnalyze {
-        let song = self.localDc!.managedObjectContext.objectWithID(songId) as! SongEntity
-        if (song.managedObjectContext != nil) {
-          song.analyze()
+      for trackId in tracksIdsToAnalyze {
+        let track = self.localDc!.managedObjectContext.objectWithID(trackId) as! TrackEntity
+        if (track.managedObjectContext != nil) {
+          track.analyze()
         }
       }
     }
@@ -180,52 +176,52 @@ class ViewController: NSViewController {
         self.importProgressAlert.beginSheetModalForWindow(self.view.window!, completionHandler: nil)
         self.importMusicFolder(self.openPanel.URL!)
         self.view.window!.endSheet(self.importProgressAlert.window)
-        self.analyzeSongs()
+        self.analyzeTracks()
       }
       self.openPanel.close()
     }
   }
 
-  @IBAction func selectBestNextSong(sender: AnyObject) {
-    let selectedSongs = self.songsController.selectedObjects as! [SongEntity]
-    if selectedSongs.count > 1 {
-      fatalError("selectBestNextSong called for multiple selected objects")
+  @IBAction func selectBestNextTrack(sender: AnyObject) {
+    let selectedTracks = self.tracksController.selectedObjects as! [TrackEntity]
+    if selectedTracks.count > 1 {
+      fatalError("selectBestNextTrack called for multiple selected objects")
     }
 
-    let song = selectedSongs[0]
-    self.bestNextSong = selektor.selectSong(song)
-    self.bestNextSongController.content = self.bestNextSong
+    let track = selectedTracks[0]
+    self.bestNextTrack = selektor.selectTrack(track)
+    self.bestNextTrackController.content = self.bestNextTrack
 
-    self.bestNextSongBox.hidden = false
-    self.playNextSongBtn.hidden = false
+    self.bestNextTrackBox.hidden = false
+    self.playNextTrackBtn.hidden = false
   }
 
-  @IBAction func playBestNextSong(sender: AnyObject) {
-    self.bestNextSongBox.hidden = true
-    self.playNextSongBtn.hidden = true
+  @IBAction func playBestNextTrack(sender: AnyObject) {
+    self.bestNextTrackBox.hidden = true
+    self.playNextTrackBtn.hidden = true
 
-    guard let bestNextSong = self.bestNextSong else {
-      fatalError("playBestNextSong called before a bestNextSong was selected!")
+    guard let bestNextTrack = self.bestNextTrack else {
+      fatalError("playBestNextTrack called before a bestNextTrack was selected!")
     }
-    let indexSet = self.songsController.selectionIndexes
-    self.songsController.removeSelectionIndexes(indexSet)
-    self.songsController.addSelectedObjects([bestNextSong])
+    let indexSet = self.tracksController.selectionIndexes
+    self.tracksController.removeSelectionIndexes(indexSet)
+    self.tracksController.addSelectedObjects([bestNextTrack])
   }
 
-  @IBAction func handleSongRemove(sender: AnyObject) {
-      let selectedSongs = self.songsController.selectedObjects as! [SongEntity]
+  @IBAction func handleTrackRemove(sender: AnyObject) {
+      let selectedTracks = self.tracksController.selectedObjects as! [TrackEntity]
 
-      if selectedSongs.count > 1 {
-        self.deleteAlert.informativeText = "Are you sure you want to delete the selected songs?"
+      if selectedTracks.count > 1 {
+        self.deleteAlert.informativeText = "Are you sure you want to delete the selected tracks?"
       } else {
-        self.deleteAlert.informativeText = "Are you sure you want to delete the song '\(selectedSongs[0].name!)'?"
+        self.deleteAlert.informativeText = "Are you sure you want to delete the track '\(selectedTracks[0].name!)'?"
       }
 
     dispatch_async(dispatch_get_main_queue()) {
       self.deleteAlert.beginSheetModalForWindow(self.view.window!, completionHandler: {
         (returnCode) -> Void in
         if returnCode == NSAlertSecondButtonReturn {
-          self.songsController.removeObjectsAtArrangedObjectIndexes(self.songsController.selectionIndexes)
+          self.tracksController.removeObjectsAtArrangedObjectIndexes(self.tracksController.selectionIndexes)
           self.appDelegate.dc.save()
         }
       })

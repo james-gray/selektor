@@ -1,5 +1,5 @@
 //
-//  SongEntity.swift
+//  TrackEntity.swift
 //  Selektor
 //
 //  Created by James Gray on 2016-05-28.
@@ -22,8 +22,8 @@ enum AnalysisState: Int {
   case Complete
 }
 
-@objc(SongEntity)
-class SongEntity: SelektorObject {
+@objc(TrackEntity)
+class TrackEntity: SelektorObject {
 
   // MARK: Properties
   @NSManaged dynamic var analyzed: NSNumber
@@ -39,7 +39,7 @@ class SongEntity: SelektorObject {
   @NSManaged dynamic var timbreVectors: NSSet?
 
   override class func getEntityName() -> String {
-    return "Song"
+    return "Track"
   }
 
   override func awakeFromInsert() {
@@ -140,7 +140,7 @@ class SongEntity: SelektorObject {
       let arffLines = arffContents.componentsSeparatedByString("\n")
 
       // Extract the vector from the ARFF file.
-      // Since only one song was analyzed, only one vector will be contained
+      // Since only one track was analyzed, only one vector will be contained
       // in the file, so we always know the position of the vector relative to
       // the end of the file.
       let vectorString = arffLines[arffLines.endIndex - 2]
@@ -180,7 +180,7 @@ class SongEntity: SelektorObject {
     let tempMfURL = tempDir.URLByAppendingPathComponent("\(mfUuid).mf")
     let tempArffURL = tempDir.URLByAppendingPathComponent("\(arffUuid).arff")
 
-    // Write a temporary .mf file containing the song's URL for Marsyas
+    // Write a temporary .mf file containing the track's URL for Marsyas
     do {
       try wavURL.path!.writeToURL(tempMfURL, atomically: false, encoding: NSUTF8StringEncoding)
     } catch {
@@ -188,14 +188,14 @@ class SongEntity: SelektorObject {
       return
     }
 
-    // Execute the mirex_extract command to analyze the song
+    // Execute the mirex_extract command to analyze the track
     let task = NSTask()
     task.launchPath = mirexPath
     task.arguments = [tempMfURL.path!, tempArffURL.path!]
     task.launch()
     task.waitUntilExit()
 
-    // Store the timbre data in the song object
+    // Store the timbre data in the track object
     self.store64DimensionalTimbreVector(tempArffURL)
 
     // Clean up temporary files. Wav files are huge - we don't want them cluttering
@@ -227,7 +227,7 @@ class SongEntity: SelektorObject {
       return
     }
 
-    // Execute the tempo command to analyze the song's BPM
+    // Execute the tempo command to analyze the track's BPM
     let task = NSTask()
     let pipe = NSPipe()
     task.launchPath = tempoPath
@@ -263,7 +263,7 @@ class SongEntity: SelektorObject {
     if !isWav {
       print("Converting \(self.relativeFilename!) to .wav")
 
-      // Use ffmpeg to create a temporary wav copy of the song
+      // Use ffmpeg to create a temporary wav copy of the track
       guard let ffmpegPath = ffmpegPath else {
         print("Unable to locate the ffmpeg binary")
         return nil
@@ -278,7 +278,7 @@ class SongEntity: SelektorObject {
       task.launch()
       task.waitUntilExit()
     } else {
-      // Simply use the song's file path as the WAV URL
+      // Simply use the track's file path as the WAV URL
       wavURL = NSURL(fileURLWithPath: self.filename!)
     }
 
@@ -294,7 +294,7 @@ class SongEntity: SelektorObject {
       self.dc.save()
     }
 
-    // Get (or create via conversion) the WAV URL for the song
+    // Get (or create via conversion) the WAV URL for the track
     guard let (wavURL, converted) = self.getOrCreateWavURL() else {
       // There was some issue creating the Wav file - most likely the
       // FFMPEG binary couldn't be located
@@ -304,13 +304,13 @@ class SongEntity: SelektorObject {
     // Compute timbre vector and (if necessary) tempo
     self.computeTimbreVector(wavURL)
 
-    // Compute the tempo for songs shorter than 20 minutes long.
-    // The vast majority of electronic dance songs clock in somewhere between
+    // Compute the tempo for tracks shorter than 20 minutes long.
+    // The vast majority of electronic dance tracks clock in somewhere between
     // 5 and ~10 minutes long - allowing for up to 20 minutes gives a bit of
     // a buffer for this. Files longer than 20 minutes are more likely to be
-    // non-song files (for example, DJ mixes or podcasts.)
+    // non-track files (for example, DJ mixes or podcasts.)
     // The tempo executable is extremely slow on files of long lengths, so
-    // forgo processing files that are likely not songs anyway.
+    // forgo processing files that are likely not tracks anyway.
     if self.tempo! == 0 && Int(self.duration!) < 1200 {
       self.computeTempo(wavURL)
     }
@@ -331,8 +331,8 @@ class SongEntity: SelektorObject {
     }
   }
 
-  func compareTimbreWith(song: SongEntity) -> Double {
+  func compareTimbreWith(track: TrackEntity) -> Double {
     let formula = self.appDelegate.settings?["distanceFormula"] as! String
-    return self.timbreVector64.distanceFrom(song.timbreVector64, formula: formula)
+    return self.timbreVector64.distanceFrom(track.timbreVector64, formula: formula)
   }
 }

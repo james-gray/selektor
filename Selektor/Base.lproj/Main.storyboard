@@ -699,7 +699,7 @@
                                     <action selector="chooseMusicFolder:" target="XfG-lQ-9wD" id="pdI-uy-9g3"/>
                                 </connections>
                             </button>
-                            <button toolTip="Delete Selected Song" verticalHuggingPriority="750" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hWs-nX-HeX">
+                            <button toolTip="Delete Selected Track" verticalHuggingPriority="750" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hWs-nX-HeX">
                                 <rect key="frame" x="30" y="27" width="19" height="21"/>
                                 <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="4Zt-wj-8nA">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -709,7 +709,7 @@ CA
 </string>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="handleSongRemove:" target="XfG-lQ-9wD" id="7rn-UR-w5f"/>
+                                    <action selector="handleTrackRemove:" target="XfG-lQ-9wD" id="7rn-UR-w5f"/>
                                 </connections>
                             </button>
                             <box title="You should play this track next:" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="fs7-IN-1Mc">
@@ -1186,7 +1186,7 @@ CA
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="systemBold" size="20"/>
                                     <connections>
-                                        <action selector="selectBestNextSong:" target="XfG-lQ-9wD" id="Q0g-jx-fNk"/>
+                                        <action selector="selectBestNextTrack:" target="XfG-lQ-9wD" id="Q0g-jx-fNk"/>
                                     </connections>
                                 </buttonCell>
                             </button>
@@ -1197,8 +1197,8 @@ CA
                                     <font key="font" metaFont="systemBold" size="20"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="playBestNextSong:" target="XfG-lQ-9wD" id="yOi-Ab-430"/>
-                                    <binding destination="XfG-lQ-9wD" name="hidden" keyPath="self.bestNextSong" id="vpB-c9-mzd">
+                                    <action selector="playBestNextTrack:" target="XfG-lQ-9wD" id="yOi-Ab-430"/>
+                                    <binding destination="XfG-lQ-9wD" name="hidden" keyPath="self.bestNextTrack" id="vpB-c9-mzd">
                                         <dictionary key="options">
                                             <string key="NSValueTransformerName">NSIsNil</string>
                                         </dictionary>
@@ -1545,21 +1545,21 @@ CA
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="bestNextSongBox" destination="fs7-IN-1Mc" id="8Ct-sw-7jN"/>
-                        <outlet property="bestNextSongController" destination="QPI-IC-mGd" id="bQH-yQ-TFb"/>
+                        <outlet property="bestNextTrackBox" destination="fs7-IN-1Mc" id="8Ct-sw-7jN"/>
+                        <outlet property="bestNextTrackController" destination="QPI-IC-mGd" id="bQH-yQ-TFb"/>
                         <outlet property="chooseBtn" destination="tfv-u8-i1I" id="ARq-Zu-iVG"/>
-                        <outlet property="playNextSongBtn" destination="Kk0-4Z-don" id="F4a-gX-1HJ"/>
+                        <outlet property="playNextTrackBtn" destination="Kk0-4Z-don" id="F4a-gX-1HJ"/>
                         <outlet property="selectNextTrackBtn" destination="wfJ-ko-aCc" id="JSz-5x-bM6"/>
-                        <outlet property="songsController" destination="JdN-Fp-fVn" id="oMS-qg-geC"/>
-                        <outlet property="songsTableView" destination="1nm-gb-X4G" id="cai-qY-T2B"/>
+                        <outlet property="tracksController" destination="JdN-Fp-fVn" id="oMS-qg-geC"/>
+                        <outlet property="tracksTableView" destination="1nm-gb-X4G" id="cai-qY-T2B"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <userDefaultsController representsSharedInstance="YES" id="iPW-Ye-n6M"/>
-                <arrayController mode="entity" entityName="Song" automaticallyPreparesContent="YES" id="JdN-Fp-fVn">
+                <arrayController mode="entity" entityName="Track" automaticallyPreparesContent="YES" id="JdN-Fp-fVn">
                     <connections>
-                        <binding destination="XfG-lQ-9wD" name="contentArrayForMultipleSelection" keyPath="self.appDelegate.songs" previousBinding="eBN-qV-qVD" id="H3V-HO-rdm"/>
-                        <binding destination="XfG-lQ-9wD" name="contentArray" keyPath="self.appDelegate.songs" id="eBN-qV-qVD">
+                        <binding destination="XfG-lQ-9wD" name="contentArrayForMultipleSelection" keyPath="self.appDelegate.tracks" previousBinding="eBN-qV-qVD" id="H3V-HO-rdm"/>
+                        <binding destination="XfG-lQ-9wD" name="contentArray" keyPath="self.appDelegate.tracks" id="eBN-qV-qVD">
                             <dictionary key="options">
                                 <bool key="NSDeletesObjectsOnRemove" value="YES"/>
                             </dictionary>
@@ -1567,9 +1567,9 @@ CA
                         <binding destination="XfG-lQ-9wD" name="managedObjectContext" keyPath="self.managedObjectContext" id="gcf-py-fTh"/>
                     </connections>
                 </arrayController>
-                <objectController id="QPI-IC-mGd" userLabel="BestNextSong Controller">
+                <objectController id="QPI-IC-mGd" userLabel="BestNextTrack Controller">
                     <connections>
-                        <binding destination="XfG-lQ-9wD" name="contentObject" keyPath="self.bestNextSong" id="Tbl-Rb-Lqf">
+                        <binding destination="XfG-lQ-9wD" name="contentObject" keyPath="self.bestNextTrack" id="Tbl-Rb-Lqf">
                             <dictionary key="options">
                                 <bool key="NSConditionallySetsEditable" value="NO"/>
                             </dictionary>

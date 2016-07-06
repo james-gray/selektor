@@ -18,7 +18,7 @@
 		4A5070431D2832E7007208BC /* Lib in Resources */ = {isa = PBXBuildFile; fileRef = 4A5070421D2832E7007208BC /* Lib */; };
 		4A51B7C31D18E7D800F7D9EE /* SelektorAVMetadataItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A51B7C21D18E7D800F7D9EE /* SelektorAVMetadataItem.swift */; };
 		4A51B7C71D18FE6A00F7D9EE /* MetadataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A51B7C61D18FE6A00F7D9EE /* MetadataParser.swift */; };
-		4A5750301CFA9F89007ED42C /* SongEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5750201CFA9F89007ED42C /* SongEntity.swift */; };
+		4A5750301CFA9F89007ED42C /* TrackEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5750201CFA9F89007ED42C /* TrackEntity.swift */; };
 		4A57503C1CFA9FBF007ED42C /* SelektorObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A57503B1CFA9FBF007ED42C /* SelektorObject.swift */; };
 		4A8FF5E51D2A0DD30077B704 /* SelektorArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FF5E41D2A0DD30077B704 /* SelektorArray.swift */; };
 		4AAA2E361CFA39C00001D767 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAA2E351CFA39C00001D767 /* DataController.swift */; };
@@ -65,7 +65,7 @@
 		4A5070421D2832E7007208BC /* Lib */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Lib; sourceTree = "<group>"; };
 		4A51B7C21D18E7D800F7D9EE /* SelektorAVMetadataItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelektorAVMetadataItem.swift; sourceTree = "<group>"; };
 		4A51B7C61D18FE6A00F7D9EE /* MetadataParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetadataParser.swift; sourceTree = "<group>"; };
-		4A5750201CFA9F89007ED42C /* SongEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SongEntity.swift; path = Models/SongEntity.swift; sourceTree = "<group>"; };
+		4A5750201CFA9F89007ED42C /* TrackEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackEntity.swift; path = Models/TrackEntity.swift; sourceTree = "<group>"; };
 		4A57503B1CFA9FBF007ED42C /* SelektorObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelektorObject.swift; path = Models/SelektorObject.swift; sourceTree = "<group>"; };
 		4A8FF5E41D2A0DD30077B704 /* SelektorArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelektorArray.swift; sourceTree = "<group>"; };
 		4AAA2E351CFA39C00001D767 /* DataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
@@ -151,7 +151,7 @@
 		4AD9543C1CFA651B00D4BE53 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				4A5750201CFA9F89007ED42C /* SongEntity.swift */,
+				4A5750201CFA9F89007ED42C /* TrackEntity.swift */,
 				4AED17661D26E27D007F2908 /* TimbreVectorEntity.swift */,
 				4A57503B1CFA9FBF007ED42C /* SelektorObject.swift */,
 			);
@@ -271,7 +271,7 @@
 				4AAA2E361CFA39C00001D767 /* DataController.swift in Sources */,
 				4A57503C1CFA9FBF007ED42C /* SelektorObject.swift in Sources */,
 				4A0402A41CF7F18F0031011A /* ViewController.swift in Sources */,
-				4A5750301CFA9F89007ED42C /* SongEntity.swift in Sources */,
+				4A5750301CFA9F89007ED42C /* TrackEntity.swift in Sources */,
 				4A0402A21CF7F18F0031011A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

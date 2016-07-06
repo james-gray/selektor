@@ -17,9 +17,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   let settings = NSDictionary.init(contentsOfFile: NSBundle.mainBundle().pathForResource(
     "Settings", ofType: "plist")!)
 
-  // Array of songs which will be used by the songsController for
-  // populating the songs table view.
-  var songs: [SongEntity] = []
+  // Array of tracks which will be used by the tracksController for
+  // populating the tracks table view.
+  var tracks: [TrackEntity] = []
 
   override class func initialize() {
     let filenameTransformer = FilenameTransformer()

@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15F34" minimumToolsVersion="Automatic">
-    <entity name="Song" representedClassName="SongEntity" syncable="YES">
+    <entity name="TimbreVector" representedClassName="TimbreVectorEntity" syncable="YES">
+        <attribute name="centroid" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="flux" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="mfccString" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rolloff" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="summaryType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="track" optional="YES" maxCount="1" deletionRule="Deny" destinationEntity="Track" inverseName="timbreVectors" inverseEntity="Track" syncable="YES"/>
+    </entity>
+    <entity name="Track" representedClassName="TrackEntity" syncable="YES">
         <attribute name="album" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="analyzed" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="artist" optional="YES" attributeType="String" syncable="YES"/>
@@ -12,23 +20,15 @@
         <attribute name="loudness" attributeType="Double" minValueString="0" defaultValueString="0.0" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="tempo" attributeType="Double" minValueString="0" defaultValueString="0" syncable="YES"/>
-        <relationship name="timbreVectors" optional="YES" toMany="YES" maxCount="4" deletionRule="Nullify" destinationEntity="TimbreVector" inverseName="song" inverseEntity="TimbreVector" syncable="YES"/>
+        <relationship name="timbreVectors" optional="YES" toMany="YES" maxCount="4" deletionRule="Nullify" destinationEntity="TimbreVector" inverseName="track" inverseEntity="TimbreVector" syncable="YES"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="filename"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="TimbreVector" representedClassName="TimbreVectorEntity" syncable="YES">
-        <attribute name="centroid" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="flux" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="mfccString" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="rolloff" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="summaryType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <relationship name="song" optional="YES" maxCount="1" deletionRule="Deny" destinationEntity="Song" inverseName="timbreVectors" inverseEntity="Song" syncable="YES"/>
-    </entity>
     <elements>
-        <element name="Song" positionX="-378" positionY="-340" width="128" height="225"/>
+        <element name="Track" positionX="-378" positionY="-340" width="128" height="225"/>
         <element name="TimbreVector" positionX="-378" positionY="-252" width="128" height="135"/>
     </elements>
 </model>

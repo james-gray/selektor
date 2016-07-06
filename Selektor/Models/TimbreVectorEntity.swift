@@ -25,7 +25,7 @@ class TimbreVectorEntity: SelektorObject {
   @NSManaged var flux: NSNumber?
   @NSManaged var rolloff: NSNumber?
   @NSManaged var mfccString: String?
-  @NSManaged var song: SongEntity?
+  @NSManaged var track: TrackEntity?
 
   override class func getEntityName() -> String {
     return "TimbreVector"

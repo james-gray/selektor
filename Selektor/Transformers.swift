@@ -96,8 +96,8 @@ class SelectionTransformer: NSValueTransformer {
   }
 
   override func transformedValue(value: AnyObject?) -> AnyObject? {
-    // XXX: Return false to prevent hiding any selected songs, since for some
-    // reason the name of certain songs is causing the "Pick Next Song" button
+    // XXX: Return false to prevent hiding any selected tracks, since for some
+    // reason the name of certain tracks is causing the "Select Next Track" button
     // to be hidden
     return false
   }
