@@ -15,8 +15,8 @@ class DataController {
   //
   // Copyright © 2016 Apple Inc. All rights reserved.
   var managedObjectContext: NSManagedObjectContext
-  var psc: NSPersistentStoreCoordinator? = nil
-  
+  var persistentStoreCoordinator: NSPersistentStoreCoordinator? = nil
+
   init(managedObjectContext: NSManagedObjectContext? = nil) {
     let dbName = "Selektor"
 
@@ -24,28 +24,28 @@ class DataController {
         withExtension: "momd") else {
       fatalError("Error loading model from bundle.")
     }
-    
+
     // The managed object model for the application. It is a fatal error for the
     // application not to be able to find and load its model.
-    guard let mom = NSManagedObjectModel(contentsOfURL: modelURL) else {
-      fatalError("Error initializing mom from: \(modelURL)")
+    guard let managedObjectModel = NSManagedObjectModel(contentsOfURL: modelURL) else {
+      fatalError("Error initializing managedObjectModel from: \(modelURL)")
     }
-  
+
     if managedObjectContext != nil {
       self.managedObjectContext = managedObjectContext!
     } else {
       self.managedObjectContext = NSManagedObjectContext(
         concurrencyType: .MainQueueConcurrencyType
       )
-      self.psc = NSPersistentStoreCoordinator(managedObjectModel: mom)
-      self.managedObjectContext.persistentStoreCoordinator = psc
+      self.persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
+      self.managedObjectContext.persistentStoreCoordinator = persistentStoreCoordinator
       self.managedObjectContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
     }
 
     // Add persistent store only if this is the first (i.e. global) DataController with the
     // managed object context for the main thread, as we only need one persistent store
     // coordinator per application.
-    if self.psc != nil {
+    if self.persistentStoreCoordinator != nil {
       dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
         let urls = NSFileManager.defaultManager().URLsForDirectory(
             .DocumentDirectory,
@@ -58,7 +58,7 @@ class DataController {
         // documents directory.
         let storeURL = docURL.URLByAppendingPathComponent(dbName + ".sqlite")
         do {
-          try self.psc!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil,
+          try self.persistentStoreCoordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil,
               URL: storeURL, options: nil)
         } catch {
           fatalError("Error migrating store: \(error)")
@@ -73,7 +73,7 @@ class DataController {
   }
 
   func fetchEntities<T: SelektorObject>(predicate: NSPredicate? = nil) -> [T] {
-    let moc = managedObjectContext
+    let managedObjectContext = self.managedObjectContext
     let entityName = T.getEntityName()
     let fetchRequest = NSFetchRequest(entityName: entityName)
 
@@ -83,7 +83,7 @@ class DataController {
     }
 
     do {
-      let fetchedObjects = try moc.executeFetchRequest(fetchRequest) as! [T]
+      let fetchedObjects = try managedObjectContext.executeFetchRequest(fetchRequest) as! [T]
       return fetchedObjects
     } catch {
       fatalError("Failed to fetch \(entityName)s: \(error)")

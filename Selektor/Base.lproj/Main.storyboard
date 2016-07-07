@@ -712,7 +712,7 @@ CA
                                     <action selector="handleTrackRemove:" target="XfG-lQ-9wD" id="7rn-UR-w5f"/>
                                 </connections>
                             </button>
-                            <box title="You should play this track next:" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="fs7-IN-1Mc">
+                            <box title="Try playing this track next:" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="fs7-IN-1Mc">
                                 <rect key="frame" x="586" y="96" width="287" height="249"/>
                                 <view key="contentView" id="tuW-y0-Abl">
                                     <rect key="frame" x="1" y="1" width="285" height="225"/>

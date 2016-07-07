@@ -129,7 +129,6 @@ class TrackEntity: SelektorObject {
     return vector
   }
 
-  // MARK: Store
   func store64DimensionalTimbreVector(arffFileURL: NSURL) {
     do {
       let arffContents = try String(contentsOfURL: arffFileURL)
@@ -205,10 +204,12 @@ class TrackEntity: SelektorObject {
 
   func parseTempoOutput(pipe: NSPipe) -> Int {
     let data = NSString(data: pipe.fileHandleForReading.readDataToEndOfFile(), encoding: NSASCIIStringEncoding) as! String
+
     if data.rangeOfString("MRS_WARNING") != nil {
-        // Error computing tempo
+        // Error computing tempo if MRS_WARNING is in the output
         return 0
     }
+
     let lines = data.componentsSeparatedByString("\n")
     let tempoLine = lines.filter { $0.hasPrefix("Estimated tempo") }.first
     let tempo = tempoLine?.componentsSeparatedByString(" ").last
