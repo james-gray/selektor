@@ -76,9 +76,9 @@ class AnalysisStateTransformer: NSValueTransformer {
     }
 
     switch num {
-    case AnalysisState.InProgress.rawValue:
+    case AnalysisState.inProgress.rawValue:
       return "\u{1F550}" // 🕐
-    case AnalysisState.Complete.rawValue:
+    case AnalysisState.complete.rawValue:
       return "\u{2714}" // ✔️
     default:
       return ""

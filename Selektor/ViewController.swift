@@ -147,7 +147,7 @@ class ViewController: NSViewController {
   func analyzeTracks() {
     // Serially analyze tracks in the background
     let tracksIdsToAnalyze = self.appDelegate.tracks
-        .filter { $0.analyzed != AnalysisState.Complete.rawValue } // Filter out analyzed tracks
+        .filter { $0.analyzed != AnalysisState.complete.rawValue } // Filter out analyzed tracks
         .sort { Int($0.analyzed) > Int($1.analyzed) } // Sort such that "in progress" tracks are analyzed first
         .map { $0.objectID } // Extract object IDs
 

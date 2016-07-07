@@ -27,7 +27,8 @@ class GrandSelektor: NSObject {
 
   func selectTrack(currentTrack: TrackEntity) -> TrackEntity {
     let tracks = self.appDelegate.tracks.filter {
-      $0.objectID != currentTrack.objectID && $0.analyzed == AnalysisState.Complete.rawValue
+      $0.objectID != currentTrack.objectID
+      && $0.analyzed == AnalysisState.complete.rawValue
     }
 
     if tracks.count == 0 {

@@ -12,22 +12,24 @@ import Cocoa
 import ObjectiveC
 import QuartzCore
 
-let mirexPath: String? = NSBundle.mainBundle().pathForResource("mirex_extract", ofType: nil, inDirectory: "Lib/marsyas/bin")
-let ffmpegPath: String? = NSBundle.mainBundle().pathForResource("ffmpeg", ofType: nil, inDirectory: "Lib/ffmpeg")
-let tempoPath: String? = NSBundle.mainBundle().pathForResource("tempo", ofType: nil, inDirectory: "Lib/marsyas/bin")
-
 enum AnalysisState: Int {
-  case ToDo = 0
-  case InProgress
-  case Complete
+  case toDo = 0
+  case inProgress
+  case complete
 }
 
 @objc(TrackEntity)
 class TrackEntity: SelektorObject {
 
+  static let mirexPath: String? = NSBundle.mainBundle().pathForResource("mirex_extract",
+    ofType: nil, inDirectory: "Lib/marsyas/bin")
+  static let ffmpegPath: String? = NSBundle.mainBundle().pathForResource("ffmpeg",
+      ofType: nil, inDirectory: "Lib/ffmpeg")
+  static let tempoPath: String? = NSBundle.mainBundle().pathForResource("tempo",
+    ofType: nil, inDirectory: "Lib/marsyas/bin")
+
   // MARK: Properties
   @NSManaged dynamic var analyzed: NSNumber
-  @NSManaged dynamic var dateAdded: NSDate?
   @NSManaged dynamic var duration: NSNumber?
   @NSManaged dynamic var filename: String?
   @NSManaged dynamic var loudness: NSNumber?
@@ -42,13 +44,6 @@ class TrackEntity: SelektorObject {
     return "Track"
   }
 
-  override func awakeFromInsert() {
-    super.awakeFromInsert()
-
-    // Set default values for NSManaged properties
-    dateAdded = NSDate()
-  }
-
   // MARK: Convenience properties
 
   dynamic var relativeFilename: String? {
@@ -57,7 +52,7 @@ class TrackEntity: SelektorObject {
 
   dynamic var timbreVector64: [Double] {
     get {
-      if self.analyzed != AnalysisState.Complete.rawValue {
+      if self.analyzed != AnalysisState.complete.rawValue {
         return [Double](count: 64, repeatedValue: 0.0)
       }
 
@@ -166,7 +161,7 @@ class TrackEntity: SelektorObject {
   }
 
   func computeTimbreVector(wavURL: NSURL) {
-    guard let mirexPath = mirexPath else {
+    guard let mirexPath = TrackEntity.mirexPath else {
       print("Unable to locate the mirex_extract binary")
       return
     }
@@ -222,7 +217,7 @@ class TrackEntity: SelektorObject {
   }
 
   func computeTempo(wavURL: NSURL) {
-    guard let tempoPath = tempoPath else {
+    guard let tempoPath = TrackEntity.tempoPath else {
       print("Unable to locate the tempo binary")
       return
     }
@@ -264,7 +259,7 @@ class TrackEntity: SelektorObject {
       print("Converting \(self.relativeFilename!) to .wav")
 
       // Use ffmpeg to create a temporary wav copy of the track
-      guard let ffmpegPath = ffmpegPath else {
+      guard let ffmpegPath = TrackEntity.ffmpegPath else {
         print("Unable to locate the ffmpeg binary")
         return nil
       }
@@ -288,7 +283,7 @@ class TrackEntity: SelektorObject {
   }
 
   func analyze() {
-    self.analyzed = AnalysisState.InProgress.rawValue
+    self.analyzed = AnalysisState.inProgress.rawValue
     // Save the new analysis state to signal the UI
     if self.managedObjectContext != nil {
       self.dc.save()
@@ -324,7 +319,7 @@ class TrackEntity: SelektorObject {
       }
     }
 
-    self.analyzed = AnalysisState.Complete.rawValue
+    self.analyzed = AnalysisState.complete.rawValue
     // Save the new analysis state to signal the UI
     if self.managedObjectContext != nil {
       self.dc.save()
