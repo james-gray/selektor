@@ -758,7 +758,11 @@ CA
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
-                                                <binding destination="QPI-IC-mGd" name="value" keyPath="selection.genre" id="Ezt-MM-wU8"/>
+                                                <binding destination="QPI-IC-mGd" name="value" keyPath="selection.genre" id="pYw-mJ-pz7">
+                                                    <dictionary key="options">
+                                                        <string key="NSNullPlaceholder">Unknown Genre</string>
+                                                    </dictionary>
+                                                </binding>
                                             </connections>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="exo-9i-31G">
@@ -769,7 +773,11 @@ CA
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
-                                                <binding destination="QPI-IC-mGd" name="value" keyPath="selection.album" id="vEF-eI-Nd5"/>
+                                                <binding destination="QPI-IC-mGd" name="value" keyPath="selection.album" id="AwI-dt-DwQ">
+                                                    <dictionary key="options">
+                                                        <string key="NSNullPlaceholder">Unknown Album</string>
+                                                    </dictionary>
+                                                </binding>
                                             </connections>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MmF-WA-U9E">
@@ -780,7 +788,11 @@ CA
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
-                                                <binding destination="QPI-IC-mGd" name="value" keyPath="selection.artist" id="zQM-Kf-9cb"/>
+                                                <binding destination="QPI-IC-mGd" name="value" keyPath="selection.artist" id="2h4-Ct-VmU">
+                                                    <dictionary key="options">
+                                                        <string key="NSNullPlaceholder">Unknown Artist</string>
+                                                    </dictionary>
+                                                </binding>
                                             </connections>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vJw-9I-1hM">
@@ -818,7 +830,11 @@ CA
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
-                                                <binding destination="QPI-IC-mGd" name="value" keyPath="selection.key" id="9MC-Pd-fHy"/>
+                                                <binding destination="QPI-IC-mGd" name="value" keyPath="selection.key" id="0Y9-yl-Zhs">
+                                                    <dictionary key="options">
+                                                        <string key="NSNullPlaceholder">Unknown Key</string>
+                                                    </dictionary>
+                                                </binding>
                                             </connections>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RrL-jO-twe">
@@ -829,8 +845,9 @@ CA
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
-                                                <binding destination="QPI-IC-mGd" name="value" keyPath="selection.duration" id="uqb-Ok-DfH">
+                                                <binding destination="QPI-IC-mGd" name="value" keyPath="selection.duration" id="mIz-eJ-p6G">
                                                     <dictionary key="options">
+                                                        <string key="NSNullPlaceholder">Unknown Duration</string>
                                                         <string key="NSValueTransformerName">DurationTransformer</string>
                                                     </dictionary>
                                                 </binding>
@@ -856,7 +873,11 @@ CA
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
-                                                <binding destination="QPI-IC-mGd" name="value" keyPath="selection.name" id="9rE-3E-M8I"/>
+                                                <binding destination="QPI-IC-mGd" name="value" keyPath="selection.name" id="c0P-L0-BbG">
+                                                    <dictionary key="options">
+                                                        <string key="NSNullPlaceholder">Unknown Title</string>
+                                                    </dictionary>
+                                                </binding>
                                             </connections>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BTc-1K-5Ol">
@@ -875,7 +896,11 @@ CA
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
-                                                <binding destination="QPI-IC-mGd" name="value" keyPath="selection.filename" id="57M-rR-a41"/>
+                                                <binding destination="QPI-IC-mGd" name="value" keyPath="selection.filename" id="ulb-6Y-qVc">
+                                                    <dictionary key="options">
+                                                        <string key="NSNullPlaceholder">Unknown Filename</string>
+                                                    </dictionary>
+                                                </binding>
                                             </connections>
                                         </textField>
                                     </subviews>
@@ -952,9 +977,10 @@ CA
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
-                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.name" id="zV0-Aa-iVV">
+                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.name" id="Rff-tc-7WG">
                                                     <dictionary key="options">
                                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                                        <string key="NSNullPlaceholder">Unknown Title</string>
                                                     </dictionary>
                                                 </binding>
                                             </connections>
@@ -1015,9 +1041,10 @@ CA
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
-                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.duration" id="Qpb-cs-muZ">
+                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.duration" id="9y6-ci-Bfl">
                                                     <dictionary key="options">
                                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                                        <string key="NSNullPlaceholder">Unknown Duration</string>
                                                         <string key="NSValueTransformerName">DurationTransformer</string>
                                                     </dictionary>
                                                 </binding>
@@ -1050,9 +1077,10 @@ CA
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
-                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.genre" id="pFR-Rb-9wS">
+                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.genre" id="W3r-oF-1pc">
                                                     <dictionary key="options">
                                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                                        <string key="NSNullPlaceholder">Unknown Genre</string>
                                                     </dictionary>
                                                 </binding>
                                             </connections>
@@ -1065,9 +1093,10 @@ CA
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
-                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.album" id="0HD-TU-K5u">
+                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.album" id="2md-VI-AEf">
                                                     <dictionary key="options">
                                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                                        <string key="NSNullPlaceholder">Unknown Album</string>
                                                     </dictionary>
                                                 </binding>
                                             </connections>
@@ -1080,9 +1109,10 @@ CA
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
-                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.artist" id="jZd-dN-wkY">
+                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.artist" id="2A0-mL-Yzb">
                                                     <dictionary key="options">
                                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                                        <string key="NSNullPlaceholder">Unknown Artist</string>
                                                     </dictionary>
                                                 </binding>
                                             </connections>
@@ -1095,9 +1125,10 @@ CA
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
-                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.key" id="gR0-Tx-Uga">
+                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.key" id="Knc-eo-dlS">
                                                     <dictionary key="options">
                                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                                        <string key="NSNullPlaceholder">Unknown Key</string>
                                                     </dictionary>
                                                 </binding>
                                             </connections>
@@ -1118,9 +1149,10 @@ CA
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
-                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.filename" id="8cq-6J-iu2">
+                                                <binding destination="JdN-Fp-fVn" name="value" keyPath="selection.filename" id="d07-gf-l0I">
                                                     <dictionary key="options">
                                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                                        <string key="NSNullPlaceholder">Unknown Filename</string>
                                                         <string key="NSValueTransformerName">FilenameTransformer</string>
                                                     </dictionary>
                                                 </binding>
@@ -1259,7 +1291,7 @@ CA
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
-                                                                        <binding destination="KPW-uU-kMp" name="value" keyPath="objectValue.name" id="7uk-3s-pd5"/>
+                                                                        <binding destination="KPW-uU-kMp" name="value" keyPath="objectValue.name" id="RDW-Hf-5fj"/>
                                                                         <outlet property="delegate" destination="XfG-lQ-9wD" id="lvY-Jz-Toe"/>
                                                                     </connections>
                                                                 </textField>
@@ -1275,9 +1307,10 @@ CA
                                                         </tableCellView>
                                                     </prototypeCellViews>
                                                     <connections>
-                                                        <binding destination="JdN-Fp-fVn" name="value" keyPath="arrangedObjects.name" id="w03-Xe-djz">
+                                                        <binding destination="JdN-Fp-fVn" name="value" keyPath="arrangedObjects.name" id="sYj-CK-bUP">
                                                             <dictionary key="options">
                                                                 <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                                                <string key="NSNullPlaceholder">Unknown</string>
                                                             </dictionary>
                                                         </binding>
                                                     </connections>
@@ -1311,7 +1344,7 @@ CA
                                                                         </connections>
                                                                     </textFieldCell>
                                                                     <connections>
-                                                                        <binding destination="3tr-Gd-4aG" name="value" keyPath="objectValue.artist" id="AfE-Xw-BOX"/>
+                                                                        <binding destination="3tr-Gd-4aG" name="value" keyPath="objectValue.artist" id="Cu4-9r-30q"/>
                                                                         <outlet property="delegate" destination="XfG-lQ-9wD" id="OzQ-K1-tMD"/>
                                                                     </connections>
                                                                 </textField>
@@ -1327,7 +1360,7 @@ CA
                                                         </tableCellView>
                                                     </prototypeCellViews>
                                                     <connections>
-                                                        <binding destination="JdN-Fp-fVn" name="value" keyPath="arrangedObjects.artist" id="eC1-mf-c5b">
+                                                        <binding destination="JdN-Fp-fVn" name="value" keyPath="arrangedObjects.artist" id="YPu-px-abW">
                                                             <dictionary key="options">
                                                                 <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                                             </dictionary>
@@ -1363,7 +1396,7 @@ CA
                                                                         </connections>
                                                                     </textFieldCell>
                                                                     <connections>
-                                                                        <binding destination="1WT-4U-Vp9" name="value" keyPath="objectValue.genre" id="53p-Fy-SLn"/>
+                                                                        <binding destination="1WT-4U-Vp9" name="value" keyPath="objectValue.genre" id="nb2-hb-7Pv"/>
                                                                         <outlet property="delegate" destination="XfG-lQ-9wD" id="gYT-wH-lPW"/>
                                                                     </connections>
                                                                 </textField>
@@ -1379,7 +1412,7 @@ CA
                                                         </tableCellView>
                                                     </prototypeCellViews>
                                                     <connections>
-                                                        <binding destination="JdN-Fp-fVn" name="value" keyPath="arrangedObjects.genre" id="1zU-Pp-1hh">
+                                                        <binding destination="JdN-Fp-fVn" name="value" keyPath="arrangedObjects.genre" id="pEo-l7-0kf">
                                                             <dictionary key="options">
                                                                 <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                                             </dictionary>
