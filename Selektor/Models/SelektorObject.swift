@@ -28,10 +28,10 @@ class SelektorObject: NSManagedObject {
   */
   lazy var dataController: DataController = {
     let currentThread = NSThread.currentThread()
-    let td = currentThread.threadDictionary
-    let dc = td.valueForKey("dc") as? DataController ?? (NSApplication.sharedApplication().delegate
+    let threadDictionary = currentThread.threadDictionary
+    let dataController = threadDictionary.valueForKey("dc") as? DataController ?? (NSApplication.sharedApplication().delegate
       as? AppDelegate)?.dataController
-    return dc!
+    return dataController!
   }()
 
   // XXX: Hack due to Swift's lack of support for class vars as of yet.

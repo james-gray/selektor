@@ -9,7 +9,7 @@
 import Foundation
 
 extension _ArrayType where Generator.Element == Double {
-  func distanceFrom(vector vector: [Double], withFormula formula: String = "euclidean") -> Double {
+  func calculateDistanceFrom(otherVector vector: [Double], withFormula formula: String = "euclidean") -> Double {
     if vector.count != self.count {
       print("Vector distance calculation only works on vectors of the same dimensionality")
       return Double(FP_INFINITE)
@@ -37,7 +37,6 @@ extension _ArrayType where Generator.Element == Double {
 
       default:
         fatalError("Invalid formula specified")
-
     }
   }
 }

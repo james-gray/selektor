@@ -29,9 +29,7 @@ class ViewController: NSViewController {
     }()!
 
   let metadataParser = MetadataParser()
-  var selektor = GrandSelektor()
-
-  var localDc: DataController?
+  let selektor = GrandSelektor()
 
   var bestNextTrack: TrackEntity? = nil
 
@@ -159,11 +157,11 @@ class ViewController: NSViewController {
       // able to use the same managed object context as the TrackEntity.
       let localMoc = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
       localMoc.parentContext = self.managedObjectContext
-      self.localDc = DataController(managedObjectContext: localMoc)
-      NSThread.currentThread().threadDictionary.setObject(self.localDc!, forKey: "dc")
+      let localDc = DataController(managedObjectContext: localMoc)
+      NSThread.currentThread().threadDictionary.setObject(localDc, forKey: "dc")
 
       for trackId in tracksIdsToAnalyze {
-        let track = self.localDc!.managedObjectContext.objectWithID(trackId) as! TrackEntity
+        let track = localDc.managedObjectContext.objectWithID(trackId) as! TrackEntity
         if (track.managedObjectContext != nil) {
           track.analyze()
         }

@@ -6,11 +6,7 @@
 //  Copyright © 2016 James Gray. All rights reserved.
 //
 
-import Foundation
 import CoreData
-import Cocoa
-import ObjectiveC
-import QuartzCore
 
 enum AnalysisState: Int {
   case toDo = 0
@@ -72,48 +68,54 @@ class TrackEntity: SelektorObject {
   }
 
   dynamic var mammTimbre: TimbreVectorEntity? {
-    get { return self.getTimbre(forSummaryType: SummaryType.meanAccMeanMem) }
-    set { self.setTimbre(newValue!, forSummaryType: SummaryType.meanAccMeanMem) }
+    get { return self.getTimbreVector(forSummaryType: SummaryType.meanAccMeanMem) }
+    set { self.setTimbreVector(newValue!, forSummaryType: SummaryType.meanAccMeanMem) }
   }
 
   dynamic var masmTimbre: TimbreVectorEntity? {
-    get { return self.getTimbre(forSummaryType: SummaryType.meanAccStdMem) }
-    set { self.setTimbre(newValue!, forSummaryType: SummaryType.meanAccStdMem) }
+    get { return self.getTimbreVector(forSummaryType: SummaryType.meanAccStdMem) }
+    set { self.setTimbreVector(newValue!, forSummaryType: SummaryType.meanAccStdMem) }
   }
 
   dynamic var sammTimbre: TimbreVectorEntity? {
-    get { return self.getTimbre(forSummaryType: SummaryType.stdAccMeanMem) }
-    set { self.setTimbre(newValue!, forSummaryType: SummaryType.stdAccMeanMem) }
+    get { return self.getTimbreVector(forSummaryType: SummaryType.stdAccMeanMem) }
+    set { self.setTimbreVector(newValue!, forSummaryType: SummaryType.stdAccMeanMem) }
   }
 
   dynamic var sasmTimbre: TimbreVectorEntity? {
-    get { return self.getTimbre(forSummaryType: SummaryType.stdAccStdMem) }
-    set { self.setTimbre(newValue!, forSummaryType: SummaryType.stdAccStdMem) }
+    get { return self.getTimbreVector(forSummaryType: SummaryType.stdAccStdMem) }
+    set { self.setTimbreVector(newValue!, forSummaryType: SummaryType.stdAccStdMem) }
   }
 
   // MARK: Convenience getter and setter functions for retrieving/storing timbre vectors
   // of a given summary type
 
-  func getTimbre(forSummaryType summaryType: SummaryType) -> TimbreVectorEntity? {
+  func getTimbreVector(forSummaryType summaryType: SummaryType) -> TimbreVectorEntity? {
     return timbreVectorSet.filter({
       ($0 as! TimbreVectorEntity).summaryType == summaryType.rawValue
     }).first as? TimbreVectorEntity
   }
 
-  func removeTimbre(forSummaryType summaryType: SummaryType) {
-    if let oldVector = self.getTimbre(forSummaryType: summaryType) {
+  func removeTimbreVector(forSummaryType summaryType: SummaryType) {
+    if let oldVector = self.getTimbreVector(forSummaryType: summaryType) {
       // Remove the old vector for the summary type
       timbreVectorSet.removeObject(oldVector)
     }
   }
 
-  func setTimbre(newVector: TimbreVectorEntity, forSummaryType summaryType: SummaryType) {
+  func setTimbreVector(newVector: TimbreVectorEntity, forSummaryType summaryType: SummaryType) {
     // Remove old timbre vector if necessary
-    self.removeTimbre(forSummaryType: summaryType)
+    self.removeTimbreVector(forSummaryType: summaryType)
 
     // Set the summary type for the new vector and add it to the timbres set
     newVector.summaryType = summaryType.rawValue
     timbreVectorSet.addObject(newVector)
+  }
+
+  func compareTimbreWith(otherTrack track: TrackEntity) -> Double {
+    let formula = self.appDelegate.settings?["distanceFormula"] as! String
+    return self.timbreVector64.calculateDistanceFrom(
+      otherVector: track.timbreVector64, withFormula: formula)
   }
 
   // MARK: Analysis Functions
@@ -160,7 +162,7 @@ class TrackEntity: SelektorObject {
     }
   }
 
-  func computeTimbreVector(wavURL: NSURL) {
+  func computeTimbre(wavURL: NSURL) {
     guard let mirexPath = TrackEntity.mirexPath else {
       print("Unable to locate the mirex_extract binary")
       return
@@ -297,7 +299,7 @@ class TrackEntity: SelektorObject {
     }
 
     // Compute timbre vector and (if necessary) tempo
-    self.computeTimbreVector(wavURL)
+    self.computeTimbre(wavURL)
 
     // Compute the tempo for tracks shorter than 20 minutes long.
     // The vast majority of electronic dance tracks clock in somewhere between
@@ -313,7 +315,7 @@ class TrackEntity: SelektorObject {
     // Delete the WAV file if we converted from another format
     if converted {
       do {
-        try self.appDelegate.fileManager.removeItemAtURL(wavURL)
+        try NSFileManager.defaultManager().removeItemAtURL(wavURL)
       } catch {
         print("Could not remove file at \(wavURL): \(error)")
       }
@@ -324,10 +326,5 @@ class TrackEntity: SelektorObject {
     if self.managedObjectContext != nil {
       self.dataController.save()
     }
-  }
-
-  func compareTimbreWith(track: TrackEntity) -> Double {
-    let formula = self.appDelegate.settings?["distanceFormula"] as! String
-    return self.timbreVector64.distanceFrom(vector: track.timbreVector64, withFormula: formula)
   }
 }
