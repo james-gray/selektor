@@ -12,7 +12,6 @@
         <attribute name="album" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="analyzed" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="artist" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="dateAdded" attributeType="Date" syncable="YES"/>
         <attribute name="duration" attributeType="Double" minValueString="0" defaultValueString="0" syncable="YES"/>
         <attribute name="filename" attributeType="String" syncable="YES"/>
         <attribute name="genre" optional="YES" attributeType="String" syncable="YES"/>
@@ -28,7 +27,7 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="Track" positionX="-378" positionY="-340" width="128" height="225"/>
         <element name="TimbreVector" positionX="-378" positionY="-252" width="128" height="135"/>
+        <element name="Track" positionX="-378" positionY="-340" width="128" height="210"/>
     </elements>
 </model>
