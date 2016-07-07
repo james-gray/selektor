@@ -118,7 +118,7 @@ class TrackEntity: SelektorObject {
 
   // MARK: Analysis Functions
 
-  func createTimbreVectorFromFeaturesArray(features: [Double]) -> TimbreVectorEntity {
+  func createTimbreVector(fromFeaturesArray features: [Double]) -> TimbreVectorEntity {
     let vector: TimbreVectorEntity = self.dataController.createEntity()
 
     vector.centroid = features[0]
@@ -150,10 +150,10 @@ class TrackEntity: SelektorObject {
       let sasmFeatures = Array(features[48...63])
 
       // Set up vectors
-      self.mammTimbre = self.createTimbreVectorFromFeaturesArray(mammFeatures)
-      self.masmTimbre = self.createTimbreVectorFromFeaturesArray(masmFeatures)
-      self.sammTimbre = self.createTimbreVectorFromFeaturesArray(sammFeatures)
-      self.sasmTimbre = self.createTimbreVectorFromFeaturesArray(sasmFeatures)
+      self.mammTimbre = self.createTimbreVector(fromFeaturesArray: mammFeatures)
+      self.masmTimbre = self.createTimbreVector(fromFeaturesArray: masmFeatures)
+      self.sammTimbre = self.createTimbreVector(fromFeaturesArray: sammFeatures)
+      self.sasmTimbre = self.createTimbreVector(fromFeaturesArray: sasmFeatures)
 
     } catch {
       print("Error reading from ARFF file at \(arffFileURL)")
