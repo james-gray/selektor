@@ -72,44 +72,44 @@ class TrackEntity: SelektorObject {
   }
 
   dynamic var mammTimbre: TimbreVectorEntity? {
-    get { return self.getTimbreForSummaryType(SummaryType.meanAccMeanMem) }
-    set { self.setTimbreForSummaryType(newValue!, summaryType: SummaryType.meanAccMeanMem) }
+    get { return self.getTimbre(forSummaryType: SummaryType.meanAccMeanMem) }
+    set { self.setTimbre(newValue!, forSummaryType: SummaryType.meanAccMeanMem) }
   }
 
   dynamic var masmTimbre: TimbreVectorEntity? {
-    get { return self.getTimbreForSummaryType(SummaryType.meanAccStdMem) }
-    set { self.setTimbreForSummaryType(newValue!, summaryType: SummaryType.meanAccStdMem) }
+    get { return self.getTimbre(forSummaryType: SummaryType.meanAccStdMem) }
+    set { self.setTimbre(newValue!, forSummaryType: SummaryType.meanAccStdMem) }
   }
 
   dynamic var sammTimbre: TimbreVectorEntity? {
-    get { return self.getTimbreForSummaryType(SummaryType.stdAccMeanMem) }
-    set { self.setTimbreForSummaryType(newValue!, summaryType: SummaryType.stdAccMeanMem) }
+    get { return self.getTimbre(forSummaryType: SummaryType.stdAccMeanMem) }
+    set { self.setTimbre(newValue!, forSummaryType: SummaryType.stdAccMeanMem) }
   }
 
   dynamic var sasmTimbre: TimbreVectorEntity? {
-    get { return self.getTimbreForSummaryType(SummaryType.stdAccStdMem) }
-    set { self.setTimbreForSummaryType(newValue!, summaryType: SummaryType.stdAccStdMem) }
+    get { return self.getTimbre(forSummaryType: SummaryType.stdAccStdMem) }
+    set { self.setTimbre(newValue!, forSummaryType: SummaryType.stdAccStdMem) }
   }
 
   // MARK: Convenience getter and setter functions for retrieving/storing timbre vectors
   // of a given summary type
 
-  func getTimbreForSummaryType(summaryType: SummaryType) -> TimbreVectorEntity? {
+  func getTimbre(forSummaryType summaryType: SummaryType) -> TimbreVectorEntity? {
     return timbreVectorSet.filter({
       ($0 as! TimbreVectorEntity).summaryType == summaryType.rawValue
     }).first as? TimbreVectorEntity
   }
 
-  func removeTimbreForSummaryType(summaryType: SummaryType) {
-    if let oldVector = self.getTimbreForSummaryType(summaryType) {
+  func removeTimbre(forSummaryType summaryType: SummaryType) {
+    if let oldVector = self.getTimbre(forSummaryType: summaryType) {
       // Remove the old vector for the summary type
       timbreVectorSet.removeObject(oldVector)
     }
   }
 
-  func setTimbreForSummaryType(newVector: TimbreVectorEntity, summaryType: SummaryType) {
+  func setTimbre(newVector: TimbreVectorEntity, forSummaryType summaryType: SummaryType) {
     // Remove old timbre vector if necessary
-    self.removeTimbreForSummaryType(summaryType)
+    self.removeTimbre(forSummaryType: summaryType)
 
     // Set the summary type for the new vector and add it to the timbres set
     newVector.summaryType = summaryType.rawValue
