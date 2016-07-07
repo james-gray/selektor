@@ -72,23 +72,23 @@ class TrackEntity: SelektorObject {
   }
 
   dynamic var mammTimbre: TimbreVectorEntity? {
-    get { return self.getTimbreForSummaryType(SummaryType.MeanAccMeanMem) }
-    set { self.setTimbreForSummaryType(newValue!, summaryType: SummaryType.MeanAccMeanMem) }
+    get { return self.getTimbreForSummaryType(SummaryType.meanAccMeanMem) }
+    set { self.setTimbreForSummaryType(newValue!, summaryType: SummaryType.meanAccMeanMem) }
   }
 
   dynamic var masmTimbre: TimbreVectorEntity? {
-    get { return self.getTimbreForSummaryType(SummaryType.MeanAccStdMem) }
-    set { self.setTimbreForSummaryType(newValue!, summaryType: SummaryType.MeanAccStdMem) }
+    get { return self.getTimbreForSummaryType(SummaryType.meanAccStdMem) }
+    set { self.setTimbreForSummaryType(newValue!, summaryType: SummaryType.meanAccStdMem) }
   }
 
   dynamic var sammTimbre: TimbreVectorEntity? {
-    get { return self.getTimbreForSummaryType(SummaryType.StdAccMeanMem) }
-    set { self.setTimbreForSummaryType(newValue!, summaryType: SummaryType.StdAccMeanMem) }
+    get { return self.getTimbreForSummaryType(SummaryType.stdAccMeanMem) }
+    set { self.setTimbreForSummaryType(newValue!, summaryType: SummaryType.stdAccMeanMem) }
   }
 
   dynamic var sasmTimbre: TimbreVectorEntity? {
-    get { return self.getTimbreForSummaryType(SummaryType.StdAccStdMem) }
-    set { self.setTimbreForSummaryType(newValue!, summaryType: SummaryType.StdAccStdMem) }
+    get { return self.getTimbreForSummaryType(SummaryType.stdAccStdMem) }
+    set { self.setTimbreForSummaryType(newValue!, summaryType: SummaryType.stdAccStdMem) }
   }
 
   // MARK: Convenience getter and setter functions for retrieving/storing timbre vectors

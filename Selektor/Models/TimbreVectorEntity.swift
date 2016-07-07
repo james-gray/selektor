@@ -10,14 +10,17 @@ import Foundation
 import CoreData
 
 enum SummaryType: Int {
-  case MeanAccMeanMem = 0
-  case MeanAccStdMem
-  case StdAccMeanMem
-  case StdAccStdMem
+  case meanAccMeanMem = 0
+  case meanAccStdMem
+  case stdAccMeanMem
+  case stdAccStdMem
 }
 
 @objc(TimbreVectorEntity)
 class TimbreVectorEntity: SelektorObject {
+  override class func getEntityName() -> String {
+    return "TimbreVector"
+  }
 
   // MARK: Properties
   @NSManaged var summaryType: NSNumber?
@@ -26,10 +29,6 @@ class TimbreVectorEntity: SelektorObject {
   @NSManaged var rolloff: NSNumber?
   @NSManaged var mfccString: String?
   @NSManaged var track: TrackEntity?
-
-  override class func getEntityName() -> String {
-    return "TimbreVector"
-  }
 
   // MARK: Public getters/setters for managed MFCC properties
   var mfcc: [Double] {
@@ -42,12 +41,10 @@ class TimbreVectorEntity: SelektorObject {
   }
 
   var vector: [Double] {
-    get {
-      return [
-        Double(self.centroid!),
-        Double(self.flux!),
-        Double(self.rolloff!)
-      ] + self.mfcc.map { Double($0) }
-    }
+    return [
+      Double(self.centroid!),
+      Double(self.flux!),
+      Double(self.rolloff!)
+    ] + self.mfcc.map { Double($0) }
   }
 }
