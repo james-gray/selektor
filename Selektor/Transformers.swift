@@ -9,14 +9,6 @@
 import Foundation
 
 class CountTransformer: NSValueTransformer {
-  override class func transformedValueClass() -> AnyClass {
-    return NSString.self
-  }
-
-  override class func allowsReverseTransformation() -> Bool {
-    return false
-  }
-
   override func transformedValue(value: AnyObject?) -> AnyObject? {
     guard let num = value as? Int else {
       return ""
@@ -28,28 +20,12 @@ class CountTransformer: NSValueTransformer {
 }
 
 class FilenameTransformer: NSValueTransformer {
-  override class func transformedValueClass() -> AnyClass {
-    return NSString.self
-  }
-
-  override class func allowsReverseTransformation() -> Bool {
-    return false
-  }
-
   override func transformedValue(value: AnyObject?) -> AnyObject? {
     return value?.lastPathComponent
   }
 }
 
 class DurationTransformer: NSValueTransformer {
-  override class func transformedValueClass() -> AnyClass {
-    return NSString.self
-  }
-
-  override class func allowsReverseTransformation() -> Bool {
-    return false
-  }
-
   override func transformedValue(value: AnyObject?) -> AnyObject? {
     guard let num = value as? Int else {
       return ""
@@ -62,14 +38,6 @@ class DurationTransformer: NSValueTransformer {
 }
 
 class AnalysisStateTransformer: NSValueTransformer {
-  override class func transformedValueClass() -> AnyClass {
-    return NSString.self
-  }
-
-  override class func allowsReverseTransformation() -> Bool {
-    return false
-  }
-
   override func transformedValue(value: AnyObject?) -> AnyObject? {
     guard let num = value as? Int else {
       return ""
@@ -87,16 +55,8 @@ class AnalysisStateTransformer: NSValueTransformer {
 }
 
 class SelectionTransformer: NSValueTransformer {
-  override class func transformedValueClass() -> AnyClass {
-    return NSString.self
-  }
-
-  override class func allowsReverseTransformation() -> Bool {
-    return false
-  }
-
   override func transformedValue(value: AnyObject?) -> AnyObject? {
-    // XXX: Return false to prevent hiding any selected tracks, since for some
+    // XXX: Return false to prevent hiding for any selected tracks, since for some
     // reason the name of certain tracks is causing the "Select Next Track" button
     // to be hidden
     return false
