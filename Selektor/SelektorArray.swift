@@ -9,19 +9,19 @@
 import Foundation
 
 extension _ArrayType where Generator.Element == Double {
-  func distanceFrom(array: [Double], formula: String = "euclidean") -> Double {
-    if array.count != self.count {
+  func distanceFrom(vector vector: [Double], withFormula formula: String = "euclidean") -> Double {
+    if vector.count != self.count {
       print("Vector distance calculation only works on vectors of the same dimensionality")
       return Double(FP_INFINITE)
     }
 
     switch formula {
       case "euclidean":
-        // Compute the Euclidean distance between self and array
+        // Compute the Euclidean distance between self and vector
         var runningSum: Double = 0
         for i in 0..<self.count {
           let p = self[i]
-          let q = array[i]
+          let q = vector[i]
           runningSum += pow((q-p), Double(2)) // (q-p)^2
         }
         return sqrt(runningSum)
@@ -30,7 +30,7 @@ extension _ArrayType where Generator.Element == Double {
         var runningSum: Double = 0
         for i in 0..<self.count {
           let p = self[i]
-          let q = array[i]
+          let q = vector[i]
           runningSum += abs(p-q) // |p-q|
         }
         return runningSum

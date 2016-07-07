@@ -11,11 +11,14 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-  let dc = DataController()
-  let tempDir = NSURL(fileURLWithPath: NSTemporaryDirectory() as String)
+  let dataController = DataController()
   let fileManager = NSFileManager.defaultManager()
   let settings = NSDictionary.init(contentsOfFile: NSBundle.mainBundle().pathForResource(
     "Settings", ofType: "plist")!)
+
+  lazy var managedObjectContext: NSManagedObjectContext = {
+    return self.dataController.managedObjectContext
+  }()
 
   // Array of tracks which will be used by the tracksController for
   // populating the tracks table view.
@@ -50,32 +53,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     } catch {
         print(error)
     }
-  }
-
-  lazy var managedObjectContext: NSManagedObjectContext = {
-    return self.dc.managedObjectContext
-  }()
-
-  // MARK: - Core Data Saving and Undo support
-
-  @IBAction func saveAction(sender: AnyObject!) {
-    // Performs the save action for the application, which is to send the save: message to the application's managed object context. Any encountered errors are presented to the user.
-    if !managedObjectContext.commitEditing() {
-      NSLog("\(NSStringFromClass(self.dynamicType)) unable to commit editing before saving")
-    }
-    if managedObjectContext.hasChanges {
-      do {
-        try managedObjectContext.save()
-      } catch {
-        let nserror = error as NSError
-        NSApplication.sharedApplication().presentError(nserror)
-      }
-    }
-  }
-
-  func windowWillReturnUndoManager(window: NSWindow) -> NSUndoManager? {
-    // Returns the NSUndoManager for the application. In this case, the manager returned is that of the managed object context for the application.
-    return managedObjectContext.undoManager
   }
 
   func applicationShouldTerminate(sender: NSApplication) -> NSApplicationTerminateReply {

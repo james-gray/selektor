@@ -20,6 +20,9 @@ enum AnalysisState: Int {
 
 @objc(TrackEntity)
 class TrackEntity: SelektorObject {
+  override class func getEntityName() -> String {
+    return "Track"
+  }
 
   static let mirexPath: String? = NSBundle.mainBundle().pathForResource("mirex_extract",
     ofType: nil, inDirectory: "Lib/marsyas/bin")
@@ -40,14 +43,12 @@ class TrackEntity: SelektorObject {
   @NSManaged dynamic var key: String?
   @NSManaged dynamic var timbreVectors: NSSet?
 
-  override class func getEntityName() -> String {
-    return "Track"
-  }
+  let tempDirectory = NSURL(fileURLWithPath: NSTemporaryDirectory() as String)
 
   // MARK: Convenience properties
 
   dynamic var relativeFilename: String? {
-    get { return NSURL(fileURLWithPath: self.filename!).lastPathComponent ?? nil }
+    return NSURL(fileURLWithPath: self.filename!).lastPathComponent ?? nil
   }
 
   dynamic var timbreVector64: [Double] {
@@ -67,7 +68,7 @@ class TrackEntity: SelektorObject {
   }
 
   dynamic var timbreVectorSet: NSMutableSet {
-    get { return self.mutableSetValueForKey("timbreVectors") }
+    return self.mutableSetValueForKey("timbreVectors")
   }
 
   dynamic var mammTimbre: TimbreVectorEntity? {
@@ -118,7 +119,7 @@ class TrackEntity: SelektorObject {
   // MARK: Analysis Functions
 
   func createTimbreVectorFromFeaturesArray(features: [Double]) -> TimbreVectorEntity {
-    let vector: TimbreVectorEntity = self.dc.createEntity()
+    let vector: TimbreVectorEntity = self.dataController.createEntity()
 
     vector.centroid = features[0]
     vector.rolloff = features[1]
@@ -166,14 +167,13 @@ class TrackEntity: SelektorObject {
       return
     }
 
-    let tempDir = self.appDelegate.tempDir
-    let fileManager = self.appDelegate.fileManager
+    let fileManager = NSFileManager.defaultManager()
 
-    let mfUuid = NSUUID().UUIDString
-    let arffUuid = NSUUID().UUIDString
+    let mfUUID = NSUUID().UUIDString
+    let arffUUID = NSUUID().UUIDString
 
-    let tempMfURL = tempDir.URLByAppendingPathComponent("\(mfUuid).mf")
-    let tempArffURL = tempDir.URLByAppendingPathComponent("\(arffUuid).arff")
+    let tempMfURL = tempDirectory.URLByAppendingPathComponent("\(mfUUID).mf")
+    let tempArffURL = tempDirectory.URLByAppendingPathComponent("\(arffUUID).arff")
 
     // Write a temporary .mf file containing the track's URL for Marsyas
     do {
@@ -251,7 +251,6 @@ class TrackEntity: SelektorObject {
   }
 
   func getOrCreateWavURL() -> (NSURL, Bool)? {
-    let tempDir = self.appDelegate.tempDir
     var wavURL: NSURL
 
     let isWav = NSURL(fileURLWithPath: self.filename!).pathExtension == "wav"
@@ -265,7 +264,7 @@ class TrackEntity: SelektorObject {
       }
 
       let uuid = NSUUID().UUIDString
-      wavURL = tempDir.URLByAppendingPathComponent("\(uuid).wav")
+      wavURL = tempDirectory.URLByAppendingPathComponent("\(uuid).wav")
 
       let task = NSTask()
       task.launchPath = ffmpegPath
@@ -286,7 +285,7 @@ class TrackEntity: SelektorObject {
     self.analyzed = AnalysisState.inProgress.rawValue
     // Save the new analysis state to signal the UI
     if self.managedObjectContext != nil {
-      self.dc.save()
+      self.dataController.save()
     }
 
     // Get (or create via conversion) the WAV URL for the track
@@ -322,12 +321,12 @@ class TrackEntity: SelektorObject {
     self.analyzed = AnalysisState.complete.rawValue
     // Save the new analysis state to signal the UI
     if self.managedObjectContext != nil {
-      self.dc.save()
+      self.dataController.save()
     }
   }
 
   func compareTimbreWith(track: TrackEntity) -> Double {
     let formula = self.appDelegate.settings?["distanceFormula"] as! String
-    return self.timbreVector64.distanceFrom(track.timbreVector64, formula: formula)
+    return self.timbreVector64.distanceFrom(vector: track.timbreVector64, withFormula: formula)
   }
 }

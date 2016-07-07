@@ -26,11 +26,11 @@ class SelektorObject: NSManagedObject {
       Return a threadlocal DataController if one has been configured, otherwise use the AppDelegate's
       DataController.
   */
-  lazy var dc: DataController = {
+  lazy var dataController: DataController = {
     let currentThread = NSThread.currentThread()
     let td = currentThread.threadDictionary
     let dc = td.valueForKey("dc") as? DataController ?? (NSApplication.sharedApplication().delegate
-      as? AppDelegate)?.dc
+      as? AppDelegate)?.dataController
     return dc!
   }()
 

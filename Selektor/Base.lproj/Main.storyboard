@@ -1307,10 +1307,9 @@ CA
                                                         </tableCellView>
                                                     </prototypeCellViews>
                                                     <connections>
-                                                        <binding destination="JdN-Fp-fVn" name="value" keyPath="arrangedObjects.name" id="sYj-CK-bUP">
+                                                        <binding destination="JdN-Fp-fVn" name="value" keyPath="arrangedObjects.name" id="80M-xc-7rC">
                                                             <dictionary key="options">
                                                                 <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
-                                                                <string key="NSNullPlaceholder">Unknown</string>
                                                             </dictionary>
                                                         </binding>
                                                     </connections>

@@ -25,10 +25,10 @@ class ViewController: NSViewController {
 
   lazy var managedObjectContext: NSManagedObjectContext = {
     return (NSApplication.sharedApplication().delegate
-      as? AppDelegate)?.dc.managedObjectContext
+      as? AppDelegate)?.dataController.managedObjectContext
     }()!
 
-  let mp = MetadataParser()
+  let metadataParser = MetadataParser()
   var selektor = GrandSelektor()
 
   var localDc: DataController?
@@ -84,7 +84,7 @@ class ViewController: NSViewController {
 
     // Populate the tracks array and attach to the tracksController
     dispatch_async(dispatch_get_main_queue()) {
-      self.appDelegate.tracks = self.appDelegate.dc.fetchEntities()
+      self.appDelegate.tracks = self.appDelegate.dataController.fetchEntities()
       self.tracksController.content = self.appDelegate.tracks
 
       if self.appDelegate.tracks.count > 0 {
@@ -104,11 +104,11 @@ class ViewController: NSViewController {
   }
 
   func importMusicFolder(directoryURL: NSURL) {
-    let fileMgr = self.appDelegate.fileManager
+    let fileManager = NSFileManager.defaultManager()
     let options: NSDirectoryEnumerationOptions = [.SkipsHiddenFiles, .SkipsPackageDescendants]
 
-    if let fileUrls = fileMgr.enumeratorAtURL(directoryURL, includingPropertiesForKeys: nil,
-                                              options: options, errorHandler: nil) {
+    if let fileUrls = fileManager.enumeratorAtURL(directoryURL,
+        includingPropertiesForKeys: nil, options: options, errorHandler: nil) {
       for url in fileUrls {
         if self.validExtensions.contains(url.pathExtension) {
             self.importTrack(url as! NSURL)
@@ -116,7 +116,7 @@ class ViewController: NSViewController {
       }
 
       // Persist changes to DB
-      self.appDelegate.dc.save()
+      self.appDelegate.dataController.save()
 
       // Update the table view by refreshing the array controller
       self.tracksController.content = self.appDelegate.tracks
@@ -126,11 +126,11 @@ class ViewController: NSViewController {
 
   func importTrack(url: NSURL) {
     print("Importing track '\(url.absoluteString)'")
-    let dc = self.appDelegate.dc
+    let dc = self.appDelegate.dataController
 
     let track: TrackEntity = dc.createEntity()
     let asset = AVURLAsset(URL: url)
-    let meta = mp.parse(asset)
+    let meta = metadataParser.parse(asset)
 
     track.name = meta["name"] as? String ?? url.lastPathComponent
     track.filename = url.path
@@ -145,11 +145,13 @@ class ViewController: NSViewController {
   }
 
   func analyzeTracks() {
-    // Serially analyze tracks in the background
+    // Serially analyze tracks in the background.
+    // Filter out analyzed tracks, sort the tracks such that "in progress" tracks
+    // are analyzed first, then extract the managed object IDs from the tracks.
     let tracksIdsToAnalyze = self.appDelegate.tracks
-        .filter { $0.analyzed != AnalysisState.complete.rawValue } // Filter out analyzed tracks
-        .sort { Int($0.analyzed) > Int($1.analyzed) } // Sort such that "in progress" tracks are analyzed first
-        .map { $0.objectID } // Extract object IDs
+        .filter { $0.analyzed != AnalysisState.complete.rawValue }
+        .sort { Int($0.analyzed) > Int($1.analyzed) }
+        .map { $0.objectID }
 
     dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.rawValue), 0)) {
       // Set up a threadlocal data controller and store it in the current thread's dictionary.
@@ -222,7 +224,7 @@ class ViewController: NSViewController {
         (returnCode) -> Void in
         if returnCode == NSAlertSecondButtonReturn {
           self.tracksController.removeObjectsAtArrangedObjectIndexes(self.tracksController.selectionIndexes)
-          self.appDelegate.dc.save()
+          self.appDelegate.dataController.save()
         }
       })
     }
