@@ -8,6 +8,11 @@
 
 import Foundation
 
+/**
+    Transformer that accepts an integer count and returns a string representing
+    the total count, as might be displayed at the bottom of a UI list. For instance,
+    given an array with a count of 20, the transformer would return "20 items total".
+*/
 class CountTransformer: NSValueTransformer {
   override func transformedValue(value: AnyObject?) -> AnyObject? {
     guard let num = value as? Int else {
@@ -19,12 +24,20 @@ class CountTransformer: NSValueTransformer {
   }
 }
 
+/**
+    Transformer that strips the absolute path from a filename and simply displays
+    the last path component.
+*/
 class FilenameTransformer: NSValueTransformer {
   override func transformedValue(value: AnyObject?) -> AnyObject? {
     return value?.lastPathComponent
   }
 }
 
+/**
+    Transformer that accepts an integer number of seconds and returns a duration
+    string in the format "mm:ss".
+*/
 class DurationTransformer: NSValueTransformer {
   override func transformedValue(value: AnyObject?) -> AnyObject? {
     guard let num = value as? Int else {
@@ -37,6 +50,11 @@ class DurationTransformer: NSValueTransformer {
   }
 }
 
+/**
+    Transformer that accepts an analysis state integer and returns a unicode
+    string emoji representing the state (a clock emoji for in progress analysis,
+    and a checkmark for complete analysis.)
+*/
 class AnalysisStateTransformer: NSValueTransformer {
   override func transformedValue(value: AnyObject?) -> AnyObject? {
     guard let num = value as? Int else {

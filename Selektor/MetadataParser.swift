@@ -9,19 +9,23 @@
 import AVFoundation
 import Foundation
 
-// MARK: Custom lets for 3-character ID3 v2.3 tag names
-let AVMetadataID322MetadataKeyTitle: String = "TT2"
-let AVMetadataID322MetadataKeyArtist: String = "TP1"
-let AVMetadataID322MetadataKeyAlbum: String = "TAL"
-let AVMetadataID322MetadataKeyInitialKey: String = "TKE"
-let AVMetadataID322MetadataKeyBeatsPerMin: String = "TBP"
-
 class MetadataParser {
+
+  // MARK: Custom lets for 3-character ID3 v2.3 tag names
+  static let AVMetadataID322MetadataKeyTitle: String = "TT2"
+  static let AVMetadataID322MetadataKeyArtist: String = "TP1"
+  static let AVMetadataID322MetadataKeyAlbum: String = "TAL"
+  static let AVMetadataID322MetadataKeyInitialKey: String = "TKE"
+  static let AVMetadataID322MetadataKeyBeatsPerMin: String = "TBP"
+
+  /// Formats parseable by `MetadataParser.`
   let formats: Dictionary<String, String> = [
     "itunes": AVMetadataFormatiTunesMetadata,
     "id3": AVMetadataFormatID3Metadata,
   ]
 
+  /// Mapping of standard tag names to the corresponding `TrackEntity` properties
+  /// by metadata format.
   let tags: [String: [String: String]] = [
     // iTunes
     AVMetadataFormatiTunesMetadata: [
@@ -40,11 +44,11 @@ class MetadataParser {
       AVMetadataID3MetadataKeyAlbumTitle: "album",
       AVMetadataID3MetadataKeyInitialKey: "key",
       AVMetadataID3MetadataKeyBeatsPerMinute: "tempo",
-      AVMetadataID322MetadataKeyTitle: "name",
-      AVMetadataID322MetadataKeyArtist: "artist",
-      AVMetadataID322MetadataKeyAlbum: "album",
-      AVMetadataID322MetadataKeyInitialKey: "key",
-      AVMetadataID322MetadataKeyBeatsPerMin: "tempo",
+      MetadataParser.AVMetadataID322MetadataKeyTitle: "name",
+      MetadataParser.AVMetadataID322MetadataKeyArtist: "artist",
+      MetadataParser.AVMetadataID322MetadataKeyAlbum: "album",
+      MetadataParser.AVMetadataID322MetadataKeyInitialKey: "key",
+      MetadataParser.AVMetadataID322MetadataKeyBeatsPerMin: "tempo",
     ],
     // Quicktime Meta
     AVMetadataFormatQuickTimeMetadata: [
@@ -80,15 +84,16 @@ class MetadataParser {
     return trackMeta
   }
 
+
   /**
       Extract metadata of format `format` from the given asset's metadata tags
       and add it to the `trackMeta` dictionary.
    
-      - parameter asset: The asset to extract metadata from
-      - parameter trackMeta: The metadata dict to populate
-      - parameter format: The string metadata format (for example "com.apple.itunes")
+      - parameter asset: The asset to extract metadata from.
+      - parameter trackMeta: The metadata dict to populate.
+      - parameter format: The string metadata format (for example "com.apple.itunes").
    
-      - returns: The mutated `trackMeta` dict
+      - returns: The mutated `trackMeta` dict.
   */
   func parseMetadataFormat(asset: AVURLAsset, trackMeta: [String: AnyObject], format: String)
       -> [String: AnyObject] {
@@ -114,5 +119,4 @@ class MetadataParser {
 
     return trackMeta
   }
-
 }
