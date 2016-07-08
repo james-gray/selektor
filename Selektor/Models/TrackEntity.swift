@@ -126,7 +126,7 @@ class TrackEntity: SelektorObject {
     vector.centroid = features[0]
     vector.rolloff = features[1]
     vector.flux = features[2]
-    vector.mfcc = Array(features[3...11])
+    vector.mfcc = Array(features[3...15])
 
     return vector
   }
