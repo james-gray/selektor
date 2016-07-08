@@ -8,15 +8,23 @@
 
 import CoreData
 
+/**
+    This class acts as a mediator between the application and the Core Data store.
+
+    Based on sample code provided by Apple at:
+    developer.apple.com/library/mac/documentation/Cocoa/Conceptual/CoreData/
+    InitializingtheCoreDataStack.html#//apple_ref/doc/uid/TP40001075-CH4-SW1
+
+    Copyright © 2016 Apple Inc. All rights reserved.
+*/
 class DataController {
-  // Based on sample code provided by Apple at:
-  // developer.apple.com/library/mac/documentation/Cocoa/Conceptual/CoreData/
-  //     InitializingtheCoreDataStack.html#//apple_ref/doc/uid/TP40001075-CH4-SW1
-  //
-  // Copyright © 2016 Apple Inc. All rights reserved.
+
   var managedObjectContext: NSManagedObjectContext
   var persistentStoreCoordinator: NSPersistentStoreCoordinator? = nil
 
+  /**
+      Set up the Core Data stack.
+  */
   init(managedObjectContext: NSManagedObjectContext? = nil) {
     let dbName = "Selektor"
 
@@ -67,11 +75,31 @@ class DataController {
     }
   }
 
+  /**
+      Create a new entity of type `T`, where `T` is a `SelektorObject` subclass.
+
+      Example:
+
+          let track: TrackEntity = dataController.createEntity() // create a `TrackEntity`
+
+      - returns: A new managed object instance of type `T`.
+  */
   func createEntity<T: SelektorObject>() -> T {
     return NSEntityDescription.insertNewObjectForEntityForName(T.getEntityName(),
         inManagedObjectContext: managedObjectContext) as! T
   }
 
+  /**
+      Fetch entities of type `T`, where `T` is a `SelektorObject` subclass.
+
+      Example:
+
+          let tracks: [TrackEntity] = dataController.fetchEntities()
+
+      - parameter predicate: Optional `NSPredicate` to filter the results.
+
+      - returns: An array of managed objects of type `T`.
+  */
   func fetchEntities<T: SelektorObject>(predicate: NSPredicate? = nil) -> [T] {
     let managedObjectContext = self.managedObjectContext
     let entityName = T.getEntityName()
@@ -90,6 +118,9 @@ class DataController {
     }
   }
 
+  /**
+      Save the managed object context.
+  */
   func save() {
     do {
       try managedObjectContext.save()

@@ -9,16 +9,16 @@
 import AVFoundation
 import Foundation
 
+/**
+    Ugly mess of type conversion, pointers and C strings to generate a string
+    representation of the metadata item's key. Whyyy is this not a part of the
+    AVFoundation API already, Apple?!
+
+    Based on code by Bob McCune in "Learning AV Foundation: A Hands-on Guide to
+    Mastering the AV Foundation Framework."
+    See https://itunes.apple.com/us/book/learning-av-foundation/id934379880?mt=11
+*/
 extension AVMetadataItem {
-  /**
-   * Ugly mess of type conversion, pointers and C strings to generate a string
-   * representation of the metadata item's key. Whyyy is this not a part of the
-   * AVFoundation API already, Apple?!
-   *
-   * Based on code by Bob McCune in "Learning AV Foundation: A Hands-on Guide to
-   * Mastering the AV Foundation Framework."
-   * See https://itunes.apple.com/us/book/learning-av-foundation/id934379880?mt=11
-   */
   var keyString: String {
     let specialChars: [Int8] = [97, -87] // © and ï, respectively
 

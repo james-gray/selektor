@@ -34,11 +34,17 @@ class SelektorObject: NSManagedObject {
     return dataController!
   }()
 
-  // XXX: Hack due to Swift's lack of support for class vars as of yet.
-  // A `class func` is effectively equivalent to a `static func`, but can be
-  // overridden by subclasses (unlike static funcs.)
-  // Similarly, `static var`s cannot be overridden (and `class vars` don't exist)
-  // so we must use a getter method instead.
+  /**
+      Returns the Core Data entity name for this managed object.
+
+      XXX: Hack due to Swift's lack of support for class vars as of yet.
+      A `class func` is effectively equivalent to a `static func`, but can be
+      overridden by subclasses (unlike static funcs.)
+      Similarly, `static var`s cannot be overridden (and `class vars` don't exist)
+      so we must use a getter method instead.
+
+      - returns: The string entity name.
+  */
   class func getEntityName() -> String {
     print("Subclasses should override abstract method `getEntityName`!")
     abort()

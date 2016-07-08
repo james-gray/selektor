@@ -8,26 +8,38 @@
 
 import CoreData
 
+/**
+    Enumeration to track the state of each track's feature analysis.
+*/
 enum AnalysisState: Int {
   case toDo = 0
   case inProgress
   case complete
 }
 
+/**
+    The core `TrackEntity` represents a single Track's state, with properties
+    representing track metadata, as well as functionality to analyze the track's
+    timbre and tempo in beats per minute.
+*/
 @objc(TrackEntity)
 class TrackEntity: SelektorObject {
   override class func getEntityName() -> String {
     return "Track"
   }
 
+  /// Path to the Marsyas mirex_extract executable.
   static let mirexPath: String? = NSBundle.mainBundle().pathForResource("mirex_extract",
     ofType: nil, inDirectory: "Lib/marsyas/bin")
+  /// Path to the ffmpeg conversion executable.
   static let ffmpegPath: String? = NSBundle.mainBundle().pathForResource("ffmpeg",
       ofType: nil, inDirectory: "Lib/ffmpeg")
+  /// Path to the Marsyas tempo beat estimation executable.
   static let tempoPath: String? = NSBundle.mainBundle().pathForResource("tempo",
     ofType: nil, inDirectory: "Lib/marsyas/bin")
 
   // MARK: Properties
+
   @NSManaged dynamic var analyzed: NSNumber
   @NSManaged dynamic var duration: NSNumber?
   @NSManaged dynamic var filename: String?
@@ -39,14 +51,19 @@ class TrackEntity: SelektorObject {
   @NSManaged dynamic var key: String?
   @NSManaged dynamic var timbreVectors: NSSet?
 
-  let tempDirectory = NSURL(fileURLWithPath: NSTemporaryDirectory() as String)
-
   // MARK: Convenience properties
+
+  let tempDirectory = NSURL(fileURLWithPath: NSTemporaryDirectory() as String)
 
   dynamic var relativeFilename: String? {
     return NSURL(fileURLWithPath: self.filename!).lastPathComponent ?? nil
   }
 
+  /**
+      Returns a 64-dimensional array vector consisting of the track's four timbre
+      vectors concatenated, consistent with the format returned by the `mirex_extract`
+      feature extraction executable.
+  */
   dynamic var timbreVector64: [Double] {
     get {
       if self.analyzed != AnalysisState.complete.rawValue {
@@ -63,25 +80,40 @@ class TrackEntity: SelektorObject {
     }
   }
 
+  /**
+      Returns a mutable set for the managed `timbreVectors` relationship.
+  */
   dynamic var timbreVectorSet: NSMutableSet {
     return self.mutableSetValueForKey("timbreVectors")
   }
 
+  /**
+      Timbre vector 1 (means of the means)
+  */
   dynamic var mammTimbre: TimbreVectorEntity? {
     get { return self.getTimbreVector(forSummaryType: SummaryType.meanAccMeanMem) }
     set { self.setTimbreVector(newValue!, forSummaryType: SummaryType.meanAccMeanMem) }
   }
 
+  /**
+      Timbre vector 2 (means of the standard deviations)
+  */
   dynamic var masmTimbre: TimbreVectorEntity? {
     get { return self.getTimbreVector(forSummaryType: SummaryType.meanAccStdMem) }
     set { self.setTimbreVector(newValue!, forSummaryType: SummaryType.meanAccStdMem) }
   }
 
+  /**
+      Timbre vector 3 (standard deviations of the means)
+  */
   dynamic var sammTimbre: TimbreVectorEntity? {
     get { return self.getTimbreVector(forSummaryType: SummaryType.stdAccMeanMem) }
     set { self.setTimbreVector(newValue!, forSummaryType: SummaryType.stdAccMeanMem) }
   }
 
+  /**
+      Timbre vector 4 (standard deviations of the standard deviations)
+  */
   dynamic var sasmTimbre: TimbreVectorEntity? {
     get { return self.getTimbreVector(forSummaryType: SummaryType.stdAccStdMem) }
     set { self.setTimbreVector(newValue!, forSummaryType: SummaryType.stdAccStdMem) }
@@ -112,6 +144,15 @@ class TrackEntity: SelektorObject {
     timbreVectorSet.addObject(newVector)
   }
 
+  /**
+      Compares the timbre of this track with another track, using the distance
+      formula specified in the Settings.plist file. Supported formulas include
+      `"euclidean"` and `"manhattan"`.
+
+      - parameter track: The `TrackEntity` to compare this track with.
+
+      - returns: The distance between the two vectors as a double.
+  */
   func compareTimbreWith(otherTrack track: TrackEntity) -> Double {
     let formula = self.appDelegate.settings?["distanceFormula"] as! String
     return self.timbreVector64.calculateDistanceFrom(
@@ -120,6 +161,14 @@ class TrackEntity: SelektorObject {
 
   // MARK: Analysis Functions
 
+  /**
+      Create a new `TimbreVectorEntity` from a 16-dimensional array of audio features
+      (represented as doubles.)
+
+      - parameter features: 16-dimensional array of audio features.
+
+      - returns: The newly-created `TimbreVectorEntity`.
+  */
   func createTimbreVector(fromFeaturesArray features: [Double]) -> TimbreVectorEntity {
     let vector: TimbreVectorEntity = self.dataController.createEntity()
 
@@ -131,6 +180,13 @@ class TrackEntity: SelektorObject {
     return vector
   }
 
+  /**
+      Given an .arff file generated with the `mirex_extract` executable, creates
+      a set of `TimbreVectorEntity`s and creates relationships between this track
+      and the vectors.
+
+      - parameter arffFileURL: The URL of the .arff file to parse.
+  */
   func store64DimensionalTimbreVector(arffFileURL: NSURL) {
     do {
       let arffContents = try String(contentsOfURL: arffFileURL)
@@ -162,6 +218,12 @@ class TrackEntity: SelektorObject {
     }
   }
 
+  /**
+      Executes the `mirex_extract` command against the file at `wavURL` to generate
+      an .arff file of timbre information for this track.
+
+      - parameter wavURL: The URL of the wave file to analyze.
+  */
   func computeTimbre(wavURL: NSURL) {
     guard let mirexPath = TrackEntity.mirexPath else {
       print("Unable to locate the mirex_extract binary")
@@ -204,6 +266,14 @@ class TrackEntity: SelektorObject {
     }
   }
 
+  /**
+      Parses the standard output of the `tempo` executable to extract the BPM tempo
+      value and return it as an integer.
+
+      - parameter pipe: The pipe to read the standard output from.
+
+      - returns: An integer representation of the BPM tempo of this track.
+  */
   func parseTempoOutput(pipe: NSPipe) -> Int {
     let data = NSString(data: pipe.fileHandleForReading.readDataToEndOfFile(), encoding: NSASCIIStringEncoding) as! String
 
@@ -219,6 +289,12 @@ class TrackEntity: SelektorObject {
     return Int(tempo!)!
   }
 
+  /**
+      Runs the `tempo` executable on `wavURL` to extract tempo information about
+      this track.
+
+      - parameter wavURL: The wave file to perform tempo estimation on.
+  */
   func computeTempo(wavURL: NSURL) {
     guard let tempoPath = TrackEntity.tempoPath else {
       print("Unable to locate the tempo binary")
@@ -253,6 +329,16 @@ class TrackEntity: SelektorObject {
     self.tempo = tempo
   }
 
+  /**
+      Returns, or creates, a wave file URL for this track. If this track is
+      already a wave file, this method simply returns the URL of the file's
+      location, otherwise it creates a temporary wave file in the application's
+      temporary directory.
+
+      - returns: A tuple containing the URL of the wave file and a boolean indicating
+          that the file was converted if `true` or that the original file was used
+          if `false`.
+  */
   func getOrCreateWavURL() -> (NSURL, Bool)? {
     var wavURL: NSURL
 
@@ -284,6 +370,9 @@ class TrackEntity: SelektorObject {
     return (wavURL, converted)
   }
 
+  /**
+      Analyze the timbre and tempo of this track.
+  */
   func analyze() {
     self.analyzed = AnalysisState.inProgress.rawValue
     // Save the new analysis state to signal the UI

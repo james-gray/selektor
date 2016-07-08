@@ -8,7 +8,20 @@
 
 import Foundation
 
+/**
+    Array extension to allow the calculation of Euclidean/Manhattan distance
+    between two arrays of the same dimensionality.
+*/
 extension _ArrayType where Generator.Element == Double {
+
+  /**
+      Calculate the distance from `self` to `vector` using `formula`.
+
+      - parameter otherVector: The vector to calculate distance from.
+      - parameter withFormula: The formula to use. Defaults to `"euclidean"`.
+
+      - returns: The distance as a double.
+  */
   func calculateDistanceFrom(otherVector vector: [Double], withFormula formula: String = "euclidean") -> Double {
     if vector.count != self.count {
       print("Vector distance calculation only works on vectors of the same dimensionality")
@@ -27,6 +40,7 @@ extension _ArrayType where Generator.Element == Double {
         return sqrt(runningSum)
 
       case "manhattan":
+        // Compute the Manhattan distance between self and vector
         var runningSum: Double = 0
         for i in 0..<self.count {
           let p = self[i]
