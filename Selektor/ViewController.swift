@@ -89,8 +89,8 @@ class ViewController: NSViewController {
       Hides the "best next track" UI box detail view and button.
   */
   func hideSuggestedTrackElements() {
-    self.bestNextTrackBox.hidden = false
-    self.playNextTrackBtn.hidden = false
+    self.bestNextTrackBox.hidden = true
+    self.playNextTrackBtn.hidden = true
   }
 
   /**
