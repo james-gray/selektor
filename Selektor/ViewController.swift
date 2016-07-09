@@ -43,7 +43,7 @@ class ViewController: NSViewController {
     }()!
 
   // Set of supported audio file extensions
-  let validExtensions: Set<String> = ["wav", "mp3", "m4a", "m3u", "wma", "aif", "ogg"]
+  let validExtensions: Set<String> = ["wav", "mp3", "m4a"]
 
 
   // MARK: UI Elements
