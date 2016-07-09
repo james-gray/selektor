@@ -30,13 +30,13 @@ class TrackEntity: SelektorObject {
 
   /// Path to the Marsyas mirex_extract executable.
   static let mirexPath: String? = NSBundle.mainBundle().pathForResource("mirex_extract",
-    ofType: nil, inDirectory: "Lib/marsyas/bin")
+    ofType: nil, inDirectory: "Dependencies/marsyas/bin")
   /// Path to the ffmpeg conversion executable.
   static let ffmpegPath: String? = NSBundle.mainBundle().pathForResource("ffmpeg",
-      ofType: nil, inDirectory: "Lib/ffmpeg")
+      ofType: nil, inDirectory: "Dependencies/ffmpeg")
   /// Path to the Marsyas tempo beat estimation executable.
   static let tempoPath: String? = NSBundle.mainBundle().pathForResource("tempo",
-    ofType: nil, inDirectory: "Lib/marsyas/bin")
+    ofType: nil, inDirectory: "Dependencies/marsyas/bin")
 
   // MARK: Properties
 
