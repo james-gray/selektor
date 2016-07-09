@@ -1,7 +1,7 @@
-Selektor/Assets.xcassets linguist-vendored
+Selektor/Assets.xcassets/* linguist-vendored
 Selektor/Base.lproj/* linguist-vendored
-Selektor.xcodeproj linguist-vendored
-Selektor.xcworkspace linguist-vendored
+Selektor.xcodeproj/* linguist-vendored
+Selektor.xcworkspace/* linguist-vendored
 Selektor/Dependencies/* linguist-vendored
-Selektor/Selektor.xcdatamodeld
+Selektor/Selektor.xcdatamodeld/* linguist-vendored
 Selektor/*.plist linguist-vendored
