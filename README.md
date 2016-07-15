@@ -12,34 +12,34 @@ All dependencies are contained within the Selektor/Dependencies directory - no a
 
 ## Core Application Structure
 
-Important application files and directories are specified in the tree below.
+Important application files and directories are specified and described in the tree below.
 
-```
+```aconf
 .
 ├── Selektor
-│   ├── AppDelegate.swift
-│   ├── DataController.swift
-│   ├── GrandSelektor.swift
-│   ├── MetadataParser.swift
-│   ├── Settings.plist
-│   ├── Transformers.swift
-│   ├── ViewController.swift
+│   ├── AppDelegate.swift # Contains app initialization and setup logic.
+│   ├── DataController.swift # Defines a class that acts as a mediator between the application and the Core Data store.
+│   ├── GrandSelektor.swift # Contains next-track selection functionality.
+│   ├── MetadataParser.swift # Parses metadata tags from user-supplied tracks and stores the metadata in track object properties.
+│   ├── Settings.plist # Contains build-time configuration parameters, such as selection algorithm specification.
+│   ├── Transformers.swift # Value transformer helpers for the GUI.
+│   ├── ViewController.swift # The main point of contact and interaction between the UI and the data model.
 │   ├── Base.lproj
-│   │   └── Main.storyboard
+│   │   └── Main.storyboard # Contains the GUI specification.
 │   ├── Dependencies
-│   │   ├── ffmpeg
-│   │   ├── ffmpeg_src
-│   │   └── marsyas
+│   │   ├── ffmpeg # Used to convert non-PCM-encoded tracks to WAV.
+│   │   ├── ffmpeg_src # Supplied alongside ffmpeg binaries as per GPLv3.
+│   │   └── marsyas # Used for audio feature extraction.
 │   ├── Models
-│   │   ├── SelektorObject.swift
-│   │   ├── TimbreVectorEntity.swift
-│   │   └── TrackEntity.swift
-│   ├── Extensions
+│   │   ├── SelektorObject.swift # Base class that other model objects subclass.
+│   │   ├── TimbreVectorEntity.swift # Represents a single 16-dimensional timbre vector.
+│   │   └── TrackEntity.swift # Represents a single track or song.
+│   ├── Extensions # Useful extensions of primitive and AVFoundation types.
 │   │   ├── SelektorAVMetadataItem.swift
 │   │   └── SelektorArray.swift
-│   └── Selektor.xcdatamodeld
+│   └── Selektor.xcdatamodeld # Contains the data model specification.
 ├── SelektorTests
-│   └── SelektorTests.swift
+│   └── SelektorTests.swift # Contains unit tests.
 └── LICENSE
 ```
 
