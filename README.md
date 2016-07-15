@@ -1,4 +1,5 @@
 # Selektor
+### A next-track recommendation system for electronic dance music DJs.
 
 In the middle of a DJ set and at a loss for what track to play next? Selektor can help.
 
