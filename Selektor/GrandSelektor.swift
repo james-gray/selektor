@@ -60,11 +60,15 @@ class GrandSelektor: NSObject {
       return currentTrack
     }
 
+    // Ensure the algorithm specified in Settings.plist is actually implemented
     if !self.algorithms.keys.contains(algorithm) {
       fatalError("Invalid selektorAlgorithm specified in Settings.plist")
     }
 
-    return self.algorithms[algorithm]!(currentTrack, tracks)
+    // Get the selection function which implements the specified algorithm and
+    // use it to determine the best next track
+    let selekt = self.algorithms[algorithm]!
+    return selekt(currentTrack, tracks)
   }
 
   /**
