@@ -3,7 +3,7 @@
 
 In the middle of a DJ set and at a loss for what track to play next? Selektor can help.
 
-Selektor will carefully analyze your music collection, and if you tell it what track you're currently playing, will suggest a track for you to mix into. Basing its recommendation on feature such as track BPM, timbre, key, and loudness, the app is a great tool for aspiring or beginner DJs to get to know their track collection and to hone their track selection skills!
+Selektor will carefully analyze your music collection, and if you tell it what track you're currently playing, it will suggest a track for you to mix into. Basing its recommendation on features such as track BPM, timbre, key, and loudness, the app is a great tool for aspiring or beginner DJs to get to know their track collection and to hone their track selection skills!
 
 ## Installation
 
