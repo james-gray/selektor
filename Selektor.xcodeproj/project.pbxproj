@@ -10,7 +10,6 @@
 		4A0402A21CF7F18F0031011A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0402A11CF7F18F0031011A /* AppDelegate.swift */; };
 		4A0402A41CF7F18F0031011A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0402A31CF7F18F0031011A /* ViewController.swift */; };
 		4A0402A71CF7F18F0031011A /* Selektor.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4A0402A51CF7F18F0031011A /* Selektor.xcdatamodeld */; };
-		4A0402A91CF7F18F0031011A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A0402A81CF7F18F0031011A /* Assets.xcassets */; };
 		4A0402AC1CF7F18F0031011A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A0402AA1CF7F18F0031011A /* Main.storyboard */; };
 		4A0402B71CF7F18F0031011A /* SelektorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0402B61CF7F18F0031011A /* SelektorTests.swift */; };
 		4A2748911D2C51D200568F90 /* Settings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4A2748901D2C51D200568F90 /* Settings.plist */; };
@@ -54,7 +53,6 @@
 		4A0402A11CF7F18F0031011A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4A0402A31CF7F18F0031011A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		4A0402A61CF7F18F0031011A /* Selektor.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Selektor.xcdatamodel; sourceTree = "<group>"; };
-		4A0402A81CF7F18F0031011A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4A0402AB1CF7F18F0031011A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4A0402AD1CF7F18F0031011A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4A0402B21CF7F18F0031011A /* SelektorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SelektorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -63,11 +61,11 @@
 		4A2748901D2C51D200568F90 /* Settings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Settings.plist; sourceTree = "<group>"; };
 		4A2748941D2C682500568F90 /* GrandSelektor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GrandSelektor.swift; sourceTree = "<group>"; };
 		4A5070421D2832E7007208BC /* Dependencies */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Dependencies; sourceTree = "<group>"; };
-		4A51B7C21D18E7D800F7D9EE /* SelektorAVMetadataItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelektorAVMetadataItem.swift; sourceTree = "<group>"; };
+		4A51B7C21D18E7D800F7D9EE /* SelektorAVMetadataItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelektorAVMetadataItem.swift; path = Extensions/SelektorAVMetadataItem.swift; sourceTree = "<group>"; };
 		4A51B7C61D18FE6A00F7D9EE /* MetadataParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetadataParser.swift; sourceTree = "<group>"; };
 		4A5750201CFA9F89007ED42C /* TrackEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackEntity.swift; path = Models/TrackEntity.swift; sourceTree = "<group>"; };
 		4A57503B1CFA9FBF007ED42C /* SelektorObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelektorObject.swift; path = Models/SelektorObject.swift; sourceTree = "<group>"; };
-		4A8FF5E41D2A0DD30077B704 /* SelektorArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelektorArray.swift; sourceTree = "<group>"; };
+		4A8FF5E41D2A0DD30077B704 /* SelektorArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelektorArray.swift; path = Extensions/SelektorArray.swift; sourceTree = "<group>"; };
 		4AAA2E351CFA39C00001D767 /* DataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		4AED17661D26E27D007F2908 /* TimbreVectorEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimbreVectorEntity.swift; path = Models/TimbreVectorEntity.swift; sourceTree = "<group>"; };
 		4AFA94581D1BB03B00F8102A /* Transformers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transformers.swift; sourceTree = "<group>"; };
@@ -117,7 +115,6 @@
 				4AFA94581D1BB03B00F8102A /* Transformers.swift */,
 				4A5070421D2832E7007208BC /* Dependencies */,
 				4A0402A11CF7F18F0031011A /* AppDelegate.swift */,
-				4A0402A81CF7F18F0031011A /* Assets.xcassets */,
 				4A0402AD1CF7F18F0031011A /* Info.plist */,
 				4A51B7C61D18FE6A00F7D9EE /* MetadataParser.swift */,
 				4A0402A51CF7F18F0031011A /* Selektor.xcdatamodeld */,
@@ -242,7 +239,6 @@
 			files = (
 				4A5070431D2832E7007208BC /* Dependencies in Resources */,
 				4A2748911D2C51D200568F90 /* Settings.plist in Resources */,
-				4A0402A91CF7F18F0031011A /* Assets.xcassets in Resources */,
 				4A0402AC1CF7F18F0031011A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
