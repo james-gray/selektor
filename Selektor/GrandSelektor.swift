@@ -37,8 +37,34 @@ class GrandSelektor: NSObject {
 
     self.algorithms = [
       "dummy": self.selectTrackDummy,
+      "plusMinus3": self.selectTrackPlusMinus3,
     ]
     self.algorithm = appDelegate.settings?["selektorAlgorithm"] as! String
+  }
+
+  /**
+      Find the track whose timbre is most similar to the current track's timbre
+      based on the Euclidean distance between timbre vectors.
+
+      - parameter currentTrack: The `TrackEntity` to compare against.
+      - parameter inTrackArray: The array of tracks to be compared.
+
+      - returns: The `TrackEntity` that is most similar to `currentTrack`.
+  */
+  func findTrackWithTimbreClosestTo(currentTrack currentTrack: TrackEntity, inTrackArray tracks: [TrackEntity]) -> TrackEntity {
+    var minDistance: Double = DBL_MAX
+    var distance: Double = 0
+    var mostSimilarTrack: TrackEntity? = nil
+
+    for track in tracks {
+      distance = currentTrack.timbreVector64.calculateDistanceFrom(otherVector: track.timbreVector64)
+      if distance < minDistance {
+        minDistance = distance
+        mostSimilarTrack = track
+      }
+    }
+
+    return mostSimilarTrack!
   }
 
   /**
@@ -82,5 +108,34 @@ class GrandSelektor: NSObject {
   func selectTrackDummy(currentTrack: TrackEntity, tracks: [TrackEntity]) -> TrackEntity {
     let index = Int(arc4random_uniform(UInt32(tracks.count)))
     return tracks[index]
+  }
+
+  /**
+      Selects a track within ± 3 BPM (if possible) with the most similar timbre
+      to the current track. If no other tracks within the range of ± 3 BPM are
+      available, increment the considered BPM range by 3 repeatedly until more
+      tracks are found.
+
+      - parameter currentTrack: The track that is currently playing.
+      - parameter tracks: An array of `TrackEntity`s to choose from.
+
+      - returns: The recommended track as deduced by the algorithm.
+  */
+  func selectTrackPlusMinus3(currentTrack: TrackEntity, tracks: [TrackEntity]) -> TrackEntity {
+    var bpmOffset = 0
+    let currentTempo = currentTrack.tempo as! Int
+    var tracksSubset = [TrackEntity]()
+
+    // Filter considered tracks to tracks with tempo within ± 3 BPM of the current
+    // track's tempo, increasing the range if no tracks are found
+    while tracksSubset.count == 0 {
+      bpmOffset += 3
+      tracksSubset = tracks.filter {
+        ($0.tempo as! Int) <= currentTempo + bpmOffset
+        && ($0.tempo as! Int) >= currentTempo - bpmOffset
+      }
+    }
+
+    return findTrackWithTimbreClosestTo(currentTrack: currentTrack, inTrackArray: tracksSubset)
   }
 }
