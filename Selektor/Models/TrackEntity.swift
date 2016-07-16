@@ -49,6 +49,7 @@ class TrackEntity: SelektorObject {
   @NSManaged dynamic var artist: String?
   @NSManaged dynamic var genre: String?
   @NSManaged dynamic var key: String?
+  @NSManaged dynamic var played: NSNumber?
   @NSManaged dynamic var timbreVectors: NSSet?
 
   // MARK: Convenience properties

@@ -75,10 +75,19 @@ class GrandSelektor: NSObject {
       - returns: A `TrackEntity` that the application suggests the user plays next.
   */
   func selectTrack(currentTrack: TrackEntity) -> TrackEntity {
-    let tracks = self.appDelegate.tracks.filter {
+    // Filter out un-analyzed tracks
+    var tracks = self.appDelegate.tracks.filter {
       $0.objectID != currentTrack.objectID
       && $0.analyzed == AnalysisState.complete.rawValue
     }
+
+    // Filter out tracks the user has already played
+    tracks = tracks.filter {
+      $0.played == false
+    }
+
+    // Mark the current track as played
+    currentTrack.played = true
 
     if tracks.count == 0 {
       // TODO: UI to show a useful error when there's only one track in the

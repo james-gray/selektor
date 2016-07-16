@@ -273,6 +273,9 @@ class ViewController: NSViewController {
       fatalError("playBestNextTrack called before a bestNextTrack was selected!")
     }
 
+    // Mark the best next track as played
+    bestNextTrack.played = true
+
     // Clear selection and programmatically select the suggested song
     let indexSet = self.tracksController.selectionIndexes
     self.tracksController.removeSelectionIndexes(indexSet)
