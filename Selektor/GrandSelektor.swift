@@ -52,14 +52,14 @@ class GrandSelektor: NSObject {
       - returns: The `TrackEntity` that is most similar to `currentTrack`.
   */
   func findTrackWithTimbreClosestTo(currentTrack currentTrack: TrackEntity, inTrackArray tracks: [TrackEntity]) -> TrackEntity {
-    var minDistance: Double = DBL_MAX
-    var distance: Double = 0
+    var minDistance = DBL_MAX
+    var timbreDistance = 0.0
     var mostSimilarTrack: TrackEntity? = nil
 
     for track in tracks {
-      distance = currentTrack.timbreVector64.calculateDistanceFrom(otherVector: track.timbreVector64)
-      if distance < minDistance {
-        minDistance = distance
+      timbreDistance = currentTrack.timbreVector64.calculateDistanceFrom(otherVector: track.timbreVector64)
+      if timbreDistance < minDistance {
+        minDistance = timbreDistance
         mostSimilarTrack = track
       }
     }
