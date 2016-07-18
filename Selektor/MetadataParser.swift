@@ -42,12 +42,10 @@ class MetadataParser {
       AVMetadataID3MetadataKeyLeadPerformer: "artist",
       AVMetadataID3MetadataKeyBand: "artist",
       AVMetadataID3MetadataKeyAlbumTitle: "album",
-      AVMetadataID3MetadataKeyInitialKey: "key",
       AVMetadataID3MetadataKeyBeatsPerMinute: "tempo",
       MetadataParser.AVMetadataID322MetadataKeyTitle: "name",
       MetadataParser.AVMetadataID322MetadataKeyArtist: "artist",
       MetadataParser.AVMetadataID322MetadataKeyAlbum: "album",
-      MetadataParser.AVMetadataID322MetadataKeyInitialKey: "key",
       MetadataParser.AVMetadataID322MetadataKeyBeatsPerMin: "tempo",
     ],
     // Quicktime Meta
