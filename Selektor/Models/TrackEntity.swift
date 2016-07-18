@@ -28,16 +28,20 @@ class TrackEntity: SelektorObject {
     return "Track"
   }
 
-  /// Path to the Marsyas mirex_extract executable.
-  static let mirexPath: String? = NSBundle.mainBundle().pathForResource("mirex_extract",
-    ofType: nil, inDirectory: "Dependencies/marsyas/bin")
-
   /// Path to the ffmpeg conversion executable.
   static let ffmpegPath: String? = NSBundle.mainBundle().pathForResource("ffmpeg",
       ofType: nil, inDirectory: "Dependencies/ffmpeg")
 
   /// Path to the Marsyas tempo beat estimation executable.
   static let tempoPath: String? = NSBundle.mainBundle().pathForResource("tempo",
+    ofType: nil, inDirectory: "Dependencies/marsyas/bin")
+
+  /// Path to the Marsyas mirex_extract executable.
+  static let mirexPath: String? = NSBundle.mainBundle().pathForResource("mirex_extract",
+    ofType: nil, inDirectory: "Dependencies/marsyas/bin")
+
+  /// Path to the Marsyas omRms executable.
+  static let omRmsPath: String? = NSBundle.mainBundle().pathForResource("omRms",
     ofType: nil, inDirectory: "Dependencies/marsyas/bin")
 
   /// Path to the VAMP simple host executable.
@@ -371,6 +375,12 @@ class TrackEntity: SelektorObject {
     return sortedKeys[0].0
   }
 
+  /**
+      Runs the `qm-keydetector` VAMP plugin on `wavURL` to extract key information about
+      this track.
+
+      - parameter wavURL: The wave file to perform key detection on.
+  */
   func computeKey(wavURL: NSURL) {
     guard let hostPath = TrackEntity.hostPath else {
       print("Unable to locate the vamp-simple-host binary")
@@ -398,6 +408,60 @@ class TrackEntity: SelektorObject {
 
     // Parse key detector output and set the song's key
     self.key = self.parseKeyDetectorOutput(pipe)
+  }
+
+  /**
+      Parses the standard output of the `omRms` executable to extract
+      a single normalized RMS loudness value for this track
+
+      - parameter pipe: The pipe to read the standard output from.
+
+      - returns: A double representation of the track's loudness.
+  */
+  func parseOmRmsOutput(pipe: NSPipe) -> Double {
+    let data = NSString(data: pipe.fileHandleForReading.readDataToEndOfFile(), encoding: NSASCIIStringEncoding) as! String
+
+    // Parse out the loudness values per window
+    let lines = data.componentsSeparatedByString("\n")
+    let rmsValues = lines.map { Double($0.componentsSeparatedByString("\t").last!) }
+
+    // Compute the average loudness
+    var avgRms = 0.0
+    for value in rmsValues {
+      avgRms += value ?? 0
+    }
+    avgRms /= Double(rmsValues.count)
+
+    return avgRms
+  }
+
+  /**
+      Runs the `omRms` executable on `wavURL` to extract loudness information about
+      this track.
+
+      - parameter wavURL: The wave file to perform loudness extraction on.
+  */
+  func computeLoudness(wavURL: NSURL) {
+    guard let omRmsPath = TrackEntity.omRmsPath else {
+      print("Unable to locate the omRms binary")
+      return
+    }
+
+    // Execute the omRms command to analyze the track's loudness
+    let task = NSTask()
+    let pipe = NSPipe()
+    task.launchPath = omRmsPath
+    task.arguments = [
+      "-ws", "44100", // Window size of 44100 samples
+      "-hp", "22050", // Hop size of 22050 samples
+      wavURL.path!,
+    ]
+    task.standardOutput = pipe
+    task.launch()
+    task.waitUntilExit()
+
+    // Parse omRms output and set the song's loudness
+    self.loudness = self.parseOmRmsOutput(pipe)
   }
 
   /**
@@ -458,10 +522,9 @@ class TrackEntity: SelektorObject {
       return
     }
 
-    // Compute key
+    // Compute key, loudness, and timbre
     self.computeKey(wavURL)
-
-    // Compute timbre vector
+    self.computeLoudness(wavURL)
     self.computeTimbre(wavURL)
 
     // Compute the tempo for tracks shorter than 20 minutes long.
