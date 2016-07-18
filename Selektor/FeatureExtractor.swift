@@ -41,10 +41,12 @@ class FeatureExtractor {
   let tempDirectory = NSURL(fileURLWithPath: NSTemporaryDirectory() as String)
 
   /**
-      Returns, or creates, a wave file URL for this track. If this track is
+      Returns, or creates, a wave file URL for the given track. If this track is
       already a wave file, this method simply returns the URL of the file's
       location, otherwise it creates a temporary wave file in the application's
       temporary directory.
+
+      - parameter track: The track to get or create a wave file for.
 
       - returns: A tuple containing the URL of the wave file and a boolean indicating
           that the file was converted if `true` or that the original file was used

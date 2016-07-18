@@ -172,11 +172,11 @@ class TrackEntity: SelektorObject {
   }
 
   /**
-      Given an .arff file generated with the `mirex_extract` executable, creates
-      a set of `TimbreVectorEntity`s and creates relationships between this track
-      and the vectors.
+      Given a 64-dimensional vector of features, creates a set of
+      `TimbreVectorEntity`s and creates relationships between this track and
+      the vectors.
 
-      - parameter arffFileURL: The URL of the .arff file to parse.
+      - parameter features: The 64-dimensional feature array.
   */
   func store64DimensionalTimbreVector(features: [Double]) {
     // Split array into 16-dimensional vectors for each summary type
@@ -193,7 +193,7 @@ class TrackEntity: SelektorObject {
   }
 
   /**
-      Analyze the timbre and tempo of this track.
+      Analyze the timbre, tempo, key, and loudness of this track.
   */
   func analyze() {
     self.analyzed = AnalysisState.inProgress.rawValue
@@ -210,11 +210,10 @@ class TrackEntity: SelektorObject {
     }
 
     // Compute key, loudness, and timbre
-    self.key = extractor.computeKey(wavURL)
-    self.loudness = extractor.computeLoudness(wavURL)
-
     let features = extractor.computeTimbre(wavURL)
     self.store64DimensionalTimbreVector(features)
+    self.key = extractor.computeKey(wavURL)
+    self.loudness = extractor.computeLoudness(wavURL)
 
     // Compute the tempo for tracks shorter than 20 minutes long.
     // The vast majority of electronic dance tracks clock in somewhere between
