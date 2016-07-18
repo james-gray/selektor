@@ -152,8 +152,6 @@ class TrackEntity: SelektorObject {
       otherVector: track.timbreVector64, withFormula: formula)
   }
 
-  // MARK: Analysis Functions
-
   /**
       Create a new `TimbreVectorEntity` from a 16-dimensional array of audio features
       (represented as doubles.)
