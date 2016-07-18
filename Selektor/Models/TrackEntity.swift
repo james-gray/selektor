@@ -340,6 +340,67 @@ class TrackEntity: SelektorObject {
   }
 
   /**
+      Parses the standard output of the `qm-keydetector` VAMP plugin to extract
+      the most likely candidate key for the track.
+
+      - parameter pipe: The pipe to read the standard output from.
+
+      - returns: A string representation of the key of this track.
+  */
+  func parseKeyDetectorOutput(pipe: NSPipe) -> String {
+    let data = NSString(data: pipe.fileHandleForReading.readDataToEndOfFile(), encoding: NSASCIIStringEncoding) as! String
+
+    // Parse out the key values per analysis frame
+    let lines = data.componentsSeparatedByString("\n")
+    var keys = lines.map { $0.componentsSeparatedByString(" ").last }
+    keys.removeLast() // Remove emptystring from keys array
+
+    // Map each key to the number of times it appears in the array. The key with
+    // the most occurrences will be chosen as this song's key.
+    var keyOccurrences = [String: Int]()
+    for key in keys {
+      // Increment occurrences for this key
+      keyOccurrences[key!] = (keyOccurrences[key!] ?? 0) + 1
+    }
+
+    // Sort key occurrences in descending order by value, i.e. the first key in
+    // the sorted array is the key candidate that occurred the most times in detection
+    let sortedKeys = keyOccurrences.sort { $0.1 > $1.1 }
+
+    // Return the most frequently occurring key as the detected key.
+    return sortedKeys[0].0
+  }
+
+  func computeKey(wavURL: NSURL) {
+    guard let hostPath = TrackEntity.hostPath else {
+      print("Unable to locate the vamp-simple-host binary")
+      return
+    }
+
+    // Add the plugins directory to the NSTask's VAMP_PATH env var to ensure the VAMP
+    // simple host can load the key detector plugin correctly.
+    let pluginsDirectory = NSString(UTF8String: TrackEntity.keyDetectorPath!)?.stringByDeletingLastPathComponent
+    var env = NSProcessInfo.processInfo().environment
+    env["VAMP_PATH"] = pluginsDirectory!
+
+    // Execute the tempo command to analyze the track's BPM
+    let task = NSTask()
+    let pipe = NSPipe()
+    task.launchPath = hostPath
+    task.environment = env
+    task.arguments = [
+      "\(TrackEntity.keyDetectorPath!):qm-keydetector",
+      wavURL.path!,
+    ]
+    task.standardOutput = pipe
+    task.launch()
+    task.waitUntilExit()
+
+    // Parse key detector output and set the song's key
+    self.key = self.parseKeyDetectorOutput(pipe)
+  }
+
+  /**
       Returns, or creates, a wave file URL for this track. If this track is
       already a wave file, this method simply returns the URL of the file's
       location, otherwise it creates a temporary wave file in the application's
@@ -397,7 +458,10 @@ class TrackEntity: SelektorObject {
       return
     }
 
-    // Compute timbre vector and (if necessary) tempo
+    // Compute key
+    self.computeKey(wavURL)
+
+    // Compute timbre vector
     self.computeTimbre(wavURL)
 
     // Compute the tempo for tracks shorter than 20 minutes long.
