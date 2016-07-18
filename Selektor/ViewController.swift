@@ -183,7 +183,6 @@ class ViewController: NSViewController {
     track.artist = meta["artist"] as? String
     track.album = meta["album"] as? String
     track.genre = meta["genre"] as? String
-    track.key = meta["key"] as? String
 
     self.appDelegate.tracks.append(track)
   }

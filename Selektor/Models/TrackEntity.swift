@@ -31,12 +31,21 @@ class TrackEntity: SelektorObject {
   /// Path to the Marsyas mirex_extract executable.
   static let mirexPath: String? = NSBundle.mainBundle().pathForResource("mirex_extract",
     ofType: nil, inDirectory: "Dependencies/marsyas/bin")
+
   /// Path to the ffmpeg conversion executable.
   static let ffmpegPath: String? = NSBundle.mainBundle().pathForResource("ffmpeg",
       ofType: nil, inDirectory: "Dependencies/ffmpeg")
+
   /// Path to the Marsyas tempo beat estimation executable.
   static let tempoPath: String? = NSBundle.mainBundle().pathForResource("tempo",
     ofType: nil, inDirectory: "Dependencies/marsyas/bin")
+
+  /// Path to the VAMP simple host executable.
+  static let hostPath: String? = NSBundle.mainBundle().pathForResource("vamp-simple-host",
+    ofType: nil, inDirectory: "Dependencies/vamp_simple_host")
+
+  /// Path to the key detector dylib.
+  static let keyDetectorPath: String? = NSBundle.mainBundle().pathForResource("qm-vamp-plugins.dylib", ofType: nil, inDirectory: "Dependencies/qm_vamp_plugins")
 
   // MARK: Properties
 
