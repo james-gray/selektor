@@ -237,6 +237,15 @@ class FeatureExtractor {
       - returns: A string representation of the key of this track.
   */
   func parseKeyDetectorOutput(pipe: NSPipe) -> String {
+    // Enharmonically respell all flat keys as sharp keys for consistency using
+    // this map
+    let keyMap = [
+      "Db": "C#",
+      "Eb": "D#",
+      "Gb": "F#",
+      "Ab": "G#",
+      "Bb": "A#",
+    ]
     let data = NSString(data: pipe.fileHandleForReading.readDataToEndOfFile(), encoding: NSASCIIStringEncoding) as! String
 
     // Parse out the key values per analysis frame
@@ -255,9 +264,11 @@ class FeatureExtractor {
     // Sort key occurrences in descending order by value, i.e. the first key in
     // the sorted array is the key candidate that occurred the most times in detection
     let sortedKeys = keyOccurrences.sort { $0.1 > $1.1 }
+    let chosenKey = sortedKeys[0].0
 
-    // Return the most frequently occurring key as the detected key.
-    return sortedKeys[0].0
+    // Return the most frequently occurring key as the detected key,
+    // respelling it enharmonically if necessary.
+    return keyMap.keys.contains(chosenKey) ? keyMap[chosenKey]! : chosenKey
   }
 
   /**
