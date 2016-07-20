@@ -224,17 +224,18 @@ class TrackEntity: SelektorObject {
     // Compute key, loudness, and timbre
     let features = extractor.computeTimbre(wavURL)
     self.store64DimensionalTimbreVector(features)
-    self.key = extractor.computeKey(wavURL)
-    self.loudness = extractor.computeLoudness(wavURL)
 
-    // Compute the tempo for tracks shorter than 20 minutes long.
+    // Compute the tempo, key, and loudness for tracks shorter than 20 minutes long.
     // The vast majority of electronic dance tracks clock in somewhere between
     // 5 and ~10 minutes long - allowing for up to 20 minutes gives a bit of
     // a buffer for this. Files longer than 20 minutes are more likely to be
     // non-track files (for example, DJ mixes or podcasts.)
-    // The tempo executable is extremely slow on files of long lengths, so
-    // forgo processing files that are likely not tracks anyway.
-    if self.tempo! == 0 && Int(self.duration!) < 1200 {
+    // The executables that the extractor calls to compute key, loudness, and
+    // tempo are extremely slow on files of long lengths, so forgo processing
+    // files that are likely not tracks anyway.
+    if Int(self.duration!) < 1200 {
+      self.key = extractor.computeKey(wavURL)
+      self.loudness = extractor.computeLoudness(wavURL)
       self.tempo = extractor.computeTempo(wavURL)
     }
 
