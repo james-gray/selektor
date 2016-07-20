@@ -160,7 +160,7 @@ class GrandSelektor: NSObject {
       }
     }
 
-    return trackSubset[selectedIndex]
+    return tracks[selectedIndex]
   }
 
 
