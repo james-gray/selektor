@@ -37,34 +37,39 @@ class GrandSelektor: NSObject {
 
     self.algorithms = [
       "dummy": self.selectTrackDummy,
-      "plusMinus3": self.selectTrackPlusMinus3,
+      "rankedBPM": self.selectTrackRankedBPM,
+      "medianBPM": self.selectTrackMedianBPM,
+      "rankedLoudness": self.selectTrackRankedLoudness,
+      //"medianLoudness": self.selectTrackMedianLoudness,
+      //"rankedKey": self.selectTrackRankedKey,
+      //"medianKey": self.selectTrackMedianKey,
     ]
     self.algorithm = appDelegate.settings?["selektorAlgorithm"] as! String
   }
 
   /**
-      Find the track whose timbre is most similar to the current track's timbre
-      based on the Euclidean distance between timbre vectors.
+      Given the current track, return a subset of tracks that are similar in BPM
+      to the current track's tempo, with a range of ± 3 BPM.
 
-      - parameter currentTrack: The `TrackEntity` to compare against.
-      - parameter inTrackArray: The array of tracks to be compared.
-
-      - returns: The `TrackEntity` that is most similar to `currentTrack`.
+      If no other tracks within the range of ± 3 BPM are available, increment
+      the considered BPM range by 3 repeatedly until more tracks are found.
   */
-  func findTrackWithTimbreClosestTo(currentTrack currentTrack: TrackEntity, inTrackArray tracks: [TrackEntity]) -> TrackEntity {
-    var minDistance = DBL_MAX
-    var timbreDistance = 0.0
-    var mostSimilarTrack: TrackEntity? = nil
+  func findTracksWithSimilarBPM(toTrack currentTrack: TrackEntity, inSet tracks: [TrackEntity]) -> [TrackEntity] {
+    var bpmOffset = 0
+    let currentTempo = currentTrack.tempo as! Int
+    var tracksSubset = [TrackEntity]()
 
-    for track in tracks {
-      timbreDistance = currentTrack.timbreVector64.calculateDistanceFrom(otherVector: track.timbreVector64)
-      if timbreDistance < minDistance {
-        minDistance = timbreDistance
-        mostSimilarTrack = track
+    // Filter considered tracks to tracks with tempo within ± 3 BPM of the current
+    // track's tempo, increasing the range if no tracks are found
+    while tracksSubset.count == 0 {
+      bpmOffset += 3
+      tracksSubset = tracks.filter {
+        ($0.tempo as! Int) <= currentTempo + bpmOffset
+          && ($0.tempo as! Int) >= currentTempo - bpmOffset
       }
     }
 
-    return mostSimilarTrack!
+    return tracksSubset
   }
 
   /**
@@ -121,30 +126,100 @@ class GrandSelektor: NSObject {
 
   /**
       Selects a track within ± 3 BPM (if possible) with the most similar timbre
-      to the current track. If no other tracks within the range of ± 3 BPM are
-      available, increment the considered BPM range by 3 repeatedly until more
-      tracks are found.
+      to the current track. Timbre similarity is calculated by computing the
+      Euclidean distance between the tracks' timbre vectors.
 
       - parameter currentTrack: The track that is currently playing.
       - parameter tracks: An array of `TrackEntity`s to choose from.
 
       - returns: The recommended track as deduced by the algorithm.
   */
-  func selectTrackPlusMinus3(currentTrack: TrackEntity, tracks: [TrackEntity]) -> TrackEntity {
-    var bpmOffset = 0
-    let currentTempo = currentTrack.tempo as! Int
-    var tracksSubset = [TrackEntity]()
+  func selectTrackRankedBPM(currentTrack: TrackEntity, tracks: [TrackEntity]) -> TrackEntity {
+    let trackSubset = findTracksWithSimilarBPM(toTrack: currentTrack, inSet: tracks)
 
-    // Filter considered tracks to tracks with tempo within ± 3 BPM of the current
-    // track's tempo, increasing the range if no tracks are found
-    while tracksSubset.count == 0 {
-      bpmOffset += 3
-      tracksSubset = tracks.filter {
-        ($0.tempo as! Int) <= currentTempo + bpmOffset
-        && ($0.tempo as! Int) >= currentTempo - bpmOffset
+    var minDistance = DBL_MAX
+    var timbreDistance = 0.0
+    var selectedTrack: TrackEntity? = nil
+
+    for track in trackSubset {
+      timbreDistance = currentTrack.compareTimbreWith(otherTrack: track)
+      if timbreDistance < minDistance {
+        minDistance = timbreDistance
+        selectedTrack = track
       }
     }
 
-    return findTrackWithTimbreClosestTo(currentTrack: currentTrack, inTrackArray: tracksSubset)
+    return selectedTrack!
+  }
+
+  /**
+      Selects a track within ± 3 BPM (if possible) whose timbre distance is
+      closest to the median distance of all tracks to the current track.
+
+      - parameter currentTrack: The track that is currently playing.
+      - parameter tracks: An array of `TrackEntity`s to choose from.
+
+      - returns: The recommended track as deduced by the algorithm.
+  */
+  func selectTrackMedianBPM(currentTrack: TrackEntity, tracks: [TrackEntity]) -> TrackEntity {
+    let trackSubset = findTracksWithSimilarBPM(toTrack: currentTrack, inSet: tracks)
+
+    // Compute the median distance
+    let distances = trackSubset.map { currentTrack.compareTimbreWith(otherTrack: $0) }
+    let medianDistance = distances.sort()[distances.count / 2]
+
+    // Compare the distances of each track from the current track to the median distance
+    let deviationsFromMedianDistance = distances.map { fabs(medianDistance - $0) }
+
+    var minDeviation = DBL_MAX
+    var selectedIndex = -1
+
+    // Find the index of the track with the closest timbre distance to the
+    // median.
+    for (index, deviation) in deviationsFromMedianDistance.enumerate() {
+      if deviation < minDeviation {
+        minDeviation = deviation
+        selectedIndex = index
+      }
+    }
+
+    return trackSubset[selectedIndex]
+  }
+
+  /**
+      Selects a track within ± 3 BPM (if possible) of the current track's tempo,
+      with the most similar timbre and loudness to the current track. Timbre
+      similarity is calculated by computing the Euclidean distance between the
+      tracks' timbre vectors, while loudness similarity is calculated by simply
+      subtracting the tracks' loudness values and taking the absolute value.
+
+      The distance values for timbre and loudness are added together for each
+      track, and the track with the shortest combined distance is chosen as the
+      suggested track.
+
+      - parameter currentTrack: The track that is currently playing.
+      - parameter tracks: An array of `TrackEntity`s to choose from.
+
+      - returns: The recommended track as deduced by the algorithm.
+  */
+  func selectTrackRankedLoudness(currentTrack: TrackEntity, tracks: [TrackEntity]) -> TrackEntity {
+    let trackSubset = findTracksWithSimilarBPM(toTrack: currentTrack, inSet: tracks)
+
+    var minDistance = DBL_MAX
+    var timbreDistance = 0.0, loudnessDistance = 0.0, totalTrackDistance = 0.0
+    var selectedTrack: TrackEntity? = nil
+
+    for track in trackSubset {
+      timbreDistance = currentTrack.compareTimbreWith(otherTrack: track)
+      loudnessDistance = fabs(Double(currentTrack.loudness!) - Double(track.loudness!))
+      totalTrackDistance = timbreDistance + loudnessDistance
+
+      if totalTrackDistance < minDistance {
+        minDistance = totalTrackDistance
+        selectedTrack = track
+      }
+    }
+
+    return selectedTrack!
   }
 }
