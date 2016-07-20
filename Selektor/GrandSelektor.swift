@@ -273,9 +273,13 @@ class GrandSelektor: NSObject {
   func selectTrackRankedLoudness(currentTrack: TrackEntity, tracks: [TrackEntity]) -> TrackEntity {
     let trackSubset = findTracksWithSimilarBPM(toTrack: currentTrack, inSet: tracks)
 
+    // Scale the loudness factor by 50 to weight the timbre and loudness distances
+    // roughly equally. In testing, the maximum timbre distance between tracks
+    // was about 50, so this scales the normalized RMS values to roughly the same
+    // range.
     let distanceFunc = { (currentTrack: TrackEntity, otherTrack: TrackEntity) in
       return currentTrack.compareTimbreWith(otherTrack: otherTrack)
-        + currentTrack.compareLoudnessWith(otherTrack: otherTrack)
+        + (50.0 * currentTrack.compareLoudnessWith(otherTrack: otherTrack))
     }
 
     return rankedSelection(withTrack: currentTrack, fromSet: trackSubset,
@@ -297,7 +301,7 @@ class GrandSelektor: NSObject {
 
     let distanceFunc = { (currentTrack: TrackEntity, otherTrack: TrackEntity) in
       return currentTrack.compareTimbreWith(otherTrack: otherTrack)
-        + currentTrack.compareLoudnessWith(otherTrack: otherTrack)
+        + (50.0 * currentTrack.compareLoudnessWith(otherTrack: otherTrack))
     }
 
     return medianSelection(withTrack: currentTrack, fromSet: trackSubset,
@@ -306,7 +310,7 @@ class GrandSelektor: NSObject {
 
   /**
       Selects a track that is in the same genre as the current track (if possible),
-      within ± 3 BPM (if possible) of the current track's tempo, abd with the
+      within ± 3 BPM (if possible) of the current track's tempo, and with the
       most similar timbre and loudness to the current track.
 
       - parameter currentTrack: The track that is currently playing.
@@ -320,7 +324,7 @@ class GrandSelektor: NSObject {
 
     let distanceFunc = { (currentTrack: TrackEntity, otherTrack: TrackEntity) in
       return currentTrack.compareTimbreWith(otherTrack: otherTrack)
-        + currentTrack.compareLoudnessWith(otherTrack: otherTrack)
+        + (50.0 * currentTrack.compareLoudnessWith(otherTrack: otherTrack))
     }
 
     return rankedSelection(withTrack: currentTrack, fromSet: trackSubset,
