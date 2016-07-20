@@ -403,8 +403,9 @@ class GrandSelektor: NSObject {
     // Scale the key factor by 16 to weight the key more heavily than the loudness
     // and timbre (which are weighted roughly equally.) Since the maximum distance
     // between keys is 6, and the rough maximum distance between timbres and (scaled)
-    // loudness is 50, multiply by 16 to roughly double the maximum distance between
-    // keys to ensure it influences the selection the most out of the three factors.
+    // loudness is 50, multiply by 16 to increase the maximum distance between
+    // keys to ensure it influences the selection roughly twice as much as the timbre
+    // or loudness.
     let distanceFunc = { (currentTrack: TrackEntity, otherTrack: TrackEntity) in
       return currentTrack.compareTimbreWith(otherTrack: otherTrack)
         + (50.0 * currentTrack.compareLoudnessWith(otherTrack: otherTrack))
