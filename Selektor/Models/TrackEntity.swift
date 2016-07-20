@@ -153,6 +153,18 @@ class TrackEntity: SelektorObject {
   }
 
   /**
+      Compares the loudness of this track with another track by subtracting the
+      two values and taking the absolute value.
+
+      - parameter track: The `TrackEntity` to compare this track with.
+
+      - returns: The absolute difference between the two loudness values as a double.
+  */
+  func compareLoudnessWith(otherTrack track: TrackEntity) -> Double {
+    return fabs(Double(self.loudness!) + Double(track.loudness!))
+  }
+
+  /**
       Create a new `TimbreVectorEntity` from a 16-dimensional array of audio features
       (represented as doubles.)
 

@@ -40,7 +40,9 @@ class GrandSelektor: NSObject {
       "rankedBPM": self.selectTrackRankedBPM,
       "medianBPM": self.selectTrackMedianBPM,
       "rankedLoudness": self.selectTrackRankedLoudness,
-      //"medianLoudness": self.selectTrackMedianLoudness,
+      "medianLoudness": self.selectTrackMedianLoudness,
+      //"rankedGenre": self.selectTrackRankedGenre,
+      //"medianGenre": self.selectTrackMedianGenre,
       //"rankedKey": self.selectTrackRankedKey,
       //"medianKey": self.selectTrackMedianKey,
     ]
@@ -71,6 +73,74 @@ class GrandSelektor: NSObject {
 
     return tracksSubset
   }
+
+  /**
+      Selects a track within ± 3 BPM (if possible) with the shortest distance
+      to the current track based on the distance function `distanceFunc`.
+
+
+      - parameter currentTrack: The track that is currently playing.
+      - parameter tracks: An array of `TrackEntity`s to choose from.
+      - parameter distanceFunc: The function to use in distance calculation.
+   
+      - returns: The recommended track.
+  */
+  func rankedSelection(withTrack currentTrack: TrackEntity, fromSet tracks: [TrackEntity],
+      usingDistanceFunction distanceFunc: (TrackEntity, TrackEntity) -> Double) -> TrackEntity {
+    let trackSubset = findTracksWithSimilarBPM(toTrack: currentTrack, inSet: tracks)
+
+    var minDistance = DBL_MAX
+    var distance = 0.0
+    var selectedTrack: TrackEntity? = nil
+
+    for otherTrack in trackSubset {
+      distance = distanceFunc(currentTrack, otherTrack)
+      if distance < minDistance {
+        minDistance = distance
+        selectedTrack = otherTrack
+      }
+    }
+
+    return selectedTrack!
+  }
+
+  /**
+      Selects a track within ± 3 BPM (if possible) whose distance from the current
+      track is closest to the median distance of all tracks to the current track.
+      Distance is calculated using the distance function `distanceFunc`.
+
+      - parameter currentTrack: The track that is currently playing.
+      - parameter tracks: An array of `TrackEntity`s to choose from.
+      - parameter distanceFunc: The function to use in distance calculation.
+
+      - returns: The recommended track.
+   */
+  func medianSelection(withTrack currentTrack: TrackEntity, fromSet tracks: [TrackEntity],
+      usingDistanceFunction distanceFunc: (TrackEntity, TrackEntity) -> Double) -> TrackEntity {
+    let trackSubset = findTracksWithSimilarBPM(toTrack: currentTrack, inSet: tracks)
+
+    // Compute the median distance
+    let distances = trackSubset.map { distanceFunc(currentTrack, $0) }
+    let medianDistance = distances.sort()[distances.count / 2]
+
+    // Compare the distances of each track from the current track to the median distance
+    let deviationsFromMedianDistance = distances.map { fabs(medianDistance - $0) }
+
+    var minDeviation = DBL_MAX
+    var selectedIndex = -1
+
+    // Find the index of the track with the closest timbre distance to the
+    // median.
+    for (index, deviation) in deviationsFromMedianDistance.enumerate() {
+      if deviation < minDeviation {
+        minDeviation = deviation
+        selectedIndex = index
+      }
+    }
+
+    return trackSubset[selectedIndex]
+  }
+
 
   /**
       Select the best next track to play based on the currently playing track.
@@ -135,21 +205,12 @@ class GrandSelektor: NSObject {
       - returns: The recommended track as deduced by the algorithm.
   */
   func selectTrackRankedBPM(currentTrack: TrackEntity, tracks: [TrackEntity]) -> TrackEntity {
-    let trackSubset = findTracksWithSimilarBPM(toTrack: currentTrack, inSet: tracks)
-
-    var minDistance = DBL_MAX
-    var timbreDistance = 0.0
-    var selectedTrack: TrackEntity? = nil
-
-    for track in trackSubset {
-      timbreDistance = currentTrack.compareTimbreWith(otherTrack: track)
-      if timbreDistance < minDistance {
-        minDistance = timbreDistance
-        selectedTrack = track
-      }
+    let distanceFunc = { (currentTrack: TrackEntity, otherTrack: TrackEntity) in
+      return currentTrack.compareTimbreWith(otherTrack: otherTrack)
     }
 
-    return selectedTrack!
+    return rankedSelection(withTrack: currentTrack, fromSet: tracks,
+        usingDistanceFunction: distanceFunc)
   }
 
   /**
@@ -162,36 +223,17 @@ class GrandSelektor: NSObject {
       - returns: The recommended track as deduced by the algorithm.
   */
   func selectTrackMedianBPM(currentTrack: TrackEntity, tracks: [TrackEntity]) -> TrackEntity {
-    let trackSubset = findTracksWithSimilarBPM(toTrack: currentTrack, inSet: tracks)
-
-    // Compute the median distance
-    let distances = trackSubset.map { currentTrack.compareTimbreWith(otherTrack: $0) }
-    let medianDistance = distances.sort()[distances.count / 2]
-
-    // Compare the distances of each track from the current track to the median distance
-    let deviationsFromMedianDistance = distances.map { fabs(medianDistance - $0) }
-
-    var minDeviation = DBL_MAX
-    var selectedIndex = -1
-
-    // Find the index of the track with the closest timbre distance to the
-    // median.
-    for (index, deviation) in deviationsFromMedianDistance.enumerate() {
-      if deviation < minDeviation {
-        minDeviation = deviation
-        selectedIndex = index
-      }
+    let distanceFunc = { (currentTrack: TrackEntity, otherTrack: TrackEntity) in
+      return currentTrack.compareTimbreWith(otherTrack: otherTrack)
     }
 
-    return trackSubset[selectedIndex]
+    return medianSelection(withTrack: currentTrack, fromSet: tracks,
+        usingDistanceFunction: distanceFunc)
   }
 
   /**
       Selects a track within ± 3 BPM (if possible) of the current track's tempo,
-      with the most similar timbre and loudness to the current track. Timbre
-      similarity is calculated by computing the Euclidean distance between the
-      tracks' timbre vectors, while loudness similarity is calculated by simply
-      subtracting the tracks' loudness values and taking the absolute value.
+      with the most similar timbre and loudness to the current track.
 
       The distance values for timbre and loudness are added together for each
       track, and the track with the shortest combined distance is chosen as the
@@ -203,23 +245,32 @@ class GrandSelektor: NSObject {
       - returns: The recommended track as deduced by the algorithm.
   */
   func selectTrackRankedLoudness(currentTrack: TrackEntity, tracks: [TrackEntity]) -> TrackEntity {
-    let trackSubset = findTracksWithSimilarBPM(toTrack: currentTrack, inSet: tracks)
-
-    var minDistance = DBL_MAX
-    var timbreDistance = 0.0, loudnessDistance = 0.0, totalTrackDistance = 0.0
-    var selectedTrack: TrackEntity? = nil
-
-    for track in trackSubset {
-      timbreDistance = currentTrack.compareTimbreWith(otherTrack: track)
-      loudnessDistance = fabs(Double(currentTrack.loudness!) - Double(track.loudness!))
-      totalTrackDistance = timbreDistance + loudnessDistance
-
-      if totalTrackDistance < minDistance {
-        minDistance = totalTrackDistance
-        selectedTrack = track
-      }
+    let distanceFunc = { (currentTrack: TrackEntity, otherTrack: TrackEntity) in
+      return currentTrack.compareTimbreWith(otherTrack: otherTrack)
+        + currentTrack.compareLoudnessWith(otherTrack: otherTrack)
     }
 
-    return selectedTrack!
+    return rankedSelection(withTrack: currentTrack, fromSet: tracks,
+        usingDistanceFunction: distanceFunc)
+  }
+
+  /**
+      Selects a track within ± 3 BPM (if possible) whose combined timbre and
+      loudness distance is closest to the median combined distance of all tracks
+      to the current track.
+
+      - parameter currentTrack: The track that is currently playing.
+      - parameter tracks: An array of `TrackEntity`s to choose from.
+
+      - returns: The recommended track as deduced by the algorithm.
+  */
+  func selectTrackMedianLoudness(currentTrack: TrackEntity, tracks: [TrackEntity]) -> TrackEntity {
+    let distanceFunc = { (currentTrack: TrackEntity, otherTrack: TrackEntity) in
+      return currentTrack.compareTimbreWith(otherTrack: otherTrack)
+        + currentTrack.compareLoudnessWith(otherTrack: otherTrack)
+    }
+
+    return medianSelection(withTrack: currentTrack, fromSet: tracks,
+        usingDistanceFunction: distanceFunc)
   }
 }
