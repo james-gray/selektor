@@ -43,8 +43,8 @@ class GrandSelektor: NSObject {
       "medianLoudness": self.selectTrackMedianLoudness,
       "rankedGenre": self.selectTrackRankedGenre,
       "medianGenre": self.selectTrackMedianGenre,
-      //"rankedKey": self.selectTrackRankedKey,
-      //"medianKey": self.selectTrackMedianKey,
+      "rankedKey": self.selectTrackRankedKey,
+      "medianKey": self.selectTrackMedianKey,
     ]
     self.algorithm = appDelegate.settings?["selektorAlgorithm"] as! String
   }
@@ -328,25 +328,86 @@ class GrandSelektor: NSObject {
   }
 
   /**
-      Selects a track within ± 3 BPM (if possible) whose combined timbre and
-      loudness distance is closest to the median combined distance of all tracks
-      to the current track.
+      Selects a track that is the same genre as the current track (if possible),
+      within ± 3 BPM (if possible) of the current track's tempo, whose combined
+      timbre and loudness distance is closest to the median combined distance of
+      all tracks to the current track.
 
       - parameter currentTrack: The track that is currently playing.
       - parameter tracks: An array of `TrackEntity`s to choose from.
 
       - returns: The recommended track as deduced by the algorithm.
-   */
+  */
   func selectTrackMedianGenre(currentTrack: TrackEntity, tracks: [TrackEntity]) -> TrackEntity {
     var trackSubset = findTracksWithSameGenre(asTrack: currentTrack, inSet: tracks)
     trackSubset = findTracksWithSimilarBPM(toTrack: currentTrack, inSet: trackSubset)
 
     let distanceFunc = { (currentTrack: TrackEntity, otherTrack: TrackEntity) in
       return currentTrack.compareTimbreWith(otherTrack: otherTrack)
-        + currentTrack.compareLoudnessWith(otherTrack: otherTrack)
+        + (50.0 * currentTrack.compareLoudnessWith(otherTrack: otherTrack))
     }
 
     return medianSelection(withTrack: currentTrack, fromSet: trackSubset,
-                           usingDistanceFunction: distanceFunc)
+        usingDistanceFunction: distanceFunc)
+  }
+
+  /**
+      Selects a track that is the same, or close, in key (based on the circle of
+      5ths), with the same genre as the current track (if possible), within ± 3
+      BPM (if possible) of the current track's tempo, and with the most similar
+      timbre and loudness to the current track.
+   
+      - parameter currentTrack: The track that is currently playing.
+      - parameter tracks: An array of `TrackEntity`s to choose from.
+   
+      - returns: The recommended track as deduced by the algorithm.
+  */
+  func selectTrackRankedKey(currentTrack: TrackEntity, tracks: [TrackEntity]) -> TrackEntity {
+    var trackSubset = findTracksWithSameGenre(asTrack: currentTrack, inSet: tracks)
+    trackSubset = findTracksWithSimilarBPM(toTrack: currentTrack, inSet: trackSubset)
+
+    // Scale the key factor by 16 to weight the key more heavily than the loudness
+    // and timbre (which are weighted roughly equally.) Since the maximum distance
+    // between keys is 6, and the rough maximum distance between timbres and (scaled)
+    // loudness is 50, multiply by 16 to roughly double the maximum distance between
+    // keys to ensure it influences the selection the most out of the three factors.
+    let distanceFunc = { (currentTrack: TrackEntity, otherTrack: TrackEntity) in
+      return currentTrack.compareTimbreWith(otherTrack: otherTrack)
+        + (50.0 * currentTrack.compareLoudnessWith(otherTrack: otherTrack))
+        + (16.0 * currentTrack.compareKeyWith(otherTrack: otherTrack))
+    }
+
+    return rankedSelection(withTrack: currentTrack, fromSet: trackSubset,
+        usingDistanceFunction: distanceFunc)
+  }
+
+  /**
+      Selects a track that is the same, or close, in key (based on the circle of
+      5ths), with the same genre as the current track (if possible), within ± 3
+      BPM (if possible) of the current track's tempo, and with the most similar
+      timbre and loudness to the current track.
+
+      - parameter currentTrack: The track that is currently playing.
+      - parameter tracks: An array of `TrackEntity`s to choose from.
+
+      - returns: The recommended track as deduced by the algorithm.
+  */
+  func selectTrackMedianKey(currentTrack: TrackEntity, tracks: [TrackEntity]) -> TrackEntity {
+    var trackSubset = findTracksWithSameGenre(asTrack: currentTrack, inSet: tracks)
+    trackSubset = findTracksWithSimilarBPM(toTrack: currentTrack, inSet: trackSubset)
+
+    // Scale the key factor by 16 to weight the key more heavily than the loudness
+    // and timbre (which are weighted roughly equally.) Since the maximum distance
+    // between keys is 6, and the rough maximum distance between timbres and (scaled)
+    // loudness is 50, multiply by 16 to roughly double the maximum distance between
+    // keys to ensure it influences the selection the most out of the three factors.
+    let distanceFunc = { (currentTrack: TrackEntity, otherTrack: TrackEntity) in
+      return currentTrack.compareTimbreWith(otherTrack: otherTrack)
+        + (50.0 * currentTrack.compareLoudnessWith(otherTrack: otherTrack))
+        + (16.0 * currentTrack.compareKeyWith(otherTrack: otherTrack))
+    }
+
+    return medianSelection(withTrack: currentTrack, fromSet: trackSubset,
+        usingDistanceFunction: distanceFunc)
   }
 }

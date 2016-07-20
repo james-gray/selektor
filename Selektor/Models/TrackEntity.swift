@@ -29,6 +29,7 @@ class TrackEntity: SelektorObject {
   }
 
   let extractor = FeatureExtractor()
+  let circleOf5ths = ["C", "G", "D", "A", "E", "B", "F#", "C#", "G#", "D#", "A#", "F"]
 
   // MARK: Properties
 
@@ -162,6 +163,35 @@ class TrackEntity: SelektorObject {
   */
   func compareLoudnessWith(otherTrack track: TrackEntity) -> Double {
     return fabs(Double(self.loudness!) + Double(track.loudness!))
+  }
+
+  /**
+      Compare the key of this track with another track based on the circle of
+      5ths. The further (going up or down the piano) that the key of the other
+      track is from the current track's key in 5ths, the larger the distance, up to
+      a maximum of 6.
+
+      - parameter track: The `TrackEntity` to compare this track with.
+
+      - returns: The distance between the two track's keys by the circle of 5ths.
+  */
+  func compareKeyWith(otherTrack track: TrackEntity) -> Double {
+    // Return maximum distance if either track does not have a key
+    if self.key == nil || track.key == nil {
+      return 6.0
+    }
+
+    let currentKeyIndex = circleOf5ths.indexOf(self.key!)
+    let otherKeyIndex = circleOf5ths.indexOf(track.key!)
+
+    // Calculate the absolute distance between the keys in 5ths
+    let difference = abs(currentKeyIndex! - otherKeyIndex!)
+
+    // Account for the circular nature of the circle of 5ths. For example, if we are
+    // seven fifths above the original key going up the piano, this is the same as
+    // being *five* fifths *below* the original key going *down* the piano. To account
+    // for this, subtract the difference from 12 if the difference is greater than 6.
+    return Double(difference > 6 ? 12 - difference : difference)
   }
 
   /**
